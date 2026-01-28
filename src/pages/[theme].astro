@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+// Icons
+import iconWater from '../assets/icons/Kaap_RGB_Water_Blok.svg';
+import iconFood from '../assets/icons/Kaap_RGB_Food_Blok.svg';
+import iconEnergy from '../assets/icons/Kaap_RGB_Energie_Blok.svg';
+
+export async function getStaticPaths() {
+  return [
+    { 
+        params: { theme: 'water' }, 
+        props: { 
+            name: 'Water', 
+            description: 'Zeeland leeft met water. Innovatiepunt KAAP versterkt de maritieme sector en watertechnologie.',
+            color: 'kaap-water',
+            icon: iconWater
+        } 
+    },
+    { 
+        params: { theme: 'voedsel' }, 
+        props: { 
+            name: 'Voedsel', 
+            description: 'Van zilte teelt tot eiwittransitie. Wij werken aan de voedselsystemen van de toekomst.',
+            color: 'kaap-food',
+            icon: iconFood
+        } 
+    },
+    { 
+        params: { theme: 'energie' }, 
+        props: { 
+            name: 'Energie', 
+            description: 'De energietransitie vraagt om slimme oplossingen, van wind op zee tot waterstof.',
+            color: 'kaap-energy',
+            icon: iconEnergy
+        } 
+    },
+  ];
+}
+
+const { theme } = Astro.params;
+const { name, description, color, icon } = Astro.props;
+
+const colorClass = `text-${color}`;
+const bgClass = `bg-${color}`;
+---
+
+<Layout title={`${name} | Innovatiepunt KAAP`}>
+  <div class="relative bg-kaap-gray py-32 overflow-hidden">
+     <!-- Theme specific background accent -->
+     <div class={`absolute top-0 right-0 w-2/3 h-full opacity-10 ${bgClass} blur-3xl transform translate-x-1/4`}></div>
+     
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+   <!-- Hero Section -->
+  <section class="relative h-[60vh] flex items-center justify-center overflow-hidden bg-kaap-gray">
+    <div class="absolute inset-0 bg-kaap-gray"></div>
+    <!-- Abstract theme background -->
+    <div class={`absolute inset-0 opacity-10 bg-${color} mix-blend-screen`}></div>
+    
+    <div class="relative z-10 text-center max-w-5xl px-4">
+      <div class="w-32 h-32 mx-auto mb-8 animate-float">
+        <Image src={icon} alt={name} class="w-full h-full object-contain drop-shadow-2xl" />
+      </div>
+      
+      <!-- Strict Pay-off: Bring your [theme] innovation to life -->
+      <h1 class="text-5xl md:text-7xl font-bold font-heading text-white mb-6 uppercase tracking-tight">
+        Bring your <span class={`text-${color}`}>{name}</span><br/>
+        innovation to life
+      </h1>
+      
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto font-light">
+        {description}
+      </p>
+    </div>
+  </section>
+            </div>
+        </div>
+  </div>
+
+  <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-3xl font-bold font-heading mb-12">Projecten binnen {name}</h2>
+          
+          <div class="bg-gray-50 rounded-3xl p-12 text-center border border-dashed border-gray-300">
+              <p class="text-gray-500 text-lg">Projecten worden geladen... (Work in Progress)</p>
+              <a href="/projecten" class="inline-block mt-6 font-medium text-kaap-purple hover:text-kaap-pink">Bekijk alle projecten</a>
+          </div>
+      </div>
+  </section>
+</Layout>

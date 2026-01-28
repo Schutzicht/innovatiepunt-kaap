@@ -1,0 +1,61 @@
+---
+import '@fontsource/inter';
+import '@fontsource/outfit';
+import '../styles/global.css';
+
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import StickyCTA from '../components/common/StickyCTA.astro';
+
+interface Props {
+	title: string;
+    description?: string;
+}
+
+const { title, description = "Innovatiepunt KAAP - Dé innovatiehub van Zeeland" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="nl" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-kaap-gray text-white font-body antialiased selection:bg-kaap-pink selection:text-white flex flex-col min-h-screen">
+        <Header />
+		<main class="flex-grow pt-20">
+			<slot />
+		</main>
+        <!-- Sticky CTA -->
+        <StickyCTA />
+        <Footer />
+        <script>
+            import Lenis from 'lenis';
+
+            const lenis = new Lenis({
+                autoRaf: true,
+            });
+
+            // Scroll Reveal Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        </script>
+	</body>
+</html>

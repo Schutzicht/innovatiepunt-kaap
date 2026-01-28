@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Laag_1" data-name="Laag 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 245 245">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#Naamloos_verloop_391-3);
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: url(#Naamloos_verloop_391-2);
+      }
+
+      .cls-3 {
+        fill: url(#Naamloos_verloop_391);
+      }
+    </style>
+    <linearGradient id="Naamloos_verloop_391" data-name="Naamloos verloop 391" x1="175.5" y1="-41.18" x2="-54.35" y2="188.68" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ea6398"/>
+      <stop offset="1" stop-color="#8d73da"/>
+    </linearGradient>
+    <linearGradient id="Naamloos_verloop_391-2" data-name="Naamloos verloop 391" x1="262.72" y1="46.04" x2="32.86" y2="275.9" xlink:href="#Naamloos_verloop_391"/>
+    <linearGradient id="Naamloos_verloop_391-3" data-name="Naamloos verloop 391" x1="244.15" y1="27.48" x2="14.3" y2="257.33" xlink:href="#Naamloos_verloop_391"/>
+  </defs>
+  <path class="cls-3" d="M48.42,122.5c0-40.66,32.96-73.62,73.62-73.62,7.97,0,15.65,1.27,22.84,3.61l24.77-42.9C155,3.42,138.92,0,122.03,0,59.52,0,7.94,46.83.47,107.32l49.17,28.57c-.8-4.34-1.22-8.82-1.22-13.39Z"/>
+  <path class="cls-2" d="M195.96,24.81l-49.31,28.29c28.55,10.12,49,37.37,49,69.4,0,21.75-9.43,41.29-24.42,54.76l24.77,42.9c29.49-22.37,48.54-57.79,48.54-97.66s-19.06-75.32-48.58-97.69Z"/>
+  <path class="cls-1" d="M49.99,137.73H.47c7.5,60.47,59.07,107.27,121.56,107.27,16.9,0,32.99-3.42,47.64-9.61l.15-56.9c-12.86,10.99-29.55,17.62-47.79,17.62-35.44,0-65.03-25.04-72.04-58.39Z"/>
+</svg>

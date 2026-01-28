@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/branding/Kaap_RGB_Logo_rond_fc.svg'; 
+
+const navItems = [
+  { name: 'Over KAAP', href: '/over' },
+  { name: 'Projecten', href: '/projecten' },
+  { name: 'Faciliteiten', href: '/faciliteiten' },
+  { name: 'Events', href: '/agenda' },
+  { name: 'Nieuws', href: '/nieuws' },
+];
+---
+
+<header class="fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out px-0 py-0" id="main-header">
+  <div class="w-full transition-all duration-500 bg-white/90 backdrop-blur-md border border-transparent shadow-sm" id="header-container">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20 transition-all duration-300" id="header-inner">
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center">
+            <a href="/" class="group block">
+               <!-- Using the round logo as requested -->
+               <img src={logo.src} alt="Innovatiepunt KAAP" class="h-12 w-auto transition-transform duration-300 group-hover:scale-110" />
+            </a>
+        </div>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex space-x-1 items-center">
+            {navItems.map((item) => (
+            <a href={item.href} class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50/50 rounded-full transition-all">
+                {item.name}
+            </a>
+            ))}
+            <div class="pl-4 ml-2 border-l border-gray-200">
+                <a href="/contact" class="px-6 py-2.5 rounded-full bg-kaap-gradient text-white font-medium text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all">
+                Neem contact op
+                </a>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+            <button id="mobile-menu-btn" class="text-gray-700 hover:text-gray-900 focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition-colors">
+            <span class="sr-only">Open main menu</span>
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            </button>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 absolute w-full left-0 z-40 shadow-xl">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      {navItems.map((item) => (
+        <a href={item.href} class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50">
+          {item.name}
+        </a>
+      ))}
+      <a href="/contact" class="block w-full text-center mt-4 px-5 py-3 rounded-full bg-kaap-gradient text-white font-medium shadow-md">
+        Neem contact op
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('main-header');
+  const container = document.getElementById('header-container');
+  const inner = document.getElementById('header-inner');
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+
+  // Scroll Effect
+  const scrollThreshold = 50;
+  
+  window.addEventListener('scroll', () => {
+      if (!header || !container || !inner) return;
+
+      if (window.scrollY > scrollThreshold) {
+          // Scrolled State: Floating Pill
+          header.classList.add('px-4', 'pt-4'); // Add padding around the header
+          container.classList.remove('w-full', 'rounded-none', 'border-transparent');
+          container.classList.add('max-w-5xl', 'mx-auto', 'rounded-full', 'shadow-lg', 'border-gray-200/50', 'bg-white/80');
+          inner.classList.replace('h-20', 'h-16'); // Smaller height
+      } else {
+          // Top State: Full Width
+          header.classList.remove('px-4', 'pt-4');
+          container.classList.add('w-full', 'rounded-none', 'border-transparent');
+          container.classList.remove('max-w-5xl', 'mx-auto', 'rounded-full', 'shadow-lg', 'border-gray-200/50', 'bg-white/80');
+          inner.classList.replace('h-16', 'h-20'); // Original height
+      }
+  });
+</script>

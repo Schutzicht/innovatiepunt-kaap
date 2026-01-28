@@ -1,0 +1,64 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+const themeColors = {
+    water: 'text-kaap-water',
+    voedsel: 'text-kaap-food',
+    energie: 'text-kaap-energy'
+};
+
+const themeColor = themeColors[project.theme] || 'text-gray-900';
+---
+
+<Layout title={`${project.title} | Innovatiepunt KAAP`}>
+  <article>
+    <!-- Hero Image -->
+    <div class="h-[50vh] min-h-[400px] relative overflow-hidden bg-kaap-gray">
+         <div class="absolute inset-0 bg-kaap-gradient opacity-20"></div>
+         <div class="w-full h-full bg-cover bg-center" style={`background-image: url('${project.image}');`}></div>
+         <div class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-transparent to-transparent"></div>
+         
+         <div class="absolute bottom-0 left-0 w-full p-8 pb-12">
+             <div class="max-w-4xl mx-auto">
+                 <span class={`inline-block px-4 py-1 rounded-full bg-white text-xs font-bold uppercase tracking-wider mb-4 border border-gray-200 ${themeColor}`}>
+                     {project.theme}
+                 </span>
+                 <h1 class="text-4xl md:text-6xl font-bold font-heading text-white mb-4 leading-tight shadow-sm stroke-black">
+                     {project.title}
+                 </h1>
+             </div>
+         </div>
+    </div>
+
+    <!-- Content -->
+    <div class="py-16 bg-white min-h-[400px]">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-lg prose-headings:font-heading prose-a:text-kaap-purple hover:prose-a:text-kaap-pink">
+                <p class="lead text-xl text-gray-600 mb-8 font-medium">
+                    {project.description}
+                </p>
+                <div set:html={project.content} />
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-100 flex justify-between items-center">
+                <a href="/projecten" class="font-medium text-gray-500 hover:text-gray-900 transition-colors">
+                    ← Terug naar overzicht
+                </a>
+                 <a href="/contact" class="px-6 py-3 rounded-full bg-kaap-gradient text-white font-bold shadow-md hover:shadow-lg transition-all">
+                    Meer weten?
+                </a>
+            </div>
+        </div>
+    </div>
+  </article>
+</Layout>

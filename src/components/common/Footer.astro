@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+const currentYear = new Date().getFullYear();
+import logoMark from '../../assets/branding/Kaap_RGB_Beeldmerk.svg'; 
+import logoWhite from '../../assets/branding/Kaap_RGB_Logo_vert_wit.svg';
+---
+
+<footer class="bg-kaap-gray text-white relative overflow-hidden pt-24 pb-8 mt-24">
+    <!-- Massive Watermark -->
+    <div class="absolute top-0 right-0 w-[800px] h-[800px] opacity-[0.03] transform translate-x-1/3 -translate-y-1/3 pointer-events-none">
+         <Image src={logoMark} alt="KAAP" class="w-full h-full object-contain" />
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Logo Section (Replaces Massive Interaction) -->
+        <div class="border-b border-white/10 pb-20 mb-20">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <!-- Main Logo -->
+                <div class="w-24 md:w-32">
+                    <Image src={logoWhite} alt="Innovatiepunt KAAP" class="w-full h-auto" />
+                </div>
+
+                <!-- CTA Button -->
+                <div class="flex flex-col items-center md:items-end text-center md:text-right">
+                    <p class="text-xl text-gray-400 max-w-md">
+                        Heb jij een idee dat de wereld kan veranderen? Kom langs bij KAAP en maak het waar.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+            <!-- Brand & Newsletter -->
+            <div class="md:col-span-5">
+                <div class="mb-8">
+                    <span class="text-2xl font-bold font-heading text-white">Innovatiepunt KAAP</span>
+                    <p class="mt-4 text-gray-500 leading-relaxed">
+                        De broedplaats voor transities in water, voedsel en energie.
+                    </p>
+                </div>
+                
+                <form class="relative max-w-sm">
+                    <input type="email" placeholder="Blijf op de hoogte (E-mailadres)" 
+                           class="w-full bg-white/5 border border-white/10 rounded-full py-4 px-6 text-white placeholder-gray-500 focus:outline-none focus:border-kaap-purple transition-colors" />
+                    <button type="submit" class="absolute right-2 top-2 p-2 bg-kaap-gradient rounded-full text-white hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Spacer -->
+            <div class="md:col-span-1"></div>
+
+            <!-- Links Grid -->
+            <div class="md:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-white font-bold mb-6 font-heading">Transities</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="/water" class="hover:text-kaap-water transition-colors">Water</a></li>
+                        <li><a href="/voedsel" class="hover:text-kaap-food transition-colors">Voedsel</a></li>
+                        <li><a href="/energie" class="hover:text-kaap-energy transition-colors">Energie</a></li>
+                    </ul>
+                </div>
+                <div>
+                     <h4 class="text-white font-bold mb-6 font-heading">Sitemap</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="/projecten" class="hover:text-white transition-colors">Projecten</a></li>
+                        <li><a href="/faciliteiten" class="hover:text-white transition-colors">Faciliteiten</a></li>
+                        <li><a href="/agenda" class="hover:text-white transition-colors">Agenda</a></li>
+                        <li><a href="/nieuws" class="hover:text-white transition-colors">Nieuws</a></li>
+                    </ul>
+                </div>
+                <div>
+                     <h4 class="text-white font-bold mb-6 font-heading">Contact</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="mailto:info@innovatiepunt-kaap.nl" class="hover:text-white transition-colors">info@innovatiepunt-kaap.nl</a></li>
+                        <li><a href="tel:0652661475" class="hover:text-white transition-colors">06-52661475</a></li>
+                        <li class="opacity-60">Edisonweg 10<br/>4382 NW Vlissingen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
+            <p>&copy; {currentYear} Innovatiepunt KAAP.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="hover:text-white transition-colors">Privacy Statement</a>
+                <a href="#" class="hover:text-white transition-colors">Cookies</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .text-outline {
+        -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+        color: transparent;
+    }
+</style>

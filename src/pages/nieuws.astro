@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Placeholder news data
+const newsItems = [
+  {
+    title: "KAAP verwelkomt 50e partner",
+    date: "25 januari 2026",
+    category: "Nieuws",
+    excerpt: "Een mijlpaal voor Innovatiepunt KAAP: vandaag mochten we onze 50e officiële partner verwelkomen in ons netwerk.",
+    image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    title: "Nieuw Living Lab voor Waterstof geopend",
+    date: "12 januari 2026",
+    category: "Energie",
+    excerpt: "Studenten en onderzoekers kunnen vanaf vandaag aan de slag in het gloednieuwe waterstof-lab.",
+    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    title: "Hackathon Food Transition groot succes",
+    date: "20 december 2025",
+    category: "Voedsel",
+    excerpt: "Meer dan 100 studenten werkten 24 uur lang aan oplossingen voor de voedseltransitie.",
+    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800"
+  }
+];
+---
+
+<Layout title="Nieuws | Innovatiepunt KAAP">
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">Nieuws</h1>
+        <p class="text-xl text-gray-500">Updates over innovatie in Zeeland.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {newsItems.map((item, index) => (
+          <a href="#" class={`block bg-gray-50 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group reveal delay-${index * 100}`}>
+            <div class="h-56 relative overflow-hidden">
+                <img src={item.image} alt={item.title} class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
+                 <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent">
+                     <span class="text-white text-xs font-bold px-2 py-1 bg-kaap-purple/80 rounded">{item.category}</span>
+                 </div>
+            </div>
+            <div class="p-8">
+                <span class="text-gray-400 text-xs mb-3 block">{item.date}</span>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-kaap-purple transition-colors leading-tight">{item.title}</h3>
+                <p class="text-gray-600 line-clamp-3 leading-relaxed">
+                    {item.excerpt}
+                </p>
+                <div class="mt-6 flex items-center text-kaap-purple font-medium">
+                    Lees meer <span class="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

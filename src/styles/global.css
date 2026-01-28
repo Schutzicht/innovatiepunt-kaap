@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@theme {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-heading: 'Outfit', sans-serif;
+
+    --color-kaap-water: #00ACC6;
+    --color-kaap-food: #97C165;
+    --color-kaap-energy: #F97D38;
+    --color-kaap-pink: #ea6398;
+    --color-kaap-purple: #8d73da;
+    --color-kaap-bg: #f8fafc;
+
+    /* Strict Brand Colors from PDF */
+    --color-kaap-gray: #222222;
+    /* C75 M64 Y59 K77 */
+    --color-kaap-light-gray: #3d3d3d;
+    /* C67 M57 Y54 K59 */
+    --color-kaap-text-gray: #8f8f8f;
+    /* C0 M0 Y0 K44 */
+    --color-kaap-black: #000000;
+
+    --animate-float: float 6s ease-in-out infinite;
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+}
+
+/* Custom Utilities for Gradient */
+@utility bg-kaap-gradient {
+    background: linear-gradient(135deg, #ea6398 0%, #8d73da 100%);
+}
+
+@utility text-kaap-gradient {
+    background: linear-gradient(135deg, #ea6398 0%, #8d73da 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Kastlijntje Utility (PDF 11.2) */
+@utility kastlijntje {
+    position: relative;
+    padding-left: 2.5rem;
+    /* Space for the line */
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.8em;
+        /* Approximate "low lying" */
+        width: 30px;
+        /* Short line */
+        height: 3px;
+        /* 0.3mm thick visually balanced */
+        background-color: currentColor;
+    }
+}
+
+/* Global Styles */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-sans);
+    background-color: var(--color-kaap-bg);
+    overflow-x: hidden;
+    scroll-behavior: auto;
+    /* Handled by Lenis */
+}
+
+/* Lenis Recommended */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+}
+
+.font-heading {
+    font-family: var(--font-heading);
+}
+
+/* Reveal Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-delay-100 {
+    transition-delay: 0.1s;
+}
+
+.reveal-delay-200 {
+    transition-delay: 0.2s;
+}
+
+.reveal-delay-300 {
+    transition-delay: 0.3s;
+}

@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Placeholder images
+const meetingImage = "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200";
+const flexImage = "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200";
+const auditoriumImage = "https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&q=80&w=1200";
+
+const facilities = [
+  {
+    title: "Proefkeuken (100 m²)",
+    description: "Alle basisfaciliteiten voor jouw productinnovatie: werkbanken, kookplaten, koel- en vriesruimte, ovens, mixers en opnamefaciliteiten om je innovatie in de spotlight te zetten.",
+    image: "https://images.unsplash.com/photo-1576867757603-05b134ebc379?auto=format&fit=crop&q=80&w=1200", 
+    specs: ["Audio- & Video-opname", "Workshops mogelijk", "Horeca-apparatuur"]
+  },
+  {
+    title: "Proefproductieruimte (200 m²)",
+    description: "Voedselveilige ruimte met (kracht)stroom, water aan- en afvoer en gemakkelijke toegang voor machines via de zij-entree. Ideaal voor experimenten buiten je eigen productielijn.",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200",
+    specs: ["Voedselveilig", "Krachtstroom", "Zij-entree toegang"]
+  },
+  {
+    title: "Ontwikkel- & Demoruimte (2000 m²)",
+    description: "Flexibele hal voor projecten, innovatietesten en demonstraties. Hoogte is geen probleem en er zijn diverse opstellingen mogelijk voor bijeenkomsten en samenwerkingen.",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200",
+    specs: ["2000 m² flexibel", "Grote hoogte", "Sprekersarena"]
+  },
+  {
+    title: "Proeflokaal",
+    description: "Inspirerende ruimte met bar en keuken voor proeverijen en keukentafelgesprekken. Breng jouw culinaire visie tot leven samen met klanten, studenten en collega's.",
+    image: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&q=80&w=1200",
+    specs: ["Bar & Keuken", "Proeverijen", "Sfeervol"]
+  },
+  {
+    title: "Flexplekken & Kantoren",
+    description: "Industrieel en modern ingerichte werkplekken in het naastgelegen pand. Ideaal voor (samen)werken, vergaderen en co-creatie in een innovatieve omgeving.",
+    image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200",
+    specs: ["Modern & Industrieel", "Vergaderruimtes", "Co-creatie"]
+  }
+];
+---
+
+<Layout title="Faciliteiten | Innovatiepunt KAAP">
+  <section class="py-20 bg-gray-50">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+       <div class="text-center mb-16 reveal">
+         <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">Onze Faciliteiten</h1>
+         <p class="text-xl text-gray-500 max-w-2xl mx-auto">Alles wat je nodig hebt om te werken, ontmoeten en groeien.</p>
+       </div>
+     </div>
+  </section>
+
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="space-y-24">
+        {facilities.map((facility, index) => (
+          <div class={`flex flex-col md:flex-row gap-12 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} reveal`}>
+            <div class="w-full md:w-1/2">
+               <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
+                   <div class="absolute inset-0 bg-kaap-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-500 z-10"></div>
+                   <img src={facility.image} alt={facility.title} class="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-700" />
+               </div>
+            </div>
+            <div class="w-full md:w-1/2">
+                <h2 class="text-3xl font-bold font-heading text-gray-900 mb-4">{facility.title}</h2>
+                <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                    {facility.description}
+                </p>
+                <div class="bg-gray-50 rounded-xl p-6 mb-8">
+                    <h4 class="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">Kenmerken</h4>
+                    <ul class="space-y-2">
+                        {facility.specs.map(spec => (
+                            <li class="flex items-center text-gray-600">
+                                <svg class="w-5 h-5 text-kaap-food mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                {spec}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <a href="/contact" class="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-kaap-purple transition-colors">
+                    Reserveren
+                </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
