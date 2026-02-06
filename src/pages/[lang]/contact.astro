@@ -1,5 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { Image } from "astro:assets";
+import heroImage from "../../assets/photos/hero-kaap.jpg";
 import { getStaticPathsHelper } from '../../i18n/utils';
 
 export function getStaticPaths() {
@@ -11,111 +13,135 @@ const { lang } = Astro.params;
 const content = {
   nl: {
     hero: {
-      title: "Neem contact op",
-      desc: "Heb je een vraag, een idee of wil je langskomen? We horen graag van je."
+      title: "Kom sfeer proeven",
+      desc: "Heb je een vraag, een idee of wil je de ruimtes in het echt zien? Je bent van harte welkom bij Innovatiepunt KAAP."
     },
     info: {
-      title: "Gegevens",
-      address: "Edisonweg 10\n4382 NW Vlissingen",
-      hours: {
-        title: "Openingstijden",
-        week: "Maandag - Vrijdag",
-        weekend: "Zaterdag - Zondag",
-        closed: "Gesloten"
-      }
+      title: "Kom langs",
+      address: "Edisonweg 10, 4382 NW Vlissingen",
+      email: "info@innovatiepunt-kaap.nl",
+      phone: "+31 6 52 66 14 75",
+      phoneDisplay: "06 52 66 14 75",
+      route: "Plan je route",
     },
     form: {
-        placeholder: "HubSpot Formulier verschijnt hier."
+      placeholder: "Laden..."
     }
   },
   en: {
     hero: {
-      title: "Get in touch",
-      desc: "Do you have a question, an idea, or would you like to visit? We would love to hear from you."
+      title: "Come and feel the vibe",
+      desc: "Do you have a question, an idea, or want to see the spaces in real life? You are most welcome at Innovatiepunt KAAP."
     },
     info: {
-      title: "Details",
-      address: "Edisonweg 10\n4382 NW Vlissingen",
-      hours: {
-        title: "Opening hours",
-        week: "Monday - Friday",
-        weekend: "Saturday - Sunday",
-        closed: "Closed"
-      }
+      title: "Visit us",
+      address: "Edisonweg 10, 4382 NW Vlissingen",
+      email: "info@innovatiepunt-kaap.nl",
+      phone: "+31 6 52 66 14 75",
+      phoneDisplay: "+31 6 52 66 14 75",
+      route: "Get directions",
     },
     form: {
-        placeholder: "HubSpot Form will appear here."
+      placeholder: "Loading..."
     }
   }
 };
 
-const c = content[lang] || content.nl;
+const c = content[lang as keyof typeof content] || content.nl;
 ---
 
 <Layout title={`${lang === 'nl' ? 'Contact' : 'Contact'} | Innovatiepunt KAAP`} lang={lang}>
-  <div class="bg-gray-50 min-h-screen">
-    <!-- Header -->
-    <section class="bg-kaap-gray py-20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-kaap-gradient opacity-10"></div>
-        <div class="max-w-7xl mx-auto px-4 relative z-10 text-center reveal">
-            <h1 class="text-4xl md:text-6xl font-bold font-heading text-white mb-6">{c.hero.title}</h1>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+  <div class="bg-gray-50 min-h-screen pb-24">
+    <!-- Hero Section -->
+    <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <Image 
+                src={heroImage} 
+                alt="Innovatiepunt KAAP" 
+                class="w-full h-full object-cover"
+                quality="high"
+            />
+            <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white -mt-20 reveal">
+            <h1 class="text-5xl md:text-7xl font-bold font-heading mb-6 tracking-tight leading-tight">
+                {c.hero.title}
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-100 max-w-2xl mx-auto font-light leading-relaxed">
                 {c.hero.desc}
             </p>
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 pb-24">
-        <div class="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row reveal delay-200">
+    <!-- Content Card -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-32 reveal delay-200">
+        <div class="bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row min-h-[600px]">
             
-            <!-- Contact Info -->
-            <div class="w-full md:w-5/12 bg-kaap-gray p-10 text-white relative overflow-hidden">
-                <div class="absolute inset-0 bg-kaap-gradient opacity-10"></div>
+            <!-- Left: Contact Details -->
+            <div class="w-full lg:w-5/12 bg-kaap-gray text-white p-10 md:p-14 relative overflow-hidden flex flex-col justify-between">
+                <!-- Background decoration -->
+                <div class="absolute top-0 right-0 w-96 h-96 bg-kaap-gradient opacity-10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
                 
-                <div class="relative z-10 space-y-8">
-                    <div>
-                        <h3 class="text-2xl font-bold font-heading mb-6">{c.info.title}</h3>
-                        <div class="space-y-4 text-gray-300">
-                            <p class="flex items-start">
-                                <svg class="w-6 h-6 mr-4 text-kaap-pink shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <span>{c.info.address}</span>
-                            </p>
-                            <p class="flex items-center">
-                                <svg class="w-6 h-6 mr-4 text-kaap-pink shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                <a href="mailto:info@innovatiepunt-kaap.nl" class="hover:text-white transition-colors">info@innovatiepunt-kaap.nl</a>
-                            </p>
-                             <p class="flex items-center">
-                                <svg class="w-6 h-6 mr-4 text-kaap-pink shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                                <a href="tel:0652661475" class="hover:text-white transition-colors">06-52661475</a>
-                            </p>
-                        </div>
-                    </div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold font-heading mb-10 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                        {c.info.title}
+                    </h2>
 
-                    <div>
-                         <h3 class="text-2xl font-bold font-heading mb-6">{c.info.hours.title}</h3>
-                         <ul class="space-y-2 text-gray-300">
-                             <li class="flex justify-between"><span>{c.info.hours.week}</span> <span>08:30 - 17:30</span></li>
-                             <li class="flex justify-between"><span>{c.info.hours.weekend}</span> <span>{c.info.hours.closed}</span></li>
-                         </ul>
+                    <div class="space-y-8">
+                        <!-- Address -->
+                        <a href="https://maps.google.com/?q=Edisonweg+10+Vlissingen" target="_blank" rel="noopener noreferrer" class="flex group items-start gap-4 hover:opacity-80 transition-opacity">
+                            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-colors">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-lg font-medium leading-relaxed max-w-[200px]">{c.info.address}</p>
+                                <span class="text-kaap-purple text-sm font-bold mt-1 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                    {c.info.route} <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- Phone -->
+                        <a href={`tel:${c.info.phone.replace(/\s/g, '')}`} class="flex group items-center gap-4 hover:opacity-80 transition-opacity">
+                            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-colors">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            </div>
+                            <span class="text-lg font-medium">{c.info.phoneDisplay}</span>
+                        </a>
+
+                        <!-- Email -->
+                        <a href={`mailto:${c.info.email}`} class="flex group items-center gap-4 hover:opacity-80 transition-opacity">
+                            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-colors">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <span class="text-lg font-medium break-all">{c.info.email}</span>
+                        </a>
                     </div>
+                </div>
+
+                <!-- Footer / Extra -->
+                <div class="relative z-10 mt-12 pt-12 border-t border-white/10">
+                   <p class="text-gray-400 text-sm">
+                       Innovatiepunt KAAP is dé plek voor starters en scale-ups in Water, Voedsel & Energie.
+                   </p>
                 </div>
             </div>
 
-            <!-- Form -->
-            <div class="w-full md:w-7/12 p-10">
-                <!-- HubSpot Form Placeholder -->
-                <div class="bg-gray-100 p-8 rounded-lg text-center">
-                    <p class="text-gray-500 mb-4">{c.form.placeholder}</p>
+            <!-- Right: Form -->
+            <div class="w-full lg:w-7/12 p-8 md:p-14 bg-white relative">
+                 <div class="max-w-lg">
                     <script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/embed/v2.js"></script>
                     <script>
                     // @ts-ignore
                     hbspt.forms.create({
                         region: "eu1",
                         portalId: "145415386",
-                        formId: "REPLACE_WITH_FORM_ID"
+                        formId: "48434a9e-f4a6-4299-8bd2-562d98d89e27"
                     });
                     </script>
-                </div>
+                 </div>
             </div>
         </div>
     </div>
