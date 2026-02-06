@@ -8,26 +8,29 @@ const { lang = 'nl' } = Astro.params;
 const t = useTranslations(lang as any);
 
 const markLabel = {
-  nl: { title: "Vraag het aan Mark", role: "Innovatiemanager" },
-  en: { title: "Ask Mark", role: "Innovation Manager" }
+  nl: { title: "Vraag het aan Mark", role: "Innovatiemanager", mobile: "Vraag Mark" },
+  en: { title: "Ask Mark", role: "Innovation Manager", mobile: "Ask Mark" }
 };
 const markTxt = markLabel[lang as 'nl' | 'en'] || markLabel.nl;
 ---
 
 <!-- Mobile Subtle Floating Pill -->
 <a 
+    id="sticky-pill-mobile"
     href={`/${lang}/contact`} 
-    class="md:hidden fixed bottom-6 right-6 z-50 bg-white/90 backdrop-blur-xl border border-white/20 shadow-lg hover:shadow-xl active:scale-95 transition-all rounded-full px-5 py-3 flex items-center gap-2 group"
+    class="md:hidden fixed bottom-6 right-6 z-50 bg-white/95 backdrop-blur-xl border border-white/20 shadow-lg hover:shadow-xl active:scale-95 transition-all duration-500 rounded-full pl-2 pr-5 py-2 flex items-center gap-3 group opacity-0 translate-y-10 pointer-events-none"
 >
-    <span class="text-kaap-purple font-bold text-sm uppercase tracking-wider">{t('cta.book')}</span>
-    <svg class="w-4 h-4 text-kaap-purple group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+    <div class="w-8 h-8 rounded-full overflow-hidden border border-kaap-purple shadow-sm">
+        <Image src={mark} alt="Mark" class="w-full h-full object-cover" />
+    </div>
+    <span class="text-kaap-purple font-bold text-sm uppercase tracking-wider">{markTxt.mobile}</span>
 </a>
 
 <!-- Desktop Floating Button -->
 <a
   id="sticky-cta-desktop"
   href={`/${lang}/contact`}
-  class="hidden md:flex fixed bottom-8 right-8 z-40 group items-center justify-center w-20 h-20 transition-transform duration-300 hover:scale-110 text-white"
+  class="hidden md:flex fixed bottom-8 right-8 z-40 group items-center justify-center w-20 h-20 transition-all duration-500 hover:scale-110 text-white opacity-0 translate-y-10 pointer-events-none"
 >
   <!-- Beeldmerk Graphic Container - Spins 360deg on hover -->
   <div
@@ -94,13 +97,28 @@ const markTxt = markLabel[lang as 'nl' | 'en'] || markLabel.nl;
 </a>
 
 <script>
-  const stickyCTA = document.getElementById("sticky-cta-desktop");
+  const stickyDesktop = document.getElementById("sticky-cta-desktop");
+  const stickyMobile = document.getElementById("sticky-pill-mobile");
+
+  // Scroll Visibility Logic
+  function checkScroll() {
+      const scrollPos = window.scrollY;
+      const threshold = window.innerHeight * 0.5; // Show after scrolling 50% of viewport
+
+      if (scrollPos > threshold) {
+          stickyDesktop?.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+          stickyMobile?.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+      } else {
+          stickyDesktop?.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+          stickyMobile?.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+      }
+  }
 
   function checkContrast() {
-    if (!stickyCTA) return;
+    if (!stickyDesktop) return;
 
     // Get button center position
-    const rect = stickyCTA.getBoundingClientRect();
+    const rect = stickyDesktop.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
 
@@ -124,8 +142,8 @@ const markTxt = markLabel[lang as 'nl' | 'en'] || markLabel.nl;
   }
 
   function updateIcons(colorClass: string) {
-    if (!stickyCTA) return;
-    const icons = stickyCTA.querySelectorAll(".sticky-icon");
+    if (!stickyDesktop) return;
+    const icons = stickyDesktop.querySelectorAll(".sticky-icon");
     icons.forEach((icon) => {
       // Check if already has class to avoid thrashing
       if (!icon.classList.contains(colorClass)) {
@@ -136,9 +154,17 @@ const markTxt = markLabel[lang as 'nl' | 'en'] || markLabel.nl;
   }
 
   // Check on scroll and resize
-  window.addEventListener("scroll", checkContrast, { passive: true });
-  window.addEventListener("resize", checkContrast, { passive: true });
+  window.addEventListener("scroll", () => {
+      checkScroll();
+      checkContrast();
+  }, { passive: true });
+  
+  window.addEventListener("resize", () => {
+      checkScroll();
+      checkContrast();
+  }, { passive: true });
 
   // Initial check
+  checkScroll();
   checkContrast();
 </script>
