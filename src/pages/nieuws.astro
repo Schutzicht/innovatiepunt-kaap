@@ -1,62 +1,65 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getNews } from '../lib/api';
 
-// Placeholder news data
-const newsItems = [
-  {
-    title: "KAAP verwelkomt 50e partner",
-    date: "25 januari 2026",
-    category: "Nieuws",
-    excerpt: "Een mijlpaal voor Innovatiepunt KAAP: vandaag mochten we onze 50e officiële partner verwelkomen in ons netwerk.",
-    image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    title: "Nieuw Living Lab voor Waterstof geopend",
-    date: "12 januari 2026",
-    category: "Energie",
-    excerpt: "Studenten en onderzoekers kunnen vanaf vandaag aan de slag in het gloednieuwe waterstof-lab.",
-    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    title: "Hackathon Food Transition groot succes",
-    date: "20 december 2025",
-    category: "Voedsel",
-    excerpt: "Meer dan 100 studenten werkten 24 uur lang aan oplossingen voor de voedseltransitie.",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800"
-  }
-];
+const newsItems = await getNews();
 ---
 
 <Layout title="Nieuws | Innovatiepunt KAAP">
-  <section class="py-20 bg-white">
+  <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 reveal">
-        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">Nieuws</h1>
-        <p class="text-xl text-gray-500">Updates over innovatie in Zeeland.</p>
+        <span class="text-kaap-pink font-bold tracking-wider uppercase text-sm mb-2 block">Laatste updates</span>
+        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-6">Nieuws & Innovatie</h1>
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto">
+            Blijf op de hoogte van de transities in water, voedsel en energie.
+        </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {newsItems.map((item, index) => (
-          <a href="#" class={`block bg-gray-50 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group reveal delay-${index * 100}`}>
-            <div class="h-56 relative overflow-hidden">
-                <img src={item.image} alt={item.title} class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
-                 <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent">
-                     <span class="text-white text-xs font-bold px-2 py-1 bg-kaap-purple/80 rounded">{item.category}</span>
+          <a href={`/nieuws/${item.id}`} class={`block bg-gray-50 rounded-[2rem] overflow-hidden hover:bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group reveal delay-${index * 100} border border-gray-100`}>
+            <div class="h-64 relative overflow-hidden">
+                <img src={item.image} alt={item.title} class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
+                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                 
+                 <div class="absolute bottom-4 left-4 right-4">
+                     <span class="inline-block text-white text-xs font-bold px-3 py-1 bg-kaap-purple/90 backdrop-blur-sm rounded-full mb-2 shadow-lg">{item.category}</span>
+                     <div class="text-white/80 text-xs font-medium">{new Date(item.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
                  </div>
             </div>
             <div class="p-8">
-                <span class="text-gray-400 text-xs mb-3 block">{item.date}</span>
-                <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-kaap-purple transition-colors leading-tight">{item.title}</h3>
-                <p class="text-gray-600 line-clamp-3 leading-relaxed">
-                    {item.excerpt}
+                <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-kaap-purple transition-colors leading-tight line-clamp-2">{item.title}</h3>
+                <p class="text-gray-600 line-clamp-3 leading-relaxed mb-6">
+                    {item.summary}
                 </p>
-                <div class="mt-6 flex items-center text-kaap-purple font-medium">
-                    Lees meer <span class="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
+                <div class="flex items-center text-kaap-purple font-bold group/link">
+                    Lees volledig artikel 
+                    <span class="ml-2 transform group-hover/link:translate-x-2 transition-transform">→</span>
                 </div>
             </div>
           </a>
         ))}
       </div>
+      
+      <!-- Newsletter CTA -->
+      <div class="mt-20 p-12 bg-kaap-gray rounded-3xl relative overflow-hidden reveal delay-300">
+          <div class="absolute inset-0 bg-kaap-gradient opacity-10"></div>
+          <div class="absolute -right-20 -top-20 w-96 h-96 bg-kaap-pink/20 rounded-full blur-3xl animate-pulse"></div>
+          
+          <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div class="text-white max-w-xl">
+                  <h2 class="text-3xl font-bold font-heading mb-4">Mis niets van de innovatie</h2>
+                  <p class="text-gray-400 text-lg">Schrijf je in voor onze maandelijkse update over projecten en events op de Kenniswerf.</p>
+              </div>
+              <div class="flex-shrink-0">
+                  <a href="#nieuwsbrief" class="inline-flex px-8 py-4 bg-white text-kaap-gray font-bold rounded-full hover:bg-kaap-gradient hover:text-white transition-all shadow-xl hover:scale-105">
+                      Inschrijven Nieuwsbrief
+                  </a>
+              </div>
+          </div>
+      </div>
+
     </div>
   </section>
 </Layout>

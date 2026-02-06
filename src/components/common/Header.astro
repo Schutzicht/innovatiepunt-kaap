@@ -3,11 +3,18 @@ import { Image } from "astro:assets";
 import logo from "../../assets/branding/Kaap_RGB_Logo_rond_fc.svg";
 
 const navItems = [
-  { name: "Over KAAP", href: "/over" },
-  { name: "Projecten", href: "/projecten" },
-  { name: "Faciliteiten", href: "/faciliteiten" },
-  { name: "Events", href: "/agenda" },
-  { name: "Nieuws", href: "/nieuws" },
+  { 
+    name: 'Over KAAP', 
+    href: '/over',
+    children: [
+        { name: 'Ons Team', href: '/ons-team' },
+        { name: 'Vacatures', href: '/vacatures' }
+    ]
+  },
+  { name: 'Projecten', href: '/projecten' },
+  { name: 'Faciliteiten', href: '/faciliteiten' },
+  { name: 'Events', href: '/agenda' },
+  { name: 'Nieuws', href: '/nieuws' },
 ];
 ---
 
@@ -36,21 +43,32 @@ const navItems = [
           </a>
         </div>
 
-        <!-- Desktop Nav (Absolute Center) -->
-        <nav class="hidden md:flex space-x-2 items-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          {
-            navItems.map((item) => (
-              <a
-                href={item.href}
-                class="relative group px-6 py-2 text-sm font-bold text-gray-700 hover:text-white transition-all hover:bg-gray-50/10"
-              >
-                <!-- Skewed Background -->
-                <!-- Skewed Background -->
-                <span class="absolute inset-0 bg-kaap-gradient rounded-tl-md rounded-br-md transition-all duration-300 ease-out origin-left transform scale-x-0 group-hover:scale-x-100"></span>
-                <span class="relative z-10 inline-block">{item.name}</span>
-              </a>
-            ))
-          }
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex space-x-1 items-center">
+            {navItems.map((item) => (
+                item.children ? (
+                    <div class="relative group">
+                        <a href={item.href} class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50/50 rounded-full transition-all flex items-center gap-1">
+                            {item.name}
+                            <svg class="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </a>
+                        <!-- Dropdown -->
+                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left z-50 overflow-hidden">
+                            <div class="py-1">
+                                {item.children.map((child) => (
+                                    <a href={child.href} class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-kaap-purple transition-colors">
+                                        {child.name}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <a href={item.href} class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50/50 rounded-full transition-all">
+                        {item.name}
+                    </a>
+                )
+            ))}
         </nav>
 
         <!-- Right Side Button -->
@@ -99,21 +117,28 @@ const navItems = [
     class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 absolute w-full left-0 z-40 shadow-xl"
   >
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      {
-        navItems.map((item) => (
-          <a
-            href={item.href}
-            class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50"
-          >
-            {item.name}
-          </a>
-        ))
-      }
-      <a
-        href="/contact"
-        class="block w-full text-center mt-4 px-5 py-3 bg-kaap-gradient text-white font-bold shadow-md"
-      >
-        <span class="">Neem contact op</span>
+      {navItems.map((item) => (
+        item.children ? (
+             <div class="space-y-1">
+                <a href={item.href} class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50">
+                    {item.name}
+                </a>
+                <div class="pl-4 border-l-2 border-gray-100 ml-2 space-y-1">
+                    {item.children.map(child => (
+                         <a href={child.href} class="block px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-kaap-purple hover:bg-gray-50">
+                            {child.name}
+                        </a>
+                    ))}
+                </div>
+             </div>
+        ) : (
+             <a href={item.href} class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50">
+                {item.name}
+             </a>
+        )
+      ))}
+      <a href="/contact" class="block w-full text-center mt-4 px-5 py-3 rounded-tl-2xl rounded-br-2xl bg-kaap-gradient text-white font-medium shadow-md">
+        Neem contact op
       </a>
     </div>
   </div>

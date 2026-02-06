@@ -1,33 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getEvents } from '../lib/api';
 
-// Placeholder events data (simulating MyBisner)
-const events = [
-  {
-    title: "Innovatiecafé: Waterstof",
-    date: "15 Mei 2026",
-    time: "16:00 - 18:00",
-    location: "Auditorium KAAP",
-    category: "Netwerk",
-    image: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    title: "Masterclass: Circulair Bouwen",
-    date: "22 Mei 2026",
-    time: "09:00 - 1b:00",
-    location: "Vergaderruimte 1",
-    category: "Kennis",
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    title: "Start-up Pitch Event",
-    date: "2 Juni 2026",
-    time: "19:00 - 22:00",
-    location: "KAAP Café",
-    category: "Pitch",
-    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=800"
-  }
-];
+const events = await getEvents();
 ---
 
 <Layout title="Events | Innovatiepunt KAAP">
@@ -35,7 +10,7 @@ const events = [
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Hero Section with Community Vibe -->
       <div class="text-center mb-16 reveal relative">
-        <span class="text-kaap-purple font-bold tracking-wider uppercase text-sm mb-2 block">Community Hub</span>
+        <span class="text-kaap-purple font-bold tracking-wider uppercase text-sm mb-2 block animate-pulse">Community Hub</span>
         <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-6">Events & Ontmoetingen</h1>
         <p class="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
             KAAP bruist door de mensen die er werken en komen. Bekijk wat er te doen is of organiseer zelf iets.
@@ -54,51 +29,57 @@ const events = [
       <!-- Events Grid -->
       <div id="agenda" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {events.map((event, index) => (
-          <article class={`bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 reveal delay-${index * 100} group flex flex-col h-full border border-gray-100`}>
+          <article class={`bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 reveal delay-${index * 100} group flex flex-col h-full border border-gray-100`}>
             <div class="h-56 relative overflow-hidden group-hover:opacity-90 transition-opacity">
                 <!-- Date Badge -->
-                <div class="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-2 rounded-xl text-center shadow-sm z-10">
-                    <span class="block text-xl font-bold text-gray-900">{event.date.split(' ')[0]}</span>
-                    <span class="block text-xs uppercase font-bold text-gray-400">{event.date.split(' ')[1]}</span>
+                <div class="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-2 rounded-xl text-center shadow-lg z-10 transform group-hover:scale-110 transition-transform">
+                    <span class="block text-xl font-bold text-gray-900">{new Date(event.date).getDate()}</span>
+                    <span class="block text-xs uppercase font-bold text-gray-400">{new Date(event.date).toLocaleDateString('nl-NL', { month: 'short' })}</span>
                 </div>
                 
                 <!-- Category Badge -->
-                <span class="absolute top-4 right-4 bg-kaap-purple/90 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10">
+                <span class="absolute top-4 right-4 bg-kaap-purple/90 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10 shadow-md">
                     {event.category}
                 </span>
 
-                <img src={event.image} alt={event.title} class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+                <img src={event.image} alt={event.title} class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
             
-            <div class="p-8 flex flex-col flex-grow">
+            <div class="p-8 flex flex-col flex-grow relative">
                 <div class="mb-4">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2 group-hover:text-kaap-purple transition-colors leading-tight">{event.title}</h3>
-                    <p class="text-sm text-gray-400 font-medium">Georganiseerd door: <span class="text-gray-600">Community Lid</span></p>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2 group-hover:text-kaap-pink transition-colors leading-tight">{event.title}</h3>
+                    {/* Placeholder for organizer if available in future, reusing mock structure */}
                 </div>
 
-                <div class="space-y-3 mb-8 flex-grow">
+                <div class="space-y-3 mb-6 flex-grow">
                     <div class="flex items-center text-gray-500 text-sm">
-                        <svg class="w-5 h-5 mr-3 text-kaap-light-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg class="w-5 h-5 mr-3 text-kaap-water" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         {event.time}
                     </div>
                     <div class="flex items-center text-gray-500 text-sm">
-                         <svg class="w-5 h-5 mr-3 text-kaap-light-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                         <svg class="w-5 h-5 mr-3 text-kaap-water" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         {event.location}
                     </div>
+                    {event.description && (
+                        <p class="text-gray-500 text-sm leading-relaxed mt-4 line-clamp-3">
+                            {event.description}
+                        </p>
+                    )}
                 </div>
 
-                <button class="w-full py-3 border-2 border-gray-100 rounded-xl text-gray-700 font-bold hover:border-kaap-purple hover:text-kaap-purple transition-colors bg-gray-50 hover:bg-white">
+                <a href={event.registrationLink || '#'} class="w-full py-3 border-2 border-gray-100 rounded-xl text-gray-700 font-bold hover:border-kaap-purple hover:bg-kaap-purple hover:text-white transition-all text-center inline-block group-hover:shadow-lg">
                     Aanmelden
-                </button>
+                </a>
             </div>
           </article>
         ))}
       </div>
       
-      <!-- Future Integration Note (Hidden from main view but establishing structure) -->
+      <!-- Future Integration Note -->
       <div class="mt-16 text-center opacity-40 hover:opacity-100 transition-opacity duration-300">
         <p class="text-sm text-gray-400 uppercase tracking-widest flex items-center justify-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-green-400"></span>
+            <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
             Powered by Bisner Community
         </p>
       </div>
