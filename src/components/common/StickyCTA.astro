@@ -8,8 +8,8 @@ const { lang = 'nl' } = Astro.params;
 const t = useTranslations(lang as any);
 
 const markLabel = {
-  nl: { title: "Vraag het aan Mark", role: "Innovatiemanager", mobile: "Vraag Mark" },
-  en: { title: "Ask Mark", role: "Innovation Manager", mobile: "Ask Mark" }
+  nl: { title: "Vraag het aan Marc", role: "Innovatiemanager", mobile: "Vraag Marc" },
+  en: { title: "Ask Marc", role: "Innovation Manager", mobile: "Ask Marc" }
 };
 const markTxt = markLabel[lang as 'nl' | 'en'] || markLabel.nl;
 ---
