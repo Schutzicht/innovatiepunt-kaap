@@ -29,7 +29,7 @@ const imageSrc =
 ---
 
 <article
-    class={`relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group/card reveal delay-${(index % 3) * 100} select-none h-[400px] md:h-[500px] w-full ${className}`}
+    class={`relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group/card reveal delay-${(index % 3) * 100} select-none h-[400px] md:h-[500px] w-full md:w-[500px] flex-shrink-0 ${className}`}
 >
     <!-- Full Background Image -->
     <div class="absolute inset-0 z-0">
@@ -76,7 +76,7 @@ const imageSrc =
                 {project.title}
             </h3>
             <p
-                class="text-gray-300 text-sm line-clamp-2 mb-4 md:mb-6 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 delay-100"
+                class="text-gray-300 text-sm line-clamp-2 mb-4 md:mb-6 opacity-100 md:opacity-0 md:group-hover/card:opacity-100 transition-opacity duration-500 delay-100"
             >
                 {project.description}
             </p>

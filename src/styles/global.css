@@ -14,16 +14,17 @@
     --color-kaap-bg: #f8fafc;
 
     /* Strict Brand Colors */
-    --color-kaap-gray: #231f20; /* Dark Corporate Gray */
+    --color-kaap-gray: #231f20;
+    /* Dark Corporate Gray */
     --color-kaap-light-gray: #3d3d3d;
     --color-kaap-text-gray: #8f8f8f;
     --color-kaap-black: #000000;
-    
+
     /* Brand Theme Colors */
     --color-kaap-water: #00acc6;
     --color-kaap-food: #97c165;
     --color-kaap-energy: #f97d38;
-    
+
     /* Gradient Colors */
     --color-kaap-pink: #ea6398;
     --color-kaap-purple: #8d73da;
@@ -96,6 +97,7 @@ body {
     font-family: var(--font-sans);
     background-color: var(--color-kaap-bg);
     overflow-x: hidden;
+    width: 100vw;
     scroll-behavior: auto;
     /* Handled by Lenis */
 }
