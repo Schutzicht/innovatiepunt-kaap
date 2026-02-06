@@ -1,0 +1,754 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+import iconWater from '../../assets/icons/Kaap_RGB_Water_Blok.svg';
+import iconFood from '../../assets/icons/Kaap_RGB_Food_Blok.svg';
+import iconEnergy from '../../assets/icons/Kaap_RGB_Energie_Blok.svg';
+
+
+import heroImage from '../../assets/images/hero.jpg';
+import { projects as projectsData } from '../../data/projects';
+import ProjectCard from '../../components/cards/ProjectCard.astro';
+import ThemesInteractive from '../../components/home/ThemesInteractive.astro';
+
+// Brand Logos for Carousel
+import logoRondFC from '../../assets/branding/Kaap_RGB_Logo_rond_fc.svg';
+import logoRondWit from '../../assets/branding/Kaap_RGB_Logo_rond_wit.svg';
+import logoVertFC from '../../assets/branding/Kaap_RGB_Logo_vert_fc.svg';
+import logoWoordmerkFC from '../../assets/branding/Kaap_RGB_Woordmerk_fc.svg';
+import logoBeeldmerk from '../../assets/branding/Kaap_RGB_Beeldmerk.svg';
+// Custom Play Button Asset
+
+
+// Authentic Photos
+import heroBg from '../../assets/photos/hero-kaap.jpg';
+import videoPoster from '../../assets/photos/video-poster.jpg';
+import facilityTest from '../../assets/photos/facility-test.jpg';
+
+// Partner Logos
+import logoRabobank from '../../assets/images/partners/rabobank.png';
+import logoHZ from '../../assets/images/partners/hz-university.avif';
+import logoFoodDelta from '../../assets/images/partners/food-delta.svg';
+import logoTerra from '../../assets/images/partners/terra.png';
+import logoVlissingen from '../../assets/images/partners/vlissingen.png';
+import facilityHousing from '../../assets/photos/facility-housing.jpg';
+import facilityAssets from '../../assets/photos/facility-assets.jpg';
+import facilityCommunity from '../../assets/photos/facility-community.jpg';
+
+import { getStaticPathsHelper } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
+const projects = projectsData[lang as string] || projectsData.nl;
+
+const content = {
+  nl: {
+    hero: {
+      subtitle: "Innovatiepunt KAAP",
+      title: "Bring your innovation to life",
+      desc: "De fysieke haven in Zeeland om innovaties in Energy, Food en Water te testen, ontwikkelen en demonstreren.",
+      btn_discover: "Ontdek K\u039BP",
+      btn_book: "Boek een ruimte",
+    },
+    intro: {
+      title: "Hét innovatiepunt",
+      title_suffix: "om te versnellen",
+      p1_part1: "Op de Kenniswerf in Vlissingen biedt KAAP ",
+      p1_bold: "4.000 m²",
+      p1_part2: " binnen- en buitenruimte aan ondernemers, onderwijs en overheid.",
+      p2: "Hier worden theorie en praktijk samengebracht om concrete oplossingen te ontwikkelen voor de transities in Energie, Voedsel en Water.",
+      read_more: "Lees meer over KAAP"
+    },
+    facilities: {
+      title: "Wat kun je doen bij KAAP?",
+      subtitle: "Van de eerste schets tot het demonstreren van een prototype: KAAP faciliteert elke stap in het innovatieproces.",
+      items: [
+        { nr: "01", title: "Testen & Ontwikkelen", desc: "Hoogwaardige faciliteiten voor real-scale validatie en opschaling van innovaties naar de markt.", tag: "Testveld" },
+        { nr: "02", title: "Huisvesting", desc: "Vaste kantoorruimte en werkplekken binnen hét innovatieve ecosysteem van de regio.", tag: "Werkplekken" },
+        { nr: "03", title: "Expertise & Faciliteiten", desc: "Directe toegang tot de proefkeuken, werkplaatsen en technische expertise voor doorontwikkeling.", tag: "R&D Support" },
+        { nr: "04", title: "Community", desc: "Vind de juiste partners, investeerders en talent via ons uitgebreide netwerk van partners.", tag: "Netwerk" }
+      ],
+      btn_all: "Alle faciliteiten bekijken"
+    },
+    video: {
+      title: "KAAP in Beeld",
+      premium: "Premium Experience"
+    },
+    audience: {
+      title: "Voor wie is KAAP?",
+      subtitle: "Een ecosysteem waar iedereen een rol speelt.",
+      entrepreneurs: { title: "Ondernemers & startups", desc: "Test je innovatie in een real-world omgeving en versnel je time-to-market. Van energietransitie tot eiwittransitie en aquacultuur." },
+      education: { title: "Onderwijs & studenten", desc: "Werk aan echte transitievraagstukken en doe werkervaring op in de meest innovatieve hub van de regio." },
+      government: { title: "Overheid & publiek", desc: "Zie hoe regionaal beleid op het gebied van water, voedsel en energie in de praktijk tot leven komt." }
+    },
+    projects: {
+      title: "Uitgelichte Projecten",
+      subtitle: "Innovatie in de praktijk",
+      partners: "Onze Partners in Innovatie"
+    },
+    community: {
+      title: "Word onderdeel van de Community",
+      subtitle: "Sluit je aan bij innovators, studenten en bedrijven die samenwerken aan de toekomst van Zeeland.",
+      card_title: "Krijg de ",
+      card_title_highlight: "innovatie",
+      card_title_suffix: " updates die ertoe doen.",
+      card_desc: "Van nieuwe projecten op de Kenniswerf tot exclusieve events. Jij kiest wat je volgt.",
+      form_interests: "Wat spreekt je aan?",
+      form_email: "Jouw e-mail voor updates",
+      form_btn: "Join de Community",
+      form_disclaimer: "Door je aan te melden ga je akkoord met onze privacyverklaring. Geen spam, alleen innovatie."
+    }
+  },
+  en: {
+    hero: {
+      subtitle: "Innovatiepunt KAAP",
+      title: "Bring your innovation to life",
+      desc: "The physical harbor in Zeeland to test, develop, and demonstrate innovations in Energy, Food, and Water.",
+      btn_discover: "Discover K\u039BP",
+      btn_book: "Book a space",
+    },
+    intro: {
+      title: "The innovation hub",
+      title_suffix: "to accelerate",
+      p1_part1: "At the Kenniswerf in Vlissingen, KAAP offers ",
+      p1_bold: "4,000 m²",
+      p1_part2: " of indoor and outdoor space to entrepreneurs, education, and government.",
+      p2: "Here, theory and practice are brought together to develop concrete solutions for transitions in Energy, Food, and Water.",
+      read_more: "Read more about KAAP"
+    },
+    facilities: {
+      title: "What can you do at KAAP?",
+      subtitle: "From the first sketch to demonstrating a prototype: KAAP facilitates every step in the innovation process.",
+      items: [
+        { nr: "01", title: "Testing & Development", desc: "High-end facilities for real-scale validation and scaling of innovations to the market.", tag: "Test field" },
+        { nr: "02", title: "Housing", desc: "Permanent office space and workspaces within the region's most innovative ecosystem.", tag: "Workspaces" },
+        { nr: "03", title: "Expertise & Facilities", desc: "Direct access to the test kitchen, workshops, and technical expertise for further development.", tag: "R&D Support" },
+        { nr: "04", title: "Community", desc: "Find the right partners, investors, and talent through our extensive network of partners.", tag: "Network" }
+      ],
+      btn_all: "View all facilities"
+    },
+    video: {
+      title: "KAAP in Focus",
+      premium: "Premium Experience"
+    },
+    audience: {
+      title: "Who is KAAP for?",
+      subtitle: "An ecosystem where everyone plays a role.",
+      entrepreneurs: { title: "Entrepreneurs & startups", desc: "Test your innovation in a real-world environment and accelerate your time-to-market. From energy to protein transition and aquaculture." },
+      education: { title: "Education & students", desc: "Work on real transition issues and gain work experience in the region's most innovative hub." },
+      government: { title: "Government & public", desc: "See how regional policy in water, food, and energy comes to life in practice." }
+    },
+    projects: {
+      title: "Featured Projects",
+      subtitle: "Innovation in practice",
+      partners: "Our Partners in Innovation"
+    },
+    community: {
+      title: "Become part of the Community",
+      subtitle: "Join innovators, students, and companies working together on the future of Zeeland.",
+      card_title: "Get the ",
+      card_title_highlight: "innovation",
+      card_title_suffix: " updates that matter.",
+      card_desc: "From new project launches to exclusive events. You choose what you follow.",
+      form_interests: "What interests you?",
+      form_email: "Your email for updates",
+      form_btn: "Join the Community",
+      form_disclaimer: "By signing up, you agree to our privacy policy. No spam, just innovation."
+    }
+  }
+};
+
+const c = content[lang as keyof typeof content] || content.nl;
+---
+
+<Layout title="Innovatiepunt KAAP | Water, Voedsel & Energie" lang={lang}>
+  <!-- Hero Section -->
+  <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-kaap-gray" data-theme="dark">
+    
+    <!-- Background: Brand Grid & Image (Fallback) & Video -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <!-- Static Fallback Image -->
+        <Image 
+            src={heroImage} 
+            alt="Innovatiepunt KAAP Gebouw" 
+            class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay transition-opacity duration-1000"
+            id="hero-static-bg"
+            quality="high"
+        />
+
+        <!-- YouTube Video Background -->
+        <div id="hero-video-container" class="absolute inset-0 w-full h-full hidden">
+            <div id="youtube-player" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] md:w-[150%] md:h-[150%] lg:w-full lg:h-[140%] pointer-events-none"></div>
+        </div>
+        
+        <!-- Subtle Brand Grid -->
+        <div class="absolute inset-0 z-10 opacity-30 pointer-events-none" 
+             style="background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 100px 100px;">
+        </div>
+
+        <!-- Premium Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-kaap-gray/80 to-transparent z-10"></div>
+        <div class="absolute inset-0 bg-kaap-gradient opacity-20 mix-blend-soft-light z-10"></div>
+    </div>
+
+    <!-- YouTube API Script -->
+    <script>
+        // Load YouTube IFrame API
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        if (firstScriptTag && firstScriptTag.parentNode) {
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+
+        // @ts-ignore
+        let player;
+        const videoId = 'hpAti93HYTI'; 
+        const LOOP_CUTOFF = 5; 
+
+        // @ts-ignore
+        window.onYouTubeIframeAPIReady = function() {
+            // @ts-ignore
+            player = new YT.Player('youtube-player', {
+                videoId: videoId,
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'rel': 0,
+                    'showinfo': 0,
+                    'modestbranding': 1,
+                    'mute': 1,
+                    'loop': 1,
+                    'playlist': videoId,
+                    'playsinline': 1,
+                    'disablekb': 1,
+                    'fs': 0
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        };
+
+        // @ts-ignore
+        function onPlayerReady(event) {
+            event.target.mute();
+            event.target.playVideo();
+            
+            const videoContainer = document.getElementById('hero-video-container');
+            if(videoContainer) {
+                videoContainer.classList.remove('hidden');
+            }
+
+            monitorVideoLoop();
+        }
+
+        function monitorVideoLoop() {
+            setInterval(() => {
+                // @ts-ignore
+                if (player && player.getCurrentTime && player.getDuration) {
+                    // @ts-ignore
+                    const currentTime = player.getCurrentTime();
+                    // @ts-ignore
+                    const duration = player.getDuration();
+                    
+                    if (duration > 0 && (duration - currentTime) <= LOOP_CUTOFF) {
+                        // @ts-ignore
+                        player.seekTo(0);
+                    }
+                }
+            }, 1000);
+        }
+    </script>
+
+    <!-- Active Elements -->
+    <div class="relative z-20 max-w-7xl mx-auto px-4 text-center">
+        <span class="text-kaap-pink font-bold tracking-wider uppercase text-sm mb-4 block reveal">{c.hero.subtitle}</span>
+        <h1 class="text-5xl md:text-7xl font-bold font-heading text-white mb-6 leading-tight reveal delay-100">
+          {c.hero.title}
+        </h1>
+        <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto reveal delay-200">
+          {c.hero.desc}
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 reveal delay-300 justify-center">
+            <!-- Ontdek KΛAP: Premium Rotating Lambda Button -->
+            <a href="#ontdek" class="group relative px-8 py-4 bg-kaap-gradient text-white font-bold text-lg rounded-tl-2xl rounded-br-2xl hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden w-full md:w-auto flex justify-center">
+                 <span class="relative z-10 flex items-center justify-center gap-[1px]">
+                    <span class="transition-all duration-500 ease-in-out group-hover:-translate-x-2 group-hover:opacity-0 font-bold whitespace-pre">{lang === 'nl' ? 'Ontdek K' : 'Discover K'}</span>
+                    <span class="transition-all duration-500 ease-in-out group-hover:-translate-x-1 group-hover:opacity-0 font-bold">Λ</span>
+                    <span class="inline-block transition-all duration-500 ease-out font-bold group-hover:rotate-90 group-hover:scale-125 origin-center">Λ</span>
+                    <span class="transition-all duration-500 ease-in-out group-hover:translate-x-2 group-hover:opacity-0 font-bold">P</span>
+                  </span>
+            </a>
+            
+            <!-- Boek een ruimte: Secondary Glass Button -->
+            <a href={`/${lang}/faciliteiten`} class="group relative px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/20 text-white font-bold text-lg rounded-tl-2xl rounded-br-2xl hover:bg-white/10 hover:border-white/40 transition-all transform hover:scale-105 w-full md:w-auto flex justify-center">
+               <span class="relative z-10">{c.hero.btn_book}</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+    </div>
+  </section>
+
+  <!-- Themes Section -->
+  <ThemesInteractive lang={lang} />
+
+  <!-- Intro Section -->
+  <section id="ontdek" class="py-12 md:py-24 bg-gray-50 relative z-20" data-theme="light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div class="reveal">
+          <h2 class="text-3xl md:text-6xl font-bold font-heading mb-6 text-gray-900 leading-tight">
+              {c.intro.title} <br/>
+              <span class="text-kaap-gradient">{c.intro.title_suffix}</span>.
+          </h2>
+          <div class="space-y-6 text-lg text-gray-600">
+              <p>
+                {c.intro.p1_part1} <span class="font-bold text-gray-900">{c.intro.p1_bold}</span> {c.intro.p1_part2}
+              </p>
+              <p>
+                {c.intro.p2}
+              </p>
+          </div>
+          <div class="mt-8">
+              <a href={`/${lang}/over`} class="text-kaap-purple font-bold hover:text-kaap-pink transition-colors flex items-center gap-2 group">
+                  {c.intro.read_more}
+                  <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+              </a>
+          </div>
+        </div>
+        <div class="relative reveal delay-200 mt-8 md:mt-0 max-w-sm mx-auto md:max-w-none">
+           <div class="aspect-square rounded-lg overflow-hidden shadow-2xl md:rotate-3 transform md:hover:rotate-0 transition-transform duration-700">
+              <Image src={facilityTest} alt="De lokatie van KAAP" class="w-full h-full object-cover scale-110" />
+           </div>
+           <div class="absolute -bottom-8 -left-8 w-48 h-48 bg-kaap-gradient rounded-md blur-3xl opacity-20 -z-10 animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facilities / What can you do Section -->
+  <section class="py-24 bg-white relative z-20" data-theme="light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 md:mb-16 reveal">
+        <h2 class="text-3xl md:text-5xl font-bold font-heading mb-4 text-gray-900">{c.facilities.title}</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto text-xl">{c.facilities.subtitle}</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {c.facilities.items.map((item, i) => (
+          <div class={`group p-6 md:p-8 rounded-lg bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-2xl transition-all duration-500 reveal delay-${i * 100} relative overflow-hidden`}>
+            {/* Hover Image Background */}
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none">
+              <Image src={[facilityTest, facilityHousing, facilityAssets, facilityCommunity][i]} alt={item.title} class="w-full h-full object-cover scale-150 group-hover:scale-100 transition-transform duration-1000" />
+            </div>
+            
+            {/* Decorative Number */}
+            <div class="absolute -top-4 -right-2 text-8xl font-bold font-heading text-gray-200/50 group-hover:text-kaap-purple/5 transition-colors pointer-events-none select-none">
+              {item.nr}
+            </div>
+            
+            <div class="relative z-10">
+              <span class="inline-block px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest bg-kaap-gray text-white mb-6">
+                {item.tag}
+              </span>
+              <h3 class="text-2xl font-bold mb-4 text-gray-900 group-hover:text-kaap-purple transition-colors">{item.title}</h3>
+              <p class="text-gray-600 leading-relaxed">{item.desc}</p>
+              
+              <div class="mt-8 w-12 h-1 bg-gray-200 group-hover:w-full group-hover:bg-kaap-gradient transition-all duration-500"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-16 text-center reveal delay-400">
+        <a href={`/${lang}/faciliteiten`} class="group relative inline-flex items-center justify-center px-10 py-4 text-white font-bold text-lg transition-all hover:-translate-y-0.5 filter drop-shadow hover:drop-shadow-xl rounded-tl-2xl rounded-br-2xl overflow-hidden">
+            <!-- Base Gradient Layer -->
+            <div class="absolute inset-0 bg-kaap-gradient"></div>
+            <!-- Hover Swipe Layer -->
+            <div class="absolute inset-0 bg-kaap-purple transition-transform duration-500 ease-out origin-left transform scale-x-0 group-hover:scale-x-100"></div>
+            <span class="relative z-10 flex items-center gap-2">
+                {c.facilities.btn_all}
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="py-24 bg-[#222323] relative overflow-hidden" data-theme="dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <h2 class="text-3xl md:text-5xl font-bold font-heading text-white mb-8 md:mb-12 reveal kastlijntje text-center md:text-left">{c.video.title}</h2>
+        
+        <div id="video-container" class="relative w-full aspect-video rounded-lg overflow-hidden shadow-[0_0_50px_rgba(141,115,218,0.3)] border border-white/10 reveal delay-100 group cursor-pointer bg-black">
+             <!-- Poster Image Overlay -->
+             <div id="video-poster" class="absolute inset-0 z-20 transition-all duration-700 bg-black">
+                <Image src={videoPoster} alt="KAAP Corporate Movie Thumbnail" class="w-full h-full object-cover opacity-60" />
+                <div class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-transparent to-transparent opacity-80"></div>
+                
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="relative group/btn cursor-pointer">
+                        <div class="absolute inset-0 rounded-full bg-white/20 animate-ping -z-10 scale-150 group-hover/btn:animate-none transition-all"></div>
+                        <div class="absolute inset-0 rounded-full bg-kaap-gradient animate-pulse -z-10 scale-125 group-hover/btn:animate-none transition-all"></div>
+                        
+                        <div class="w-16 h-16 md:w-32 md:h-32 bg-transparent rounded-full flex items-center justify-center relative perspective-1000">
+                             <div class="w-full h-full relative flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/btn:rotate-90" id="desktop-play-btn">
+                                 <div class="absolute inset-0 transition-opacity duration-300 group-hover/btn:opacity-0 flex items-center justify-center">
+                                     <svg class="w-[90%] h-[90%]" viewBox="0 0 245 245" xmlns="http://www.w3.org/2000/svg">
+                                        <g>
+                                            <polygon fill="white" points="150.73 135.7 144.85 135.7 136.94 117.01 129.03 135.7 118.22 135.7 110.31 117.01 102.4 135.7 90.83 135.7 83.56 124.92 78.92 124.92 78.92 135.7 73.87 135.7 73.87 110.18 78.92 110.18 78.92 120.1 83.54 120.1 90.55 110.18 96.7 110.18 87.8 122.46 96.72 135.23 107.64 110.18 113.09 110.18 123.63 134.6 134.27 110.18 139.72 110.18 150.73 135.7"/>
+                                            <path fill="white" d="M152.16,135.7v-25.52h13.91c4.86,0,8.26,3.86,8.26,8.65,0,4.77-3.48,8.75-8.26,8.75h-8.85s0,8.13,0,8.13h-5.05ZM165.83,122.82c2.52,0,3.95-2.85,3.15-5.47-.4-1.34-1.96-2.41-3.36-2.41h-8.42v7.88s8.62,0,8.62,0Z"/>
+                                        </g>
+                                        <g>
+                                            <path fill="white" d="M48.42,122.5c0-40.66,32.96-73.62,73.62-73.62,7.97,0,15.65,1.27,22.84,3.61l24.77-42.9C155,3.42,138.92,0,122.03,0,59.52,0,7.94,46.83.47,107.32l49.17,28.57c-.8-4.34-1.22-8.82-1.22-13.39Z"/>
+                                            <path fill="white" d="M195.96,24.81l-49.31,28.29c28.55,10.12,49,37.37,49,69.4,0,21.75-9.43,41.29-24.42,54.76l24.77,42.9c29.49-22.37,48.54-57.79,48.54-97.66s-19.06-75.32-48.58-97.69Z"/>
+                                            <path fill="white" d="M49.99,137.73H.47c7.5,60.47,59.07,107.27,121.56,107.27,16.9,0,32.99-3.42,47.64-9.61l.15-56.9c-12.86,10.99-29.55,17.62-47.79,17.62-35.44,0-65.03-25.04-72.04-58.39Z"/>
+                                        </g>
+                                     </svg>
+                                 </div>
+                                 <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100">
+                                      <span class="text-white font-bold text-4xl md:text-6xl leading-none pb-1 md:pb-2">Λ</span>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Labels (Desktop Overlay) -->
+                <div class="hidden md:block absolute bottom-12 left-12 pointer-events-none">
+                    <span class="text-kaap-pink font-bold uppercase tracking-widest text-sm mb-2 block">{c.video.premium}</span>
+                    <h3 class="text-4xl font-bold text-white uppercase italic tracking-tighter">{c.hero.title}</h3>
+                </div>
+             </div>
+
+             <!-- The actual Iframe -->
+             <div id="video-iframe-wrapper" class="absolute inset-0 z-10 hidden">
+                 <iframe 
+                    id="youtube-iframe"
+                    class="w-full h-full" 
+                    src="" 
+                    title="KAAP Corporate Movie" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+             </div>
+        </div>
+        
+        <!-- Labels (Mobile Below) -->
+        <div class="md:hidden mt-8 text-center px-4 bg-gray-50/5 rounded-2xl p-6 border border-white/5">
+             <span class="text-kaap-pink font-bold uppercase tracking-widest text-xs mb-3 block opacity-80">{c.video.premium}</span>
+             <h3 class="text-xl font-bold text-white uppercase italic tracking-tighter leading-tight">{c.hero.title}</h3>
+        </div>
+     </div>
+  </section>
+
+  <script>
+      const container = document.getElementById('video-container');
+      const poster = document.getElementById('video-poster');
+      const wrapper = document.getElementById('video-iframe-wrapper');
+      // @ts-ignore
+      const iframe = document.getElementById('youtube-iframe');
+
+      if (container && poster && wrapper && iframe) {
+          container.addEventListener('click', () => {
+              // @ts-ignore
+              iframe.src = "https://www.youtube.com/embed/5t_JCDYSHHI?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1";
+              poster.classList.add('opacity-0', 'pointer-events-none');
+              wrapper.classList.remove('hidden');
+              setTimeout(() => {
+                  poster.style.display = 'none';
+              }, 700);
+          });
+      }
+  </script>
+
+  <!-- audience / For Whom Section -->
+  <section class="py-12 md:py-24 bg-white relative z-20" data-theme="light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 reveal">
+        <h2 class="text-3xl md:text-5xl font-bold font-heading mb-4 text-gray-900 kastlijntje">{c.audience.title}</h2>
+        <p class="text-gray-600 text-lg md:text-xl">{c.audience.subtitle}</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+        <a href={`/${lang}/ondernemers`} class="reveal group block p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:shadow-xl hover:bg-white transition-all duration-300 transform hover:-translate-y-1">
+          <h3 class="text-2xl font-bold mb-4 text-kaap-pink flex items-center justify-between">
+            {c.audience.entrepreneurs.title}
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1">→</span>
+          </h3>
+          <p class="text-gray-600 leading-relaxed text-lg group-hover:text-gray-900 transition-colors">{c.audience.entrepreneurs.desc}</p>
+        </a>
+
+        <a href={`/${lang}/onderwijs`} class="reveal delay-100 group block p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:shadow-xl hover:bg-white transition-all duration-300 transform hover:-translate-y-1">
+          <h3 class="text-2xl font-bold mb-4 text-kaap-purple flex items-center justify-between">
+            {c.audience.education.title}
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1">→</span>
+          </h3>
+          <p class="text-gray-600 leading-relaxed text-lg group-hover:text-gray-900 transition-colors">{c.audience.education.desc}</p>
+        </a>
+
+        <a href={`/${lang}/overheid`} class="reveal delay-200 group block p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:shadow-xl hover:bg-white transition-all duration-300 transform hover:-translate-y-1">
+          <h3 class="text-2xl font-bold mb-4 text-kaap-water flex items-center justify-between">
+            {c.audience.government.title}
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1">→</span>
+          </h3>
+          <p class="text-gray-600 leading-relaxed text-lg group-hover:text-gray-900 transition-colors">{c.audience.government.desc}</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Carousel -->
+  <section class="py-12 md:py-24 bg-gray-50 overflow-hidden" data-theme="light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-8 md:mb-12 reveal">
+            <div>
+                 <h2 class="text-3xl md:text-5xl font-bold font-heading mb-4 text-gray-900 kastlijntje">{c.projects.title}</h2>
+                <p class="text-gray-600">{c.projects.subtitle}</p>
+            </div>
+            
+            <!-- Carousel Controls -->
+            <div class="hidden md:flex gap-4">
+                 <button id="scroll-left" class="p-3 rounded-tl-2xl rounded-br-2xl bg-kaap-gray text-white border-2 border-kaap-gray hover:bg-kaap-gradient hover:border-transparent transition-all shadow-md z-10 text-xl font-bold" aria-label={lang === 'nl' ? 'Vorige projecten' : 'Previous projects'}>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                 </button>
+                 <button id="scroll-right" class="p-3 rounded-tl-2xl rounded-br-2xl bg-kaap-gray text-white border-2 border-kaap-gray hover:bg-kaap-gradient hover:border-transparent transition-all shadow-md z-10 text-xl font-bold" aria-label={lang === 'nl' ? 'Volgende projecten' : 'Next projects'}>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                 </button>
+            </div>
+        </div>
+      
+        <!-- Carousel Container -->
+        <div class="relative w-full group">
+            <div id="project-carousel" class="flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-8 pb-8 scrollbar-hide mask-fade-right cursor-grab active:cursor-grabbing">
+                {projects.slice(0, 5).map((project, index) => (
+                    <ProjectCard 
+                        project={project} 
+                        index={index} 
+                        lang={lang}
+                        class="snap-start shrink-0 w-[78vw] md:w-[500px] h-[65vh] md:h-[550px]" 
+                    />
+                ))}
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <script>
+    const slider = document.getElementById('project-carousel');
+    const prevBtn = document.getElementById('scroll-left');
+    const nextBtn = document.getElementById('scroll-right');
+
+    if (slider && prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+             // @ts-ignore
+            slider.scrollBy({ left: -slider.offsetWidth * 0.5, behavior: 'smooth' });
+        });
+        
+        nextBtn.addEventListener('click', () => {
+             // @ts-ignore
+            slider.scrollBy({ left: slider.offsetWidth * 0.5, behavior: 'smooth' });
+        });
+
+        let isDown = false;
+        let startX = 0;
+        let scrollLeft = 0;
+        let hasMoved = false;
+
+        // @ts-ignore
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            hasMoved = false;
+            slider.classList.add('active');
+            slider.style.cursor = 'grabbing';
+            slider.style.scrollSnapType = 'none';
+            slider.style.scrollBehavior = 'auto';
+            // @ts-ignore
+            startX = e.pageX - slider.offsetLeft;
+            // @ts-ignore
+            scrollLeft = slider.scrollLeft;
+        });
+
+        const stopDragging = () => {
+            if(!isDown) return;
+            isDown = false;
+            // @ts-ignore
+            slider.classList.remove('active');
+            // @ts-ignore
+            slider.style.cursor = 'grab';
+            // @ts-ignore
+            slider.style.scrollSnapType = 'x mandatory';
+            // @ts-ignore
+            slider.style.scrollBehavior = 'smooth';
+        };
+
+        // @ts-ignore
+        slider.addEventListener('mouseleave', stopDragging);
+        // @ts-ignore
+        slider.addEventListener('mouseup', stopDragging);
+
+        // @ts-ignore
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            // @ts-ignore
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2; 
+            if (Math.abs(walk) > 5) hasMoved = true;
+            // @ts-ignore
+            slider.scrollLeft = scrollLeft - walk;
+        });
+
+        // @ts-ignore
+        slider.addEventListener('click', (e) => {
+            if (hasMoved) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }, true);
+    }
+  </script>
+
+  <style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+
+    .animate-marquee {
+        display: flex;
+        width: max-content;
+        animation: marquee 40s linear infinite;
+    }
+
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    .group:hover .animate-marquee {
+        animation-play-state: paused;
+    }
+  </style>
+
+  <!-- Partners Section (Infinite Marquee) -->
+  <section class="py-12 md:py-24 bg-gray-50 relative z-20 border-t border-gray-100 overflow-hidden" data-theme="light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 md:mb-12">
+        <div class="text-center reveal">
+            <h3 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">{c.projects.partners}</h3>
+        </div>
+    </div>
+    
+    <div class="relative w-full overflow-hidden group">
+        <div class="animate-marquee flex items-center">
+            {/* Repeat partner set for smooth loop */}
+            {[1, 2, 3, 4].map(() => (
+                <div class="flex items-center gap-12 md:gap-24 px-6 md:px-12">
+                     <Image src={logoRabobank} alt="Rabobank" class="h-10 md:h-12 w-auto hover:scale-105 transition-all duration-300" />
+                     <Image src={logoHZ} alt="HZ University" class="h-10 md:h-12 w-auto hover:scale-105 transition-all duration-300" />
+                     <div class="h-10 md:h-12 flex items-center justify-center font-bold text-gray-400 hover:text-kaap-purple transition-all duration-300 select-none">
+                        <span class="text-xl md:text-2xl tracking-tighter">Dockwize</span>
+                     </div>
+                     <Image src={logoFoodDelta} alt="Food Delta Zeeland" class="h-10 md:h-12 w-auto hover:scale-105 transition-all duration-300" />
+                     <Image src={logoTerra} alt="Terra Inspectioneering" class="h-10 md:h-12 w-auto hover:scale-105 transition-all duration-300" />
+                     <Image src={logoVlissingen} alt="Gemeente Vlissingen" class="h-10 md:h-12 w-auto hover:scale-105 transition-all duration-300" />
+                </div>
+            ))}
+        </div>
+    </div>
+  </section>
+
+  <!-- Community & Newsletter Section -->
+  <section class="py-12 md:py-24 bg-white relative z-20" data-theme="light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-12 reveal text-center md:text-left">
+            <h2 class="text-3xl md:text-5xl font-bold font-heading mb-4 text-gray-900 kastlijntje">{c.community.title}</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto md:mx-0">{c.community.subtitle}</p>
+        </div>
+
+        <div class="bg-gray-50 rounded-lg shadow-lg border border-gray-100 overflow-hidden flex flex-col md:flex-row reveal delay-100">
+            <!-- Info Block -->
+            <div class="w-full md:w-5/12 bg-kaap-gray text-white p-8 md:p-16 relative overflow-hidden flex flex-col justify-center">
+                <div class="absolute inset-0 bg-kaap-gradient opacity-10 blur-3xl"></div>
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-bold font-heading mb-6 tracking-tight">{c.community.card_title} <span class="text-kaap-pink">{c.community.card_title_highlight}</span> {c.community.card_title_suffix}</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                        {c.community.card_desc}
+                    </p>
+                    <div class="flex items-center space-x-4 opacity-70">
+                        <div class="w-10 h-1 bg-white/40"></div>
+                        <span class="text-sm uppercase tracking-widest font-bold">KAAP Community</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Block -->
+            <div class="w-full md:w-7/12 p-8 md:p-16 bg-white">
+                <form class="space-y-8">
+                    <div class="space-y-4">
+                        <label class="block text-sm font-bold text-gray-900 uppercase tracking-widest">{c.community.form_interests}</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <!-- Water -->
+                            <label class="relative group cursor-pointer">
+                                <input type="checkbox" name="interest" value="water" class="peer hidden" />
+                                <div class="p-3 sm:p-6 rounded-xl sm:rounded-2xl border-2 border-kaap-water/10 bg-white text-center transition-all duration-300 peer-checked:border-kaap-water peer-checked:bg-kaap-water/5 peer-checked:shadow-md hover:border-kaap-water hover:shadow-lg hover:-translate-y-1 flex flex-row sm:flex-col items-center justify-start sm:justify-center gap-3 sm:gap-0 group/card">
+                                    <Image src={iconWater} alt="Water" class="w-8 h-8 sm:w-12 sm:h-12 mb-0 sm:mb-3 transition-transform duration-300 group-hover/card:scale-110" />
+                                    <span class="block font-bold text-gray-700 group-hover/card:text-kaap-water transition-colors">Water</span>
+                                </div>
+                            </label>
+                            <!-- Voedsel -->
+                            <label class="relative group cursor-pointer">
+                                <input type="checkbox" name="interest" value="voedsel" class="peer hidden" />
+                                <div class="p-3 sm:p-6 rounded-xl sm:rounded-2xl border-2 border-kaap-food/10 bg-white text-center transition-all duration-300 peer-checked:border-kaap-food peer-checked:bg-kaap-food/5 peer-checked:shadow-md hover:border-kaap-food hover:shadow-lg hover:-translate-y-1 flex flex-row sm:flex-col items-center justify-start sm:justify-center gap-3 sm:gap-0 group/card">
+                                    <Image src={iconFood} alt="Voedsel" class="w-8 h-8 sm:w-12 sm:h-12 mb-0 sm:mb-3 transition-transform duration-300 group-hover/card:scale-110" />
+                                    <span class="block font-bold text-gray-700 group-hover/card:text-kaap-food transition-colors">{lang === 'nl' ? 'Voedsel' : 'Food'}</span>
+                                </div>
+                            </label>
+                            <!-- Energie -->
+                            <label class="relative group cursor-pointer">
+                                <input type="checkbox" name="interest" value="energie" class="peer hidden" />
+                                <div class="p-3 sm:p-6 rounded-xl sm:rounded-2xl border-2 border-kaap-energy/10 bg-white text-center transition-all duration-300 peer-checked:border-kaap-energy peer-checked:bg-kaap-energy/5 peer-checked:shadow-md hover:border-kaap-energy hover:shadow-lg hover:-translate-y-1 flex flex-row sm:flex-col items-center justify-start sm:justify-center gap-3 sm:gap-0 group/card">
+                                    <Image src={iconEnergy} alt="Energie" class="w-8 h-8 sm:w-12 sm:h-12 mb-0 sm:mb-3 transition-transform duration-300 group-hover/card:scale-110" />
+                                    <span class="block font-bold text-gray-700 group-hover/card:text-kaap-energy transition-colors">{lang === 'nl' ? 'Energie' : 'Energy'}</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 uppercase tracking-widest mb-2">{c.community.form_email}</label>
+                            <input type="email" placeholder="jouw@email.nl" class="w-full px-6 py-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-kaap-purple outline-none transition-all" />
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-6 pt-4">
+                        <button type="submit" class="w-full sm:w-auto px-10 py-5 bg-kaap-gray text-white font-bold rounded-tl-2xl rounded-br-2xl hover:bg-kaap-gradient transition-all shadow-xl hover:scale-105 active:scale-95 whitespace-nowrap">
+                            {c.community.form_btn}
+                        </button>
+                        <p class="text-xs text-gray-400 max-w-xs text-center sm:text-left">
+                            {c.community.form_disclaimer}
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </section>
+</Layout>

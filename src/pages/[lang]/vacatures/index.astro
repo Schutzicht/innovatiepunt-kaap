@@ -1,9 +1,60 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { vacancies } from '../../data/vacancies';
+import Layout from '../../../layouts/Layout.astro';
+import { vacancies as vacanciesData } from '../../../data/vacancies';
+import { getStaticPathsHelper } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
+const vacancies = vacanciesData[lang as string] || vacanciesData.nl;
+
+const content = {
+    nl: {
+        hero: {
+            label: "Join the team",
+            title_main: "Bouw mee aan",
+            title_highlight: "de toekomst.",
+            desc: "Werken bij KAAP betekent werken in het epicentrum van innovatie. Waar ideeën werkelijkheid worden en transities versnellen."
+        },
+        labels: {
+            view: "Bekijk vacature",
+            none_title: "Geen openstaande vacatures",
+            none_desc: "Maar we staan altijd open voor talent. Stuur een open sollicitatie!",
+            none_btn: "Neem contact op"
+        },
+        cta: {
+            title: "Niet gevonden wat je zocht?",
+            desc: "Denk jij dat je onmisbaar bent voor KAAP, maar staat jouw droombaan er niet tussen? Overtuig ons met je visie en energie.",
+            btn: "Stuur open sollicitatie"
+        }
+    },
+    en: {
+        hero: {
+            label: "Join the team",
+            title_main: "Build the",
+            title_highlight: "future with us.",
+            desc: "Working at KAAP means working at the epicenter of innovation. Where ideas become reality and transitions accelerate."
+        },
+        labels: {
+            view: "View vacancy",
+            none_title: "No current vacancies",
+            none_desc: "But we are always open to talent. Send an open application!",
+            none_btn: "Contact us"
+        },
+        cta: {
+            title: "Didn't find what you were looking for?",
+            desc: "Do you think you are indispensable to KAAP, but your dream job is not listed? Convince us with your vision and energy.",
+            btn: "Send open application"
+        }
+    }
+};
+
+const c = content[lang as keyof typeof content] || content.nl;
 ---
 
-<Layout title="Vacatures | Innovatiepunt KAAP">
+<Layout title={`${lang === 'nl' ? 'Vacatures' : 'Vacancies'} | Innovatiepunt KAAP`} lang={lang}>
   <!-- Hero Section -->
   <section class="relative min-h-[60vh] flex items-center justify-center bg-kaap-gray overflow-hidden">
      <div class="absolute inset-0 z-0">
@@ -12,13 +63,13 @@ import { vacancies } from '../../data/vacancies';
     </div>
 
     <div class="relative z-10 text-center max-w-5xl px-4 py-20 reveal">
-        <span class="text-kaap-pink font-bold tracking-[0.2em] uppercase mb-6 block animate-pulse">Join the team</span>
+        <span class="text-kaap-pink font-bold tracking-[0.2em] uppercase mb-6 block animate-pulse">{c.hero.label}</span>
         <h1 class="text-5xl md:text-8xl font-bold font-heading text-white leading-none mb-8">
-            Bouw mee aan <br/>
-            <span class="text-kaap-purple">de toekomst.</span>
+            {c.hero.title_main} <br/>
+            <span class="text-kaap-purple">{c.hero.title_highlight}</span>
         </h1>
         <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
-            Werken bij KAAP betekent werken in het epicentrum van innovatie. Waar ideeën werkelijkheid worden en transities versnellen.
+            {c.hero.desc}
         </p>
     </div>
   </section>
@@ -28,7 +79,7 @@ import { vacancies } from '../../data/vacancies';
      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 gap-8">
             {vacancies.length > 0 ? vacancies.map((job, index) => (
-                <a href={`/vacatures/${job.slug}`} class="group block reveal delay-100">
+                <a href={`/${lang}/vacatures/${job.slug}`} class="group block reveal delay-100">
                     <article class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 hover:shadow-2xl transition-all duration-500 relative overflow-hidden transform hover:-translate-y-1">
                         <!-- Hover Gradient Background -->
                         <div class="absolute inset-0 bg-gradient-to-r from-kaap-purple/5 to-kaap-pink/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -47,7 +98,7 @@ import { vacancies } from '../../data/vacancies';
                             </div>
                             
                             <div class="flex items-center gap-4">
-                                <span class="hidden md:block text-gray-900 font-bold group-hover:mr-4 transition-all">Bekijk vacature</span>
+                                <span class="hidden md:block text-gray-900 font-bold group-hover:mr-4 transition-all">{c.labels.view}</span>
                                 <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gray-100 group-hover:bg-kaap-gradient flex items-center justify-center transition-all duration-300 shadow-md group-hover:shadow-lg group-hover:scale-110">
                                     <svg class="w-6 h-6 text-gray-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                 </div>
@@ -57,10 +108,10 @@ import { vacancies } from '../../data/vacancies';
                 </a>
             )) : (
                 <div class="text-center py-20 bg-white rounded-3xl border border-gray-100">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Geen openstaande vacatures</h3>
-                    <p class="text-gray-500">Maar we staan altijd open voor talent. Stuur een open sollicitatie!</p>
-                    <a href="/contact" class="inline-block mt-6 px-8 py-3 bg-kaap-gray text-white rounded-full font-bold hover:bg-kaap-purple transition-colors">
-                        Neem contact op
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">{c.labels.none_title}</h3>
+                    <p class="text-gray-500">{c.labels.none_desc}</p>
+                    <a href={`/${lang}/contact`} class="inline-block mt-6 px-8 py-3 bg-kaap-gray text-white rounded-full font-bold hover:bg-kaap-purple transition-colors">
+                        {c.labels.none_btn}
                     </a>
                 </div>
             )}
@@ -71,13 +122,12 @@ import { vacancies } from '../../data/vacancies';
   <!-- Open Application / CTA -->
   <section class="py-24 bg-white">
       <div class="max-w-4xl mx-auto px-4 text-center reveal">
-          <h2 class="text-3xl font-bold font-heading text-gray-900 mb-6">Niet gevonden wat je zocht?</h2>
+          <h2 class="text-3xl font-bold font-heading text-gray-900 mb-6">{c.cta.title}</h2>
           <p class="text-lg text-gray-600 mb-10 leading-relaxed">
-              Denk jij dat je onmisbaar bent voor KAAP, maar staat jouw droombaan er niet tussen? 
-              Overtuig ons met je visie en energie.
+              {c.cta.desc}
           </p>
-          <a href="/contact?subject=Open%20Sollicitatie" class="px-10 py-4 border-2 border-gray-900 text-gray-900 rounded-full font-bold hover:bg-gray-900 hover:text-white transition-all duration-300">
-              Stuur open sollicitatie
+          <a href={`/${lang}/contact?subject=${lang === 'nl' ? 'Open Sollicitatie' : 'Open Application'}`} class="px-10 py-4 border-2 border-gray-900 text-gray-900 rounded-full font-bold hover:bg-gray-900 hover:text-white transition-all duration-300">
+              {c.cta.btn}
           </a>
       </div>
   </section>

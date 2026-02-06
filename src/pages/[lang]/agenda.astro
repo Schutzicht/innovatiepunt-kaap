@@ -1,27 +1,63 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getEvents } from '../lib/api';
+import Layout from '../../layouts/Layout.astro';
+import { getEvents } from '../../lib/api';
 
+import { getStaticPathsHelper } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
 const events = await getEvents();
+
+const content = {
+  nl: {
+    hero: {
+      label: "Community Hub",
+      title: "Events & Ontmoetingen",
+      desc: "KAAP bruist door de mensen die er werken en komen. Bekijk wat er te doen is of organiseer zelf iets.",
+      btn_submit: "Meld je event aan",
+      btn_view: "Bekijk agenda"
+    },
+    labels: {
+        register: "Aanmelden"
+    }
+  },
+  en: {
+    hero: {
+      label: "Community Hub",
+      title: "Events & Gatherings",
+      desc: "KAAP thrives because of the people who work and visit here. See what's on or organize something yourself.",
+      btn_submit: "Register your event",
+      btn_view: "View agenda"
+    },
+    labels: {
+        register: "Register"
+    }
+  }
+};
+
+const c = content[lang] || content.nl;
 ---
 
-<Layout title="Events | Innovatiepunt KAAP">
+<Layout title={`${lang === 'nl' ? 'Events' : 'Events'} | Innovatiepunt KAAP`} lang={lang}>
   <section class="py-24 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Hero Section with Community Vibe -->
       <div class="text-center mb-16 reveal relative">
-        <span class="text-kaap-purple font-bold tracking-wider uppercase text-sm mb-2 block animate-pulse">Community Hub</span>
-        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-6">Events & Ontmoetingen</h1>
+        <span class="text-kaap-purple font-bold tracking-wider uppercase text-sm mb-2 block animate-pulse">{c.hero.label}</span>
+        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-6">{c.hero.title}</h1>
         <p class="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
-            KAAP bruist door de mensen die er werken en komen. Bekijk wat er te doen is of organiseer zelf iets.
+            {c.hero.desc}
         </p>
         
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="/contact?subject=Event%20Organiseren" class="px-8 py-3 rounded-full bg-kaap-gradient text-white font-bold shadow-lg hover:bg-white hover:text-kaap-purple transition-all transform hover:-translate-y-1">
-                Meld je event aan
+            <a href={`/${lang}/contact?subject=Event%20Organiseren`} class="px-8 py-3 rounded-full bg-kaap-gradient text-white font-bold shadow-lg hover:bg-white hover:text-kaap-purple transition-all transform hover:-translate-y-1">
+                {c.hero.btn_submit}
             </a>
             <a href="#agenda" class="px-8 py-3 rounded-full bg-white text-gray-700 font-bold border border-gray-200 hover:border-gray-400 transition-all">
-                Bekijk agenda
+                {c.hero.btn_view}
             </a>
         </div>
       </div>
@@ -34,7 +70,7 @@ const events = await getEvents();
                 <!-- Date Badge -->
                 <div class="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-2 rounded-xl text-center shadow-lg z-10 transform group-hover:scale-110 transition-transform">
                     <span class="block text-xl font-bold text-gray-900">{new Date(event.date).getDate()}</span>
-                    <span class="block text-xs uppercase font-bold text-gray-400">{new Date(event.date).toLocaleDateString('nl-NL', { month: 'short' })}</span>
+                    <span class="block text-xs uppercase font-bold text-gray-400">{new Date(event.date).toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-US', { month: 'short' })}</span>
                 </div>
                 
                 <!-- Category Badge -->
@@ -49,7 +85,6 @@ const events = await getEvents();
             <div class="p-8 flex flex-col flex-grow relative">
                 <div class="mb-4">
                     <h3 class="text-2xl font-bold text-gray-900 mb-2 group-hover:text-kaap-pink transition-colors leading-tight">{event.title}</h3>
-                    {/* Placeholder for organizer if available in future, reusing mock structure */}
                 </div>
 
                 <div class="space-y-3 mb-6 flex-grow">
@@ -69,7 +104,7 @@ const events = await getEvents();
                 </div>
 
                 <a href={event.registrationLink || '#'} class="w-full py-3 border-2 border-gray-100 rounded-xl text-gray-700 font-bold hover:border-kaap-purple hover:bg-kaap-purple hover:text-white transition-all text-center inline-block group-hover:shadow-lg">
-                    Aanmelden
+                    {c.labels.register}
                 </a>
             </div>
           </article>
@@ -77,11 +112,8 @@ const events = await getEvents();
       </div>
       
       <!-- Future Integration Note -->
-      <div class="mt-16 text-center opacity-40 hover:opacity-100 transition-opacity duration-300">
-        <p class="text-sm text-gray-400 uppercase tracking-widest flex items-center justify-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-            Powered by Bisner Community
-        </p>
+      <div class="mt-8 text-center text-gray-400 text-sm">
+          &copy; {new Date().getFullYear()} Innovatiepunt KAAP
       </div>
 
     </div>

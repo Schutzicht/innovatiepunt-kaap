@@ -1,0 +1,73 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { projects as projectsData } from '../../../data/projects';
+import ProjectCard from '../../../components/cards/ProjectCard.astro';
+import { getStaticPathsHelper } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
+const projects = projectsData[lang as string] || projectsData.nl;
+
+const content = {
+    nl: {
+        title: "Onze Projecten",
+        desc: "Ontdek hoe we werken aan transities in water, voedsel en energie.",
+        themes: [
+            { label: 'Alles', value: 'all' },
+            { label: 'Water', value: 'water' },
+            { label: 'Voedsel', value: 'voedsel' },
+            { label: 'Energie', value: 'energie' },
+        ]
+    },
+    en: {
+        title: "Our Projects",
+        desc: "Discover how we work on transitions in water, food, and energy.",
+        themes: [
+            { label: 'All', value: 'all' },
+            { label: 'Water', value: 'water' },
+            { label: 'Food', value: 'food' },
+            { label: 'Energy', value: 'energy' },
+        ]
+    }
+};
+
+const c = content[lang as keyof typeof content] || content.nl;
+---
+
+<Layout title={`${c.title} | Innovatiepunt KAAP`} lang={lang}>
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">{c.title}</h1>
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto">{c.desc}</p>
+      </div>
+    </div>
+
+  <section class="py-16 bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-4 mb-12">
+        {c.themes.map(t => (
+            <button class={`px-6 py-2 rounded-full border-2 font-medium transition-all 
+                ${t.value === 'all' 
+                    ? 'bg-kaap-gray border-gray-900 text-white' 
+                    : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'
+                }
+            `}>
+                {t.label}
+            </button>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {projects.map((project, index) => (
+            <ProjectCard project={project} index={index} lang={lang} />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

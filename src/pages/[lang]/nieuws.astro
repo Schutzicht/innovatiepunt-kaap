@@ -1,31 +1,69 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getNews } from '../lib/api';
+import Layout from '../../layouts/Layout.astro';
+import { getNews } from '../../lib/api';
 
+import { getStaticPathsHelper } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
 const newsItems = await getNews();
+
+const content = {
+  nl: {
+    hero: {
+      label: "Laatste updates",
+      title: "Nieuws & Innovatie",
+      desc: "Blijf op de hoogte van de transities in water, voedsel en energie."
+    },
+    cta: {
+        read: "Lees volledig artikel",
+        title: "Mis niets van de innovatie",
+        desc: "Schrijf je in voor onze maandelijkse update over projecten en events op de Kenniswerf.",
+        btn: "Inschrijven Nieuwsbrief"
+    }
+  },
+  en: {
+    hero: {
+      label: "Latest updates",
+      title: "News & Innovation",
+      desc: "Stay informed about transitions in water, food, and energy."
+    },
+    cta: {
+        read: "Read full article",
+        title: "Don't miss a thing",
+        desc: "Sign up for our monthly update on projects and events at the Kenniswerf.",
+        btn: "Subscribe to Newsletter"
+    }
+  }
+};
+
+const c = content[lang] || content.nl;
 ---
 
-<Layout title="Nieuws | Innovatiepunt KAAP">
+<Layout title={`${lang === 'nl' ? 'Nieuws' : 'News'} | Innovatiepunt KAAP`} lang={lang}>
   <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 reveal">
-        <span class="text-kaap-pink font-bold tracking-wider uppercase text-sm mb-2 block">Laatste updates</span>
-        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-6">Nieuws & Innovatie</h1>
+        <span class="text-kaap-pink font-bold tracking-wider uppercase text-sm mb-2 block">{c.hero.label}</span>
+        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-6">{c.hero.title}</h1>
         <p class="text-xl text-gray-500 max-w-2xl mx-auto">
-            Blijf op de hoogte van de transities in water, voedsel en energie.
+            {c.hero.desc}
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {newsItems.map((item, index) => (
-          <a href={`/nieuws/${item.id}`} class={`block bg-gray-50 rounded-[2rem] overflow-hidden hover:bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group reveal delay-${index * 100} border border-gray-100`}>
+          <a href={`/${lang}/nieuws/${item.id}`} class={`block bg-gray-50 rounded-[2rem] overflow-hidden hover:bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group reveal delay-${index * 100} border border-gray-100`}>
             <div class="h-64 relative overflow-hidden">
                 <img src={item.image} alt={item.title} class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
                  
                  <div class="absolute bottom-4 left-4 right-4">
                      <span class="inline-block text-white text-xs font-bold px-3 py-1 bg-kaap-purple/90 backdrop-blur-sm rounded-full mb-2 shadow-lg">{item.category}</span>
-                     <div class="text-white/80 text-xs font-medium">{new Date(item.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+                     <div class="text-white/80 text-xs font-medium">{new Date(item.date).toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
                  </div>
             </div>
             <div class="p-8">
@@ -34,7 +72,7 @@ const newsItems = await getNews();
                     {item.summary}
                 </p>
                 <div class="flex items-center text-kaap-purple font-bold group/link">
-                    Lees volledig artikel 
+                    {c.cta.read} 
                     <span class="ml-2 transform group-hover/link:translate-x-2 transition-transform">→</span>
                 </div>
             </div>
@@ -49,12 +87,12 @@ const newsItems = await getNews();
           
           <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
               <div class="text-white max-w-xl">
-                  <h2 class="text-3xl font-bold font-heading mb-4">Mis niets van de innovatie</h2>
-                  <p class="text-gray-400 text-lg">Schrijf je in voor onze maandelijkse update over projecten en events op de Kenniswerf.</p>
+                  <h2 class="text-3xl font-bold font-heading mb-4">{c.cta.title}</h2>
+                  <p class="text-gray-400 text-lg">{c.cta.desc}</p>
               </div>
               <div class="flex-shrink-0">
                   <a href="#nieuwsbrief" class="inline-flex px-8 py-4 bg-white text-kaap-gray font-bold rounded-full hover:bg-kaap-gradient hover:text-white transition-all shadow-xl hover:scale-105">
-                      Inschrijven Nieuwsbrief
+                      {c.cta.btn}
                   </a>
               </div>
           </div>

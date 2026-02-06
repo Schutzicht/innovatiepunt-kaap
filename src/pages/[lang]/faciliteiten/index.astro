@@ -1,0 +1,120 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getStaticPathsHelper } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as any);
+
+const content = {
+  nl: {
+    hero: {
+      title: "Onze Faciliteiten",
+      subtitle: "Van high-tech labruimte tot sfeervol vergaderen: ontdek de fysieke middelen voor jouw groei (los van vaste huisvesting)."
+    },
+    cards: [
+      {
+        title: "Testen & Ontwikkelen",
+        desc: "Loodsruimte, proefkeukens en demo-hallen voor real-scale innovatie in water, energie en voedsel.",
+        btn: "Bekijk Innovatieruimtes",
+        href: "/faciliteiten/testen-ontwikkelen",
+        color: "kaap-pink",
+        img: "https://info.dockwize.nl/hubfs/KAAP/Proefkeuken%20(1).jpg"
+      },
+      {
+        title: "Huisvesting",
+        desc: "Moderne flexplekken en vaste kantoren in een inspirerend ecosysteem van gelijkgestemde innovators.",
+        btn: "Bekijk Huisvesting",
+        href: "/faciliteiten/huisvesting",
+        color: "kaap-purple",
+        img: "https://info.dockwize.nl/hubfs/Flexwerken.jpg"
+      },
+      {
+        title: "Vergaderruimtes",
+        desc: "Professionele ruimtes voor elke bijeenkomst, van brainstorm tot presentatie. Volledig uitgerust.",
+        btn: "Bekijk Vergaderruimtes",
+        href: "/faciliteiten/vergaderruimtes",
+        color: "kaap-energy",
+        img: "https://info.dockwize.nl/hubfs/Vonk.jpg"
+      }
+    ]
+  },
+  en: {
+    hero: {
+      title: "Our Facilities",
+      subtitle: "From high-tech labs to inspiring meeting spaces: discover the physical resources for your growth (separate from permanent housing)."
+    },
+    cards: [
+      {
+        title: "Testing & Development",
+        desc: "Warehouse space, test kitchens, and demo halls for real-scale innovation in water, energy, and food.",
+        btn: "View Innovation Spaces",
+        href: "/faciliteiten/testen-ontwikkelen",
+        color: "kaap-pink",
+        img: "https://info.dockwize.nl/hubfs/KAAP/Proefkeuken%20(1).jpg"
+      },
+      {
+        title: "Housing",
+        desc: "Modern flex spots and permanent offices in an inspiring ecosystem of like-minded innovators.",
+        btn: "View Housing",
+        href: "/faciliteiten/huisvesting",
+        color: "kaap-purple",
+        img: "https://info.dockwize.nl/hubfs/Flexwerken.jpg"
+      },
+      {
+        title: "Meeting Rooms",
+        desc: "Professional spaces for every meeting, from brainstorm to presentation. Fully equipped.",
+        btn: "View Meeting Rooms",
+        href: "/faciliteiten/vergaderruimtes",
+        color: "kaap-energy",
+        img: "https://info.dockwize.nl/hubfs/Vonk.jpg"
+      }
+    ]
+  }
+};
+
+const c = content[lang] || content.nl;
+---
+
+<Layout title={`${c.hero.title} | Innovatiepunt KAAP`} lang={lang}>
+  <section class="py-20 bg-gray-50">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+       <div class="text-center mb-16 reveal">
+         <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">{c.hero.title}</h1>
+         <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">{c.hero.subtitle}</p>
+       </div>
+     </div>
+  </section>
+
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {c.cards.map((card, index) => (
+          <a href={`/${lang}${card.href}`} class="group relative block rounded-3xl overflow-hidden shadow-2xl reveal hover:-translate-y-2 transition-transform duration-500">
+             <div class="aspect-video relative">
+                <img src={card.img} alt={card.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                <div class="absolute inset-0 bg-kaap-gray/40 group-hover:bg-kaap-gray/20 transition-colors"></div>
+                <div class={`absolute inset-0 bg-gradient-to-t from-kaap-gray via-transparent to-transparent opacity-90`}></div>
+             </div>
+             <div class="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
+                <h2 class="text-3xl md:text-4xl font-bold font-heading text-white mb-4">{card.title}</h2>
+                <p class="text-gray-200 text-lg mb-8 max-w-md">
+                    {card.desc}
+                </p>
+                <div class="flex items-center gap-3 text-white font-bold">
+                    <span class="border-b-2 border-white pb-1 group-hover:gap-4 flex items-center gap-2 transition-all">
+                        {card.btn}
+                        <svg class="w-5 h-5 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </span>
+                </div>
+             </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

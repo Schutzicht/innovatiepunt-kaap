@@ -1,20 +1,80 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import jorik from '../assets/team/Jorik.png';
-import marc from '../assets/team/Marc.png';
-import phaedra from '../assets/team/Phaedra.png';
+import jorik from '../../assets/team/Jorik.png';
+import marc from '../../assets/team/Marc.png';
+import phaedra from '../../assets/team/Phaedra.png';
 
 const makerSpace = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200";
+import { getStaticPathsHelper } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
+
+const content = {
+  nl: {
+    hero: {
+      title: "Ons Team",
+      desc: "Wij bouwen dagelijks aan de community en de faciliteiten. Heb je een vraag of een goed idee? Spreek ons aan!"
+    },
+    team: {
+      phaedra: {
+        role: "Communicatiemedewerker",
+        desc: "Verbindt mensen en verhalen. Zorgt dat iedereen weet wat er speelt binnen KAAP."
+      },
+      jorik: {
+        role: "Marketing Manager",
+        desc: "Zet KAAP op de kaart en zorgt voor de juiste strategische koers."
+      },
+      marc: {
+        role: "Business Development Manager",
+        desc: "Weet alles van techniek en faciliteiten. Bouwt aan nieuwe partnerschappen."
+      }
+    },
+    cta: {
+      title: "Wil jij ook bij dit team horen?",
+      btn: "Kom eens langs"
+    }
+  },
+  en: {
+    hero: {
+      title: "Our Team",
+      desc: "We work daily to build the community and facilities. Have a question or a great idea? Talk to us!"
+    },
+    team: {
+      phaedra: {
+        role: "Communications Officer",
+        desc: "Connects people and stories. Ensures everyone knows what's happening within KAAP."
+      },
+      jorik: {
+        role: "Marketing Manager",
+        desc: "Puts KAAP on the map and ensures the correct strategic direction."
+      },
+      marc: {
+        role: "Business Development Manager",
+        desc: "Knows everything about technology and facilities. Builds new partnerships."
+      }
+    },
+    cta: {
+      title: "Want to join this team?",
+      btn: "Come visit us"
+    }
+  }
+};
+
+const c = content[lang] || content.nl;
 ---
 
-<Layout title="Ons Team | Innovatiepunt KAAP">
+<Layout title={`${lang === 'nl' ? 'Ons Team' : 'Our Team'} | Innovatiepunt KAAP`} lang={lang}>
   <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 reveal">
-        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">Ons Team</h1>
+        <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">{c.hero.title}</h1>
         <p class="text-xl text-gray-500 max-w-2xl mx-auto">
-          Wij bouwen dagelijks aan de community en de faciliteiten. Heb je een vraag of een goed idee? Spreek ons aan!
+          {c.hero.desc}
         </p>
       </div>
 
@@ -26,9 +86,9 @@ const makerSpace = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158
                     <Image src={phaedra} alt="Phaedra" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 font-heading">Phaedra</h3>
-                <span class="text-kaap-pink font-medium uppercase tracking-wider text-sm mt-1">Communicatiemedewerker</span>
+                <span class="text-kaap-pink font-medium uppercase tracking-wider text-sm mt-1">{c.team.phaedra.role}</span>
                 <p class="text-gray-500 text-center mt-4 text-sm leading-relaxed px-4">
-                    Verbindt mensen en verhalen. Zorgt dat iedereen weet wat er speelt binnen KAAP.
+                    {c.team.phaedra.desc}
                 </p>
             </div>
 
@@ -39,9 +99,9 @@ const makerSpace = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158
                     <Image src={jorik} alt="Jorik" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 font-heading">Jorik</h3>
-                    <span class="text-kaap-purple font-medium uppercase tracking-wider text-sm mt-1">Marketing Manager</span>
+                    <span class="text-kaap-purple font-medium uppercase tracking-wider text-sm mt-1">{c.team.jorik.role}</span>
                 <p class="text-gray-500 text-center mt-4 text-sm leading-relaxed px-4">
-                    Zet KAAP op de kaart en zorgt voor de juiste strategische koers.
+                    {c.team.jorik.desc}
                 </p>
             </div>
 
@@ -52,9 +112,9 @@ const makerSpace = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158
                     <Image src={marc} alt="Marc" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 font-heading">Marc</h3>
-                    <span class="text-kaap-energy font-medium uppercase tracking-wider text-sm mt-1">Business Development Manager</span>
+                    <span class="text-kaap-energy font-medium uppercase tracking-wider text-sm mt-1">{c.team.marc.role}</span>
                 <p class="text-gray-500 text-center mt-4 text-sm leading-relaxed px-4">
-                    Weet alles van techniek en faciliteiten. Bouwt aan nieuwe partnerschappen.
+                    {c.team.marc.desc}
                 </p>
             </div>
         </div>
@@ -66,10 +126,10 @@ const makerSpace = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158
       <div class="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors duration-700"></div>
       <div class="relative z-10 text-center max-w-4xl px-4 reveal">
           <h2 class="text-3xl md:text-5xl font-bold font-heading text-white mb-6 tracking-tighter">
-            Wil jij ook bij dit team horen?
+            {c.cta.title}
           </h2>
-          <a href="/contact" class="inline-block px-8 py-4 bg-white text-gray-900 font-bold text-lg rounded-full hover:scale-110 transition-transform shadow-lg">
-            Kom eens langs
+          <a href={`/${lang}/contact`} class="inline-block px-8 py-4 bg-white text-gray-900 font-bold text-lg rounded-full hover:scale-110 transition-transform shadow-lg">
+            {c.cta.btn}
           </a>
       </div>
   </section>

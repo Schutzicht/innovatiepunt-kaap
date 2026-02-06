@@ -14,9 +14,10 @@ interface Props {
     };
     class?: string;
     index?: number;
+    lang?: string;
 }
 
-const { project, class: className = "", index = 0 } = Astro.props;
+const { project, class: className = "", index = 0, lang = "nl" } = Astro.props;
 
 const icon =
     project.theme === "water"
@@ -26,6 +27,13 @@ const icon =
           : iconEnergy;
 const imageSrc =
     typeof project.image === "string" ? project.image : project.image.src;
+
+const labels = {
+    nl: { view: "Bekijk project" },
+    en: { view: "View project" }
+};
+
+const l = labels[lang as keyof typeof labels] || labels.nl;
 ---
 
 <article
@@ -79,9 +87,9 @@ const imageSrc =
             {project.theme}
         </span>
 
-        <a href={`/projecten/${project.slug}`} class="block group/link">
+        <a href={`/${lang}/projecten/${project.slug}`} class="block group/link">
             <h3
-                class="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3 leading-tight drop-shadow-md group-hover/link:text-kaap-pink transition-colors"
+                class="text-xl md:text-3xl font-bold text-white mb-2 md:mb-3 leading-tight drop-shadow-md group-hover/link:text-kaap-pink transition-colors"
             >
                 {project.title}
             </h3>
@@ -93,7 +101,7 @@ const imageSrc =
             <span
                 class="text-white font-bold inline-flex items-center group-hover/link:text-kaap-pink transition-colors cursor-pointer text-sm md:text-base"
             >
-                Bekijk project <span
+                {l.view} <span
                     class="ml-2 transform group-hover/link:translate-x-2 transition-transform"
                     >→</span
                 >

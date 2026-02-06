@@ -1,18 +1,58 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { vacancies } from '../../data/vacancies';
+import Layout from '../../../layouts/Layout.astro';
+import { vacancies as vacanciesData } from '../../../data/vacancies';
 
 export async function getStaticPaths() {
-  return vacancies.map(job => ({
-    params: { slug: job.slug },
-    props: { job },
-  }));
+  const paths: any[] = [];
+  ['nl', 'en'].forEach(lang => {
+    const langVacancies = vacanciesData[lang] || vacanciesData.nl;
+    langVacancies.forEach(job => {
+      paths.push({
+        params: { lang, slug: job.slug },
+        props: { job, lang },
+      });
+    });
+  });
+  return paths;
 }
 
-const { job } = Astro.props;
+const { job, lang } = Astro.props;
+
+const content = {
+    nl: {
+        titles: {
+            what: "Wat ga je doen?",
+            offer: "Wat bieden wij?",
+            who: "Wie ben jij?",
+            interest: "Interesse?"
+        },
+        labels: {
+            apply: "Solliciteer direct",
+            call: "Of bel ons eerst even",
+            team_note: "Wij kijken uit naar je bericht!"
+        },
+        desc: `Ben jij de ${job.title} die wij zoeken? Wacht dan niet en laat van je horen.`
+    },
+    en: {
+        titles: {
+            what: "What will you do?",
+            offer: "What do we offer?",
+            who: "Who are you?",
+            interest: "Interested?"
+        },
+        labels: {
+            apply: "Apply now",
+            call: "Or give us a call",
+            team_note: "We look forward to hearing from you!"
+        },
+        desc: `Are you the ${job.title} we are looking for? Don't wait and let us hear from you.`
+    }
+};
+
+const c = content[lang as keyof typeof content] || content.nl;
 ---
 
-<Layout title={`${job.title} | Werken bij KAAP`}>
+<Layout title={`${job.title} | ${lang === 'nl' ? 'Werken bij KAAP' : 'Working at KAAP'}`} lang={lang}>
   <!-- Hero / Cover -->
   <div class="relative h-[60vh] md:h-[70vh] bg-gray-900 overflow-hidden">
       <div class="absolute inset-0">
@@ -51,7 +91,7 @@ const { job } = Astro.props;
                   <!-- Responsibilities -->
                   <div class="reveal delay-200">
                       <h3 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
-                          Wat ga je doen?
+                          {c.titles.what}
                       </h3>
                       <ul class="space-y-4">
                           {job.content.responsibilities.map(item => (
@@ -66,7 +106,7 @@ const { job } = Astro.props;
                   <!-- Offer -->
                   <div class="bg-gray-50 p-10 rounded-3xl border border-gray-100 reveal delay-300">
                        <h3 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
-                          Wat bieden wij?
+                          {c.titles.offer}
                       </h3>
                        <ul class="space-y-4">
                           {job.content.offer.map(item => (
@@ -81,7 +121,7 @@ const { job } = Astro.props;
                   <!-- Requirements -->
                    <div class="reveal delay-400">
                       <h3 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
-                          Wie ben jij?
+                          {c.titles.who}
                       </h3>
                       <ul class="space-y-4">
                           {job.content.requirements.map(item => (
@@ -97,18 +137,18 @@ const { job } = Astro.props;
               <!-- Sidebar -->
               <div class="lg:col-span-4 relative">
                   <div class="sticky top-32 p-8 rounded-3xl bg-white shadow-2xl border border-gray-100 reveal delay-500">
-                      <h3 class="text-2xl font-bold text-gray-900 mb-6">Interesse?</h3>
+                      <h3 class="text-2xl font-bold text-gray-900 mb-6">{c.titles.interest}</h3>
                       <p class="text-gray-500 mb-8 leading-relaxed">
-                          Ben jij de {job.title} die wij zoeken? Wacht dan niet en laat van je horen.
+                          {c.desc}
                       </p>
                       
                       <div class="space-y-6">
-                           <a href={`mailto:info@innovatiepuntkaap.nl?subject=Sollicitatie%20${job.title}`} class="block w-full py-4 bg-kaap-gradient text-white text-center rounded-xl font-bold text-lg hover:shadow-lg hover:scale-[1.02] transition-all transform animate-pulse-slow">
-                              Solliciteer direct
+                           <a href={`mailto:info@innovatiepunt-kaap.nl?subject=${lang === 'nl' ? 'Sollicitatie' : 'Job Application'} ${job.title}`} class="block w-full py-4 bg-kaap-gradient text-white text-center rounded-xl font-bold text-lg hover:shadow-lg hover:scale-[1.02] transition-all transform animate-pulse-slow">
+                               {c.labels.apply}
                           </a>
                           <div class="text-center">
-                              <span class="text-sm text-gray-400 block mb-2">Of bel ons eerst even</span>
-                              <a href="tel:0612345678" class="text-kaap-purple font-bold hover:underline">06 1234 5678</a>
+                              <span class="text-sm text-gray-400 block mb-2">{c.labels.call}</span>
+                              <a href="tel:0652661475" class="text-kaap-purple font-bold hover:underline">06-52661475</a>
                           </div>
                       </div>
 
@@ -116,12 +156,11 @@ const { job } = Astro.props;
 
                       <div class="flex items-center gap-4">
                           <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
-                              <!-- Placeholder for recruiter/team lead avatar -->
                               <div class="w-full h-full bg-kaap-gray flex items-center justify-center text-white font-bold text-xs">TEAM</div>
                           </div>
                           <div>
                               <p class="text-sm font-bold text-gray-900">Team KAAP</p>
-                              <p class="text-xs text-gray-400">Wij kijken uit naar je bericht!</p>
+                              <p class="text-xs text-gray-400">{c.labels.team_note}</p>
                           </div>
                       </div>
                   </div>
@@ -135,7 +174,7 @@ const { job } = Astro.props;
 <style>
     /* Custom slow pulse for the button */
     @keyframes pulse-slow {
-        0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76, 29, 149, 0.4); } // kaap-purple-ish
+        0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76, 29, 149, 0.4); }
         50% { transform: scale(1.02); box-shadow: 0 10px 25px -5px rgba(76, 29, 149, 0.4); }
     }
     .animate-pulse-slow {

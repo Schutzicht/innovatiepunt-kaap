@@ -10,13 +10,15 @@ import StickyCTA from '../components/common/StickyCTA.astro';
 interface Props {
 	title: string;
     description?: string;
+    lang?: string;
 }
 
-const { title, description = "Innovatiepunt KAAP - Dé innovatiehub van Zeeland" } = Astro.props;
+const { title, description = "Innovatiepunt KAAP - Dé innovatiehub van Zeeland", lang = "nl" } = Astro.props;
 ---
 
+
 <!doctype html>
-<html lang="nl" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -26,13 +28,13 @@ const { title, description = "Innovatiepunt KAAP - Dé innovatiehub van Zeeland"
 		<title>{title}</title>
 	</head>
 	<body class="bg-kaap-gray text-white font-body antialiased selection:bg-kaap-pink selection:text-white flex flex-col min-h-screen">
-        <Header />
+        <Header lang={lang} />
 		<main class="flex-grow pt-20">
 			<slot />
 		</main>
         <!-- Sticky CTA -->
         <StickyCTA />
-        <Footer />
+        <Footer lang={lang} />
         <script>
             import Lenis from 'lenis';
 
@@ -57,5 +59,7 @@ const { title, description = "Innovatiepunt KAAP - Dé innovatiehub van Zeeland"
 
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         </script>
+        <!-- HubSpot Embed Code -->
+        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/145415386.js"></script>
 	</body>
 </html>

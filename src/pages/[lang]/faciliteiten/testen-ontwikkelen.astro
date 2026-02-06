@@ -1,0 +1,135 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getStaticPathsHelper } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as any);
+
+const content = {
+  nl: {
+    hero: {
+      title: "Testen & Ontwikkelen",
+      subtitle: "Hoogwaardige faciliteiten voor real-scale innovatie en opschaling."
+    },
+    facilities: [
+      {
+        title: "Proefkeuken",
+        description: "Een professionele en veilige omgeving voor kookdemonstraties, productontwikkeling of culinaire workshops. Voorzien van 7 kookeilanden waar je direct aan de slag kunt.",
+        specs: ["7 Kookeilanden", "Inductiekookplaten (4 pits)", "Afzuigkap per eiland", "Basis set pannen & keukengerei"],
+        price: "€ 75,- per werkstation"
+      },
+      {
+        title: "Proefproductieruimte",
+        description: "Voedselveilige loodsruimte met krachtstroom en wateraansluitingen. De ideale plek om je productieproces op te schalen buiten je eigen productielijn.",
+        specs: ["Voedselveilig (HACCP)", "Krachtstroom & Water", "Grote overheaddeur", "Inclusief opslagruimte"],
+        price: "Op aanvraag"
+      },
+      {
+        title: "Ontwikkel- & Demoruimte",
+        description: "Een gigantische, flexibele hal voor innovatietesten op real-scale. Van waterstofopstellingen tot grote demo's: hier is de ruimte voor jouw ambitie.",
+        specs: ["2000 m² oppervlakte", "Gigantische vrije hoogte", "Sprekersarena aanwezig", "Krachtstroom aansluitingen"],
+        price: "Op aanvraag"
+      }
+    ],
+    labels: {
+        features: "Specificaties",
+        book: "Reserveren",
+        price: "Prijs"
+    }
+  },
+  en: {
+    hero: {
+      title: "Testing & Development",
+      subtitle: "High-end facilities for real-scale innovation, from professional kitchens to industrial pilot halls."
+    },
+    facilities: [
+      {
+        title: "Test Kitchen",
+        description: "A professional and safe environment for cooking demonstrations, product development, or culinary workshops. Equipped with 7 cooking islands for immediate start.",
+        specs: ["7 Cooking islands", "Induction hobs (4 burners)", "Extraction hood per island", "Basic set of pans & utensils"],
+        price: "€ 75 per workstation"
+      },
+      {
+        title: "Pilot Production Room",
+        description: "Food-safe warehouse space with power electricity and water connections. The ideal place to scale your production process outside your own line.",
+        specs: ["Food-safe (HACCP)", "Power & Water", "Large overhead door", "Includes storage space"],
+        price: "Upon request"
+      },
+      {
+        title: "Development & Demo Space",
+        description: "A giant, flexible hall for real-scale innovation tests. From hydrogen setups to large demos: here is the space for your ambition.",
+        specs: ["2000 m² surface", "Unrestricted height", "Speaker arena present", "Power connections"],
+        price: "Upon request"
+      }
+    ],
+    labels: {
+        features: "Specifications",
+        book: "Book",
+        price: "Price"
+    }
+  }
+};
+
+const c = content[lang] || content.nl;
+
+const facilityImages = [
+  "https://info.dockwize.nl/hubfs/KAAP/Proefkeuken%20(1).jpg",
+  "https://info.dockwize.nl/hubfs/Stroom.jpg",
+  "https://info.dockwize.nl/hubfs/KAAP/Eventhal.jpg"
+];
+---
+
+<Layout title={`${c.hero.title} | Innovatiepunt KAAP`} lang={lang}>
+  <section class="py-20 bg-gray-50 border-b border-gray-100">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+       <div class="reveal">
+         <span class="text-kaap-pink font-bold tracking-widest uppercase text-sm mb-4 block">{lang === 'nl' ? 'Innovatieruimte' : 'Innovation Space'}</span>
+         <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">{c.hero.title}</h1>
+         <p class="text-xl text-gray-500 max-w-2xl leading-relaxed">{c.hero.subtitle}</p>
+       </div>
+     </div>
+  </section>
+
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="space-y-24">
+        {c.facilities.map((facility, index) => (
+          <div class={`flex flex-col md:flex-row gap-12 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} reveal`}>
+            <div class="w-full md:w-1/2">
+               <div class="relative rounded-3xl overflow-hidden shadow-2xl group border border-gray-100">
+                   <div class="absolute inset-0 bg-kaap-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-500 z-10"></div>
+                   <img src={facilityImages[index]} alt={facility.title} class="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-700" />
+               </div>
+            </div>
+            <div class="w-full md:w-1/2">
+                <h2 class="text-3xl font-bold font-heading text-gray-900 mb-2">{facility.title}</h2>
+                <div class="text-kaap-pink font-bold mb-4">{c.labels.price}: {facility.price}</div>
+                <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                    {facility.description}
+                </p>
+                <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-100">
+                    <h4 class="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">{c.labels.features}</h4>
+                    <ul class="space-y-2">
+                        {facility.specs.map(spec => (
+                            <li class="flex items-center text-gray-600">
+                                <svg class="w-5 h-5 text-kaap-food mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                {spec}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <a href="https://kaap.bisner.com/book" target="_blank" class="inline-flex items-center px-8 py-4 bg-kaap-gray text-white font-bold rounded-tl-2xl rounded-br-2xl hover:bg-kaap-gradient transition-all shadow-lg hover:scale-105">
+                    {c.labels.book}
+                </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

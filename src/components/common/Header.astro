@@ -2,19 +2,44 @@
 import { Image } from "astro:assets";
 import logo from "../../assets/branding/Kaap_RGB_Logo_rond_fc.svg";
 
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+
+import { useTranslations } from "../../i18n/utils";
+const t = useTranslations(lang as any);
+
 const navItems = [
   { 
-    name: 'Over KAAP', 
-    href: '/over',
+    name: t('nav.facilities'), 
+    href: `/${lang}/faciliteiten`,
     children: [
-        { name: 'Ons Team', href: '/ons-team' },
-        { name: 'Vacatures', href: '/vacatures' }
+        { name: t('nav.facilities.labs'), href: `/${lang}/faciliteiten/testen-ontwikkelen` },
+        { name: t('nav.facilities.housing'), href: `/${lang}/faciliteiten/huisvesting` },
+        { name: t('nav.facilities.meeting'), href: `/${lang}/faciliteiten/vergaderruimtes` }
     ]
   },
-  { name: 'Projecten', href: '/projecten' },
-  { name: 'Faciliteiten', href: '/faciliteiten' },
-  { name: 'Events', href: '/agenda' },
-  { name: 'Nieuws', href: '/nieuws' },
+  { name: t('nav.projects'), href: `/${lang}/projecten` },
+  { 
+    name: t('nav.audiences'), 
+    href: `/${lang}/ondernemers`,
+    children: [
+        { name: t('nav.audiences.entrepreneurs'), href: `/${lang}/ondernemers` },
+        { name: t('nav.audiences.education'), href: `/${lang}/onderwijs` },
+        { name: t('nav.audiences.government'), href: `/${lang}/overheid` }
+    ]
+  },
+  { 
+    name: t('nav.about'), 
+    href: `/${lang}/over`,
+    children: [
+        { name: t('nav.team'), href: `/${lang}/ons-team` },
+        { name: t('nav.vacancies'), href: `/${lang}/vacatures` },
+        { name: t('nav.news'), href: `/${lang}/nieuws` }
+    ]
+  }
 ];
 ---
 
@@ -28,12 +53,12 @@ const navItems = [
   >
     <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div
-        class="relative flex justify-between items-center h-20 transition-all duration-300"
+        class="grid grid-cols-[auto_1fr_auto] md:grid-cols-[200px_1fr_200px] items-center h-20 transition-all duration-300 px-4 sm:px-0"
         id="header-inner"
       >
         <!-- Logo -->
-        <div class="flex-shrink-0 flex items-center">
-          <a href="/" class="group block">
+        <div class="flex justify-start items-center">
+          <a href={`/${lang}/`} class="group block">
             <!-- Using the round logo as requested -->
             <img
               src={logo.src}
@@ -44,19 +69,19 @@ const navItems = [
         </div>
 
         <!-- Desktop Nav -->
-        <nav class="hidden md:flex space-x-1 items-center">
+        <nav class="hidden md:flex justify-center gap-1 items-center">
             {navItems.map((item) => (
                 item.children ? (
                     <div class="relative group">
-                        <a href={item.href} class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50/50 rounded-full transition-all flex items-center gap-1">
+                        <a href={item.href} class="px-5 py-2.5 text-sm font-bold text-gray-700 hover:text-kaap-purple hover:bg-gray-50/80 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap">
                             {item.name}
-                            <svg class="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </a>
                         <!-- Dropdown -->
-                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left z-50 overflow-hidden">
-                            <div class="py-1">
+                        <div class="absolute left-1/2 -translate-x-1/2 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform scale-95 group-hover:scale-100 origin-top z-50 overflow-hidden">
+                            <div class="p-2 space-y-1">
                                 {item.children.map((child) => (
-                                    <a href={child.href} class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-kaap-purple transition-colors">
+                                    <a href={child.href} class="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-kaap-purple rounded-xl transition-all">
                                         {child.name}
                                     </a>
                                 ))}
@@ -64,24 +89,29 @@ const navItems = [
                         </div>
                     </div>
                 ) : (
-                    <a href={item.href} class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50/50 rounded-full transition-all">
+                    <a href={item.href} class="px-5 py-2.5 text-sm font-bold text-gray-700 hover:text-kaap-purple hover:bg-gray-50/80 rounded-full transition-all whitespace-nowrap">
                         {item.name}
                     </a>
                 )
             ))}
         </nav>
 
-        <!-- Right Side Button -->
-        <div class="hidden md:flex items-center">
+         <div class="hidden md:flex items-center justify-end gap-5">
+            <!-- Language Switcher -->
+            <div class="flex items-center text-xs font-black bg-gray-100/80 backdrop-blur-sm rounded-full p-1 border border-gray-200/50 shadow-inner">
+                <a href="/nl" class={`px-3.5 py-2 rounded-full transition-all duration-300 ${lang === 'nl' ? 'bg-white text-kaap-purple shadow-sm ring-1 ring-black/5' : 'text-gray-400 hover:text-gray-600'}`}>NL</a>
+                <a href="/en" class={`px-3.5 py-2 rounded-full transition-all duration-300 ${lang === 'en' ? 'bg-white text-kaap-purple shadow-sm ring-1 ring-black/5' : 'text-gray-400 hover:text-gray-600'}`}>EN</a>
+            </div>
+ 
             <a
-              href="/contact"
-              class="group relative inline-flex items-center justify-center px-10 py-3 text-white font-bold text-sm transition-all hover:-translate-y-0.5 filter drop-shadow-md hover:drop-shadow-lg rounded-tl-2xl rounded-br-2xl overflow-hidden"
+              href={`/${lang}/contact`}
+              class="group relative inline-flex items-center justify-center px-6 py-2.5 text-white font-black text-xs transition-all hover:-translate-y-0.5 filter drop-shadow hover:drop-shadow-lg rounded-tl-xl rounded-br-xl overflow-hidden min-w-[140px] whitespace-nowrap"
             >
                 <!-- Base Gradient Layer -->
                 <div class="absolute inset-0 bg-kaap-gradient"></div>
-                <!-- Hover Swipe Layer (Different Color: KAAP Purple) -->
-                <div class="absolute inset-0 bg-kaap-purple transition-transform duration-300 ease-out origin-left transform scale-x-0 group-hover:scale-x-100"></div>
-                <span class="relative z-10 inline-block">Boek een ruimte</span>
+                <!-- Hover Swipe Layer -->
+                <div class="absolute inset-0 bg-kaap-purple transition-transform duration-500 ease-out origin-left transform scale-x-0 group-hover:scale-x-100"></div>
+                <span class="relative z-10 inline-block uppercase tracking-wider">{t('cta.book')}</span>
             </a>
         </div>
 
@@ -111,34 +141,46 @@ const navItems = [
     </div>
   </div>
 
-  <!-- Mobile Menu -->
   <div
     id="mobile-menu"
-    class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 absolute w-full left-0 z-40 shadow-xl"
+    class="hidden md:hidden bg-white/98 backdrop-blur-2xl border-t border-gray-100 absolute w-full left-0 z-40 shadow-2xl transition-all duration-300 ease-in-out"
   >
-    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      {navItems.map((item) => (
+    <div class="px-4 py-6 space-y-4 max-h-[85vh] overflow-y-auto">
+      {navItems.map((item, index) => (
         item.children ? (
-             <div class="space-y-1">
-                <a href={item.href} class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50">
-                    {item.name}
-                </a>
-                <div class="pl-4 border-l-2 border-gray-100 ml-2 space-y-1">
+             <div class="space-y-2 border-b border-gray-50 pb-4 last:border-0">
+                <div class="flex items-center justify-between">
+                    <a href={item.href} class="text-xl font-bold text-gray-900 active:text-kaap-purple">
+                        {item.name}
+                    </a>
+                    <button 
+                        class="p-2 -mr-2 text-gray-400 mobile-submenu-toggle transition-transform duration-300"
+                        data-target={`submenu-${index}`}
+                    >
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div 
+                    id={`submenu-${index}`}
+                    class="hidden pl-4 space-y-3 pt-2 overflow-hidden transition-all duration-300 origin-top"
+                >
                     {item.children.map(child => (
-                         <a href={child.href} class="block px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-kaap-purple hover:bg-gray-50">
+                         <a href={child.href} class="block text-base font-medium text-gray-500 active:text-kaap-purple py-1">
                             {child.name}
                         </a>
                     ))}
                 </div>
              </div>
         ) : (
-             <a href={item.href} class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-kaap-purple hover:bg-gray-50">
+             <a href={item.href} class="block text-xl font-bold text-gray-900 active:text-kaap-purple border-b border-gray-50 pb-4 last:border-0">
                 {item.name}
              </a>
         )
       ))}
-      <a href="/contact" class="block w-full text-center mt-4 px-5 py-3 rounded-tl-2xl rounded-br-2xl bg-kaap-gradient text-white font-medium shadow-md">
-        Boek een ruimte
+      <a href={`/${lang}/contact`} class="block w-full text-center mt-6 px-5 py-4 rounded-tl-2xl rounded-br-2xl bg-kaap-gradient text-white font-black uppercase tracking-widest shadow-lg active:scale-95 transition-transform">
+        {t('cta.book')}
       </a>
     </div>
   </div>
@@ -154,8 +196,34 @@ const navItems = [
   if (mobileBtn && mobileMenu) {
     mobileBtn.addEventListener("click", () => {
       mobileMenu.classList.toggle("hidden");
+      // Reset all submenus when closing the main menu for a clean start next time
+      if(mobileMenu.classList.contains('hidden')) {
+        document.querySelectorAll('.mobile-submenu-toggle').forEach(t => {
+            t.classList.remove('rotate-180');
+        });
+        document.querySelectorAll('[id^="submenu-"]').forEach(s => {
+            s.classList.add('hidden');
+        });
+      }
     });
   }
+
+  // Handle mobile sub-menu toggles
+  document.querySelectorAll('.mobile-submenu-toggle').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = btn.getAttribute('data-target');
+        const submenu = document.getElementById(targetId);
+        
+        if (submenu) {
+            const isHidden = submenu.classList.contains('hidden');
+            
+            // Toggle current
+            submenu.classList.toggle('hidden');
+            btn.classList.toggle('rotate-180');
+        }
+    });
+  });
 
   // Scroll Effect
   const scrollThreshold = 50;

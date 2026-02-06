@@ -3,6 +3,15 @@ import { Image } from "astro:assets";
 const currentYear = new Date().getFullYear();
 import logoMark from "../../assets/branding/Kaap_RGB_Beeldmerk.svg";
 import logoWhite from "../../assets/branding/Kaap_RGB_Logo_vert_wit.svg";
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+
+import { useTranslations } from "../../i18n/utils";
+const t = useTranslations(lang as any);
 ---
 
 <footer
@@ -36,8 +45,7 @@ import logoWhite from "../../assets/branding/Kaap_RGB_Logo_vert_wit.svg";
                     class="flex flex-col items-center md:items-end text-center md:text-right"
                 >
                     <p class="text-xl text-gray-400 max-w-md">
-                        Heb jij een idee dat de wereld kan veranderen? Kom langs
-                        bij KAAP en maak het waar.
+                        {t('footer.cta')}
                     </p>
                 </div>
             </div>
@@ -51,15 +59,14 @@ import logoWhite from "../../assets/branding/Kaap_RGB_Logo_vert_wit.svg";
                         >Innovatiepunt KAAP</span
                     >
                     <p class="mt-4 text-gray-500 leading-relaxed">
-                        De broedplaats voor transities in water, voedsel en
-                        energie.
+                        {t('footer.subtitle')}
                     </p>
                 </div>
 
                 <form class="relative max-w-sm">
                     <input
                         type="email"
-                        placeholder="Blijf op de hoogte (E-mailadres)"
+                        placeholder={t('footer.newsletter_placeholder')}
                         class="w-full bg-white/5 border border-white/10 rounded-tl-2xl rounded-br-2xl py-4 px-6 text-white placeholder-gray-500 focus:outline-none focus:border-kaap-purple transition-colors"
                     />
                     <button
@@ -88,70 +95,70 @@ import logoWhite from "../../assets/branding/Kaap_RGB_Logo_vert_wit.svg";
             <div class="md:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-8">
                 <div>
                     <h4 class="text-white font-bold mb-6 font-heading">
-                        Transities
+                        {t('footer.transitions')}
                     </h4>
                     <ul class="space-y-4 text-sm text-gray-400">
                         <li>
                             <a
-                                href="/water"
+                                href={`/${lang}/projecten?theme=water`}
                                 class="hover:text-kaap-water transition-colors"
-                                >Water</a
+                                >{t('theme.water')}</a
                             >
                         </li>
                         <li>
                             <a
-                                href="/voedsel"
+                                href={`/${lang}/projecten?theme=voedsel`}
                                 class="hover:text-kaap-food transition-colors"
-                                >Voedsel</a
+                                >{t('theme.food')}</a
                             >
                         </li>
                         <li>
                             <a
-                                href="/energie"
+                                href={`/${lang}/projecten?theme=energie`}
                                 class="hover:text-kaap-energy transition-colors"
-                                >Energie</a
+                                >{t('theme.energy')}</a
                             >
                         </li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-6 font-heading">
-                        Sitemap
+                        {t('footer.sitemap')}
                     </h4>
                     <ul class="space-y-4 text-sm text-gray-400">
                         <li>
                             <a
-                                href="/projecten"
+                                href={`/${lang}/projecten`}
                                 class="hover:text-white transition-colors"
-                                >Projecten</a
+                                >{t('nav.projects')}</a
                             >
                         </li>
                         <li>
                             <a
-                                href="/faciliteiten"
+                                href={`/${lang}/faciliteiten`}
                                 class="hover:text-white transition-colors"
-                                >Faciliteiten</a
+                                >{t('nav.facilities')}</a
                             >
                         </li>
                         <li>
                             <a
-                                href="/agenda"
+                                href={`/${lang}/agenda`}
                                 class="hover:text-white transition-colors"
-                                >Agenda</a
+                                >{t('nav.events')}</a
                             >
                         </li>
                         <li>
                             <a
-                                href="/nieuws"
+                                href={`/${lang}/nieuws`}
                                 class="hover:text-white transition-colors"
-                                >Nieuws</a
+                                >{t('nav.news')}</a
                             >
                         </li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-6 font-heading">
-                        Contact
+                        {t('footer.contact')}
                     </h4>
                     <ul class="space-y-4 text-sm text-gray-400">
                         <li>
@@ -182,10 +189,10 @@ import logoWhite from "../../assets/branding/Kaap_RGB_Logo_vert_wit.svg";
             <p>&copy; {currentYear} Innovatiepunt KAAP.</p>
             <div class="flex space-x-6 mt-4 md:mt-0">
                 <a href="#" class="hover:text-white transition-colors"
-                    >Privacy Statement</a
+                    >{t('footer.privacy')}</a
                 >
                 <a href="#" class="hover:text-white transition-colors"
-                    >Cookies</a
+                    >Cookie Policy</a
                 >
             </div>
         </div>

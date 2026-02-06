@@ -1,0 +1,145 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+// Icons
+import iconWater from '../../assets/icons/Kaap_RGB_Water_Blok.svg';
+import iconFood from '../../assets/icons/Kaap_RGB_Food_Blok.svg';
+import iconEnergy from '../../assets/icons/Kaap_RGB_Energie_Blok.svg';
+
+import { projects as projectsData } from '../../data/projects';
+import ProjectCard from '../../components/cards/ProjectCard.astro';
+
+export async function getStaticPaths() {
+  const themes = [
+    { 
+        id: 'water',
+        name: { nl: 'Water', en: 'Water' }, 
+        description: { 
+            nl: 'Zeeland leeft met water. Innovatiepunt KAAP versterkt de maritieme sector en watertechnologie.',
+            en: 'Zeeland lives with water. Innovatiepunt KAAP strengthens the maritime sector and water technology.'
+        },
+        color: 'kaap-water',
+        icon: iconWater
+    },
+    { 
+        id: 'voedsel',
+        en_id: 'food',
+        name: { nl: 'Voedsel', en: 'Food' }, 
+        description: { 
+            nl: 'Van zilte teelt tot eiwittransitie. Wij werken aan de voedselsystemen van de toekomst.',
+            en: 'From salty cultivation to protein transition. We work on the food systems of the future.'
+        },
+        color: 'kaap-food',
+        icon: iconFood
+    },
+    { 
+        id: 'energie',
+        en_id: 'energy',
+        name: { nl: 'Energie', en: 'Energy' }, 
+        description: { 
+            nl: 'De energietransitie vraagt om slimme oplossingen, van wind op zee tot waterstof.',
+            en: 'The energy transition requires smart solutions, from offshore wind to hydrogen.'
+        },
+        color: 'kaap-energy',
+        icon: iconEnergy
+    },
+  ];
+
+  const paths: any[] = [];
+  ['nl', 'en'].forEach(lang => {
+    themes.forEach(theme => {
+      paths.push({
+        params: { 
+            lang, 
+            theme: lang === 'en' ? (theme.en_id || theme.id) : theme.id 
+        },
+        props: { 
+            name: (theme.name as any)[lang], 
+            description: (theme.description as any)[lang], 
+            color: theme.color, 
+            icon: theme.icon,
+            themeId: theme.id // Always use the Dutch theme ID for filtering in projects.ts if necessary, but actually we should map it.
+        },
+      });
+    });
+  });
+  return paths;
+}
+
+const { lang, theme } = Astro.params;
+const { name, description, color, icon, themeId } = Astro.props;
+
+const colorClass = `text-${color}`;
+const bgClass = `bg-${color}`;
+
+const projects = projectsData[lang as string] || projectsData.nl;
+// Map the theme back to the values used in projects.ts ('water', 'voedsel', 'energie')
+const projectsTheme = theme === 'food' ? 'voedsel' : theme === 'energy' ? 'energie' : theme;
+const themeProjects = projects.filter(p => p.theme === projectsTheme);
+
+const labels = {
+    nl: { 
+        projects_title: `Projecten binnen ${name}`,
+        none_title: "Nog geen projecten zichtbaar voor dit thema.",
+        none_btn: "Bekijk alle projecten"
+    },
+    en: {
+        projects_title: `Projects in ${name}`,
+        none_title: "No projects visible yet for this theme.",
+        none_btn: "View all projects"
+    }
+};
+
+const l = labels[lang as keyof typeof labels] || labels.nl;
+---
+
+<Layout title={`${name} | Innovatiepunt KAAP`} lang={lang}>
+  <div class="relative bg-kaap-gray py-32 overflow-hidden">
+     <!-- Theme specific background accent -->
+     <div class={`absolute top-0 right-0 w-2/3 h-full opacity-10 ${bgClass} blur-3xl transform translate-x-1/4`}></div>
+     
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+   <!-- Hero Section -->
+  <section class="relative h-[60vh] flex items-center justify-center overflow-hidden bg-kaap-gray">
+    <div class="absolute inset-0 bg-kaap-gray"></div>
+    <!-- Abstract theme background -->
+    <div class={`absolute inset-0 opacity-10 bg-${color} mix-blend-screen`}></div>
+    
+    <div class="relative z-10 text-center max-w-5xl px-4">
+      <div class="w-32 h-32 mx-auto mb-8 animate-float">
+        <Image src={icon} alt={name} class="w-full h-full object-contain drop-shadow-2xl brightness-0 invert" />
+      </div>
+      
+      <h1 class="text-5xl md:text-7xl font-bold font-heading text-white mb-6 uppercase tracking-tight">
+        Bring your <span class={`text-${color}`}>{name}</span><br/>
+        innovation to life
+      </h1>
+      
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto font-light">
+        {description}
+      </p>
+    </div>
+  </section>
+     </div>
+  </div>
+
+  <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-3xl font-bold font-heading mb-12">{l.projects_title}</h2>
+          
+          {themeProjects.length > 0 ? (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {themeProjects.map((project, index) => (
+                    <ProjectCard project={project} index={index} lang={lang} />
+                ))}
+            </div>
+          ) : (
+            <div class="bg-gray-50 rounded-3xl p-12 text-center border border-dashed border-gray-300">
+                <p class="text-gray-500 text-lg">{l.none_title}</p>
+                <a href={`/${lang}/projecten`} class="inline-block mt-6 font-medium text-kaap-purple hover:text-kaap-pink">{l.none_btn}</a>
+            </div>
+          )}
+      </div>
+  </section>
+</Layout>

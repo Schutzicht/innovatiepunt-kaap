@@ -1,31 +1,47 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { projects } from '../../data/projects';
+import Layout from '../../../layouts/Layout.astro';
+import { projects as projectsData } from '../../../data/projects';
 
 export function getStaticPaths() {
-  return projects.map(project => ({
-    params: { slug: project.slug },
-    props: { project },
-  }));
+  const paths: any[] = [];
+  ['nl', 'en'].forEach(lang => {
+    const langProjects = projectsData[lang] || projectsData.nl;
+    langProjects.forEach(project => {
+      paths.push({
+        params: { lang, slug: project.slug },
+        props: { project, lang },
+      });
+    });
+  });
+  return paths;
 }
 
-const { project } = Astro.props;
+const { project, lang } = Astro.props;
 
-const themeColors = {
+const themeColors: Record<string, string> = {
     water: 'text-kaap-water',
     voedsel: 'text-kaap-food',
-    energie: 'text-kaap-energy'
+    food: 'text-kaap-food',
+    energie: 'text-kaap-energy',
+    energy: 'text-kaap-energy'
 };
 
 const themeColor = themeColors[project.theme] || 'text-gray-900';
+
+const labels = {
+    nl: { back: "← Terug naar overzicht", more: "Meer weten?" },
+    en: { back: "← Back to overview", more: "Want to know more?" }
+};
+
+const l = labels[lang as keyof typeof labels] || labels.nl;
 ---
 
-<Layout title={`${project.title} | Innovatiepunt KAAP`}>
+<Layout title={`${project.title} | Innovatiepunt KAAP`} lang={lang}>
   <article>
     <!-- Hero Image -->
     <div class="h-[50vh] min-h-[400px] relative overflow-hidden bg-kaap-gray">
          <div class="absolute inset-0 bg-kaap-gradient opacity-20"></div>
-         <div class="w-full h-full bg-cover bg-center" style={`background-image: url('${project.image}');`}></div>
+         <div class="w-full h-full bg-cover bg-center" style={`background-image: url('${typeof project.image === 'string' ? project.image : project.image.src}');`}></div>
          <div class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-transparent to-transparent"></div>
          
          <div class="absolute bottom-0 left-0 w-full p-8 pb-12">
@@ -51,11 +67,11 @@ const themeColor = themeColors[project.theme] || 'text-gray-900';
             </div>
             
             <div class="mt-12 pt-8 border-t border-gray-100 flex justify-between items-center">
-                <a href="/projecten" class="font-medium text-gray-500 hover:text-gray-900 transition-colors">
-                    ← Terug naar overzicht
+                <a href={`/${lang}/projecten`} class="font-medium text-gray-500 hover:text-gray-900 transition-colors">
+                    {l.back}
                 </a>
-                 <a href="/contact" class="px-6 py-3 rounded-full bg-kaap-gradient text-white font-bold shadow-md hover:shadow-lg transition-all">
-                    Meer weten?
+                 <a href={`/${lang}/contact`} class="px-6 py-3 rounded-full bg-kaap-gradient text-white font-bold shadow-md hover:shadow-lg transition-all">
+                    {l.more}
                 </a>
             </div>
         </div>

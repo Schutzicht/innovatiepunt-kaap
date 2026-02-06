@@ -10,15 +10,22 @@ import themeFood from '../../assets/photos/theme-food.jpg';
 import themeEnergy from '../../assets/photos/theme-energy.jpg';
 import beeldmerk from '../../assets/graphics/Beeldmerk_RGB_FC.png';
 
+interface Props {
+    lang?: string;
+}
+
+const { lang = 'nl' } = Astro.props;
+
 const themes = [
   {
     id: 'food',
-    label: 'Food',
+    label: lang === 'nl' ? 'Voedsel' : 'Food',
     icon: iconFood,
     color: 'text-kaap-food',
     bg: 'bg-kaap-food',
     image: themeFood,
-    borderColor: 'border-kaap-food'
+    borderColor: 'border-kaap-food',
+    url: lang === 'nl' ? '/voedsel' : '/food'
   },
   {
     id: 'water',
@@ -27,18 +34,27 @@ const themes = [
     color: 'text-kaap-water',
     bg: 'bg-kaap-water',
     image: themeWater,
-    borderColor: 'border-kaap-water'
+    borderColor: 'border-kaap-water',
+    url: '/water'
   },
   {
     id: 'energy',
-    label: 'Energy',
+    label: lang === 'nl' ? 'Energie' : 'Energy',
     icon: iconEnergy,
     color: 'text-kaap-energy',
     bg: 'bg-kaap-energy',
     image: themeEnergy,
-    borderColor: 'border-kaap-energy'
+    borderColor: 'border-kaap-energy',
+    url: lang === 'nl' ? '/energie' : '/energy'
   }
 ];
+
+const labels = {
+    nl: { discover: "Ontdek de transitie" },
+    en: { discover: "Discover the transition" }
+};
+
+const l = labels[lang as keyof typeof labels] || labels.nl;
 ---
 
 <section id="sleek-themes" class="relative w-full h-auto min-h-[600px] md:min-h-[800px] bg-[#222323] overflow-hidden flex flex-col md:flex-row" data-theme="dark">
@@ -77,14 +93,14 @@ const themes = [
 
         <!-- Typography -->
          <div class="order-2 text-center md:text-left z-20 w-full">
-            <h2 class="text-4xl md:text-7xl font-bold font-heading text-white leading-[1.1] mb-6 md:mb-0">
+            <h2 class="text-3xl md:text-7xl font-bold font-heading text-white leading-[1.1] mb-6 md:mb-0">
                 Bring <br/>
                 your <span id="dynamic-word" class="text-kaap-food transition-colors duration-500">food</span> <br/>
                 innovation <br/>
                 to life
             </h2>
             <div class="mt-4 md:mt-8 flex justify-center md:justify-start items-center space-x-4">
-                <a href="/voedsel" id="dynamic-link" class="text-white border-b border-white pb-1 hover:text-gray-300 transition-colors text-sm md:text-base">Ontdek de transitie</a>
+                <a href={`/${lang}${themes[0].url}`} id="dynamic-link" class="text-white border-b border-white pb-1 hover:text-gray-300 transition-colors text-sm md:text-base">{l.discover}</a>
             </div>
         </div>
     </div>
@@ -135,60 +151,46 @@ const themes = [
     }
 </style>
 
-<script>
+<script is:inline define:vars={{ lang, themes }}>
     function initThemes() {
-        console.log('ThemesInteractive: Initializing...');
+        console.log('ThemesInteractive: Initializing with lang:', lang);
         
-        type ThemeKey = 'food' | 'water' | 'energy';
-
-        // Theme Data
-        const themeData: Record<ThemeKey, { color: string; border: string; word: string; url: string }> = {
-            'food': { color: 'text-kaap-food', border: 'border-kaap-food', word: 'food', url: '/voedsel' },
-            'water': { color: 'text-kaap-water', border: 'border-kaap-water', word: 'water', url: '/water' },
-            'energy': { color: 'text-kaap-energy', border: 'border-kaap-energy', word: 'energy', url: '/energie' }
-        };
+        const themeData = {};
+        themes.forEach(t => {
+            themeData[t.id] = {
+                color: t.color,
+                word: t.id === 'food' && lang === 'en' ? 'food' : t.id === 'energy' && lang === 'en' ? 'energy' : t.id,
+                url: `/${lang}${t.url}`
+            };
+        });
 
         const buttons = document.querySelectorAll('.theme-nav-btn');
         const dynamicWord = document.getElementById('dynamic-word');
         const dynamicLink = document.getElementById('dynamic-link');
-        const ringAccent = document.getElementById('ring-accent');
         const imgs = document.querySelectorAll('[data-theme-img]');
         
-        if (!buttons.length) {
-            console.error('ThemesInteractive: No buttons found');
-            return;
-        }
+        if (!buttons.length) return;
 
-        function setTheme(themeId: string) {
-            const key = themeId as ThemeKey;
-            if (!themeData[key]) return;
-            console.log('ThemesInteractive: Setting theme to', key);
+        function setTheme(themeId) {
+            const data = themeData[themeId];
+            if (!data) return;
             
-            // 1. Update Buttons
             buttons.forEach(btn => {
                 if (btn.getAttribute('data-target') === themeId) {
                     btn.classList.add('active');
-                    // Ensure the indicator is visible
                 } else {
                     btn.classList.remove('active');
                 }
             });
 
-            // 2. Update Text & Link
             if (dynamicWord) {
-                const data = themeData[key];
-                
-                // Change classes and text immediately
-                dynamicWord.className = `${data.color} transition-colors duration-300`;
+                dynamicWord.className = `${data.color} transition-colors duration-500`;
                 dynamicWord.innerText = data.word;
-                
-                // Update Link URL
                 if (dynamicLink) {
                     dynamicLink.setAttribute('href', data.url);
                 }
             }
 
-            // 3. Update Image
             imgs.forEach(img => {
                 if (img.getAttribute('data-theme-img') === themeId) {
                     img.classList.remove('opacity-0');
@@ -198,31 +200,20 @@ const themes = [
             });
         }
 
-        // Init
-        // setTheme('food'); // Default is already set in HTML to some extent, but let's enforce it? 
-        // Actually, HTML static content is "food", so we don't need to force run it unless we want to reset.
-        // Let's just listen.
-
-        // Initialize activeTheme with the default (or currently active class)
         let activeTheme = 'food';
         buttons.forEach(btn => {
             if (btn.classList.contains('active')) {
                 const target = btn.getAttribute('data-target');
                 if (target) activeTheme = target;
             }
-        });
-
-        const navContainer = document.querySelector('.flex.flex-row.md\\:flex-col');
-
-        // Listeners
-        buttons.forEach(btn => {
+            
             btn.addEventListener('mouseenter', () => {
                 const target = btn.getAttribute('data-target');
                 if (target) setTheme(target);
             });
             
             btn.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent jump
+                e.preventDefault();
                 const target = btn.getAttribute('data-target');
                 if (target) {
                     activeTheme = target;
@@ -231,7 +222,7 @@ const themes = [
             });
         });
 
-        // Revert to active theme when leaving the navigation area
+        const navContainer = document.querySelector('.theme-nav-btn')?.parentElement;
         if (navContainer) {
             navContainer.addEventListener('mouseleave', () => {
                 setTheme(activeTheme);
@@ -239,13 +230,6 @@ const themes = [
         }
     }
 
-    // Run on load
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initThemes);
-    } else {
-        initThemes();
-    }
-    
-    // Support View Transitions if added later
+    initThemes();
     document.addEventListener('astro:page-load', initThemes);
 </script>

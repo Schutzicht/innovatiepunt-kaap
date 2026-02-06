@@ -1,0 +1,145 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getStaticPathsHelper } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as any);
+
+const content = {
+  nl: {
+    hero: {
+      title: "Huisvesting",
+      subtitle: "Focus op jouw groei in een omgeving die inspireert en faciliteert."
+    },
+    facilities: [
+      {
+        title: "Kantoorruimte Unit A",
+        description: "Een ruime kantoorruimte ideaal voor groeiende teams. Geniet van alle community voordelen en de professionele uitstraling van KAAP.",
+        specs: ["24/7 Toegang", "Eigen inrichting", "Gedeelde faciliteiten"],
+        cta: "Informatie aanvragen"
+      },
+      {
+        title: "Kantoorruimte Unit B",
+        description: "Licht en modern kantoor met uitzicht op het water. De perfecte basis voor innovatieve ondernemers.",
+        specs: ["Modern kantoormeubilair", "Inclusief nutsvoorzieningen", "Community events"],
+        cta: "Informatie aanvragen"
+      },
+      {
+        title: "Kantoorruimte Unit C",
+        description: "Compacte unit voor start-ups of kleine teams. Schaal snel op binnen het KAAP ecosysteem.",
+        specs: ["Flexibele groei", "Huur per maand", "Postverwerking"],
+        cta: "Informatie aanvragen"
+      },
+      {
+        title: "Kantoorruimte Unit D",
+        description: "Hoogwaardig afgewerkte ruimte op de bovenverdieping. Rustig gelegen maar direct verbonden met de actie.",
+        specs: ["Inclusief vergaderuren", "Premium afwerking", "Parkeergelegenheid"],
+        cta: "Informatie aanvragen"
+      }
+    ],
+    labels: {
+        features: "Kenmerken",
+        contact: "Contact opnemen"
+    }
+  },
+  en: {
+    hero: {
+      title: "Housing",
+      subtitle: "Focus on your growth in an environment that inspires and facilitates."
+    },
+    facilities: [
+      {
+        title: "Office Space Unit A",
+        description: "A spacious office room ideal for growing teams. Enjoy all community benefits and the professional appearance of KAAP.",
+        specs: ["24/7 Access", "Private setup", "Shared facilities"],
+        cta: "Request information"
+      },
+      {
+        title: "Office Space Unit B",
+        description: "Bright and modern office with water views. The perfect base for innovative entrepreneurs.",
+        specs: ["Modern office furniture", "Utilities included", "Community events"],
+        cta: "Request information"
+      },
+      {
+        title: "Office Space Unit C",
+        description: "Compact unit for start-ups or small teams. Scale quickly within the KAAP ecosystem.",
+        specs: ["Flexible growth", "Monthly rent", "Mail handling"],
+        cta: "Request information"
+      },
+      {
+        title: "Office Space Unit D",
+        description: "High-quality finished space on the top floor. Quietly located but directly connected to the action.",
+        specs: ["Meeting hours included", "Premium finishing", "Parking available"],
+        cta: "Request information"
+      }
+    ],
+    labels: {
+        features: "Features",
+        contact: "Contact us"
+    }
+  }
+};
+
+const c = content[lang] || content.nl;
+
+const facilityImages = [
+  "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200",
+  "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200",
+  "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200",
+  "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200"
+];
+---
+
+<Layout title={`${c.hero.title} | Innovatiepunt KAAP`} lang={lang}>
+  <section class="py-20 bg-gray-50 border-b border-gray-100">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+       <div class="reveal">
+         <span class="text-kaap-purple font-bold tracking-widest uppercase text-sm mb-4 block">Huisvesting</span>
+         <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">{c.hero.title}</h1>
+         <p class="text-xl text-gray-500 max-w-2xl leading-relaxed">{c.hero.subtitle}</p>
+       </div>
+     </div>
+  </section>
+
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="space-y-24">
+        {c.facilities.map((facility, index) => (
+          <div class={`flex flex-col md:flex-row gap-12 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} reveal`}>
+            <div class="w-full md:w-1/2">
+               <div class="relative rounded-3xl overflow-hidden shadow-2xl group border border-gray-100">
+                   <div class="absolute inset-0 bg-kaap-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-500 z-10"></div>
+                   <img src={facilityImages[index]} alt={facility.title} class="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-700" />
+               </div>
+            </div>
+            <div class="w-full md:w-1/2">
+                <h2 class="text-3xl font-bold font-heading text-gray-900 mb-4">{facility.title}</h2>
+                <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                    {facility.description}
+                </p>
+                <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-100">
+                    <h4 class="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">{c.labels.features}</h4>
+                    <ul class="space-y-2">
+                        {facility.specs.map(spec => (
+                            <li class="flex items-center text-gray-600">
+                                <svg class="w-5 h-5 text-kaap-purple mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                {spec}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <a href={`/${lang}/contact`} class="inline-flex items-center px-8 py-4 bg-kaap-gray text-white font-bold rounded-tl-2xl rounded-br-2xl hover:bg-kaap-gradient transition-all shadow-lg hover:scale-105">
+                    {facility.cta}
+                </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,174 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getStaticPathsHelper } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as any);
+
+const content = {
+  nl: {
+    hero: {
+      title: "Vergaderen & Ontmoeten",
+      subtitle: "Professionele ruimtes voor elke bijeenkomst, van brainstorm tot presentatie."
+    },
+    facilities: [
+      {
+        title: "Vonk",
+        description: "Een inspirerende ruimte voor trainingen, presentaties of kleinschalige congressen. Voorzien van een kleine tribune voor extra publiek of break-out sessies.",
+        specs: ["18 zitplaatsen + tribune", "4K HD-TV", "Flip-over & Whiteboard", "Airco & WiFi"],
+        price: "€ 43,50 per uur"
+      },
+      {
+        title: "Stroom",
+        description: "Gelegen naast de proefproductieruimte, ideaal voor productieve sessies en break-out groepen in een industriële sfeer.",
+        specs: ["Max. 30 personen", "4K HD-TV", "Flip-over & Whiteboard", "Licht & Ruimtelijk"],
+        price: "€ 35,50 per uur"
+      },
+      {
+        title: "Bron",
+        description: "Een persoonlijke ruimte voor brainstormsessies, workshops of intieme presentaties waar focus centraal staat.",
+        specs: ["Tot 8 personen", "4K HD-TV", "Flip-over & Whiteboard", "Focus setting"],
+        price: "€ 36,00 per uur"
+      },
+      {
+        title: "Workshopruimte",
+        description: "Grote, flexibele ruimte die direct verbonden is met de proefkeuken. Ideaal voor lezingen, seminars en grotere bijeenkomsten.",
+        specs: ["48 zitplaatsen", "Verplaatsbare wanden", "Flexibele opstelling", "Naast proefkeuken"],
+        price: "€ 275,00 per dagdeel"
+      },
+      {
+        title: "Eventhal",
+        description: "Dé rauwe, industriële locatie voor grote evenementen op de Kenniswerf. Volledig naar eigen wens in te richten voor beurzen of congressen.",
+        specs: ["100 tot 1.000 gasten", "Industrieel karakter", "Volledig flexibel", "Hoge plafonds"],
+        price: "€ 500,00 per dagdeel"
+      },
+      {
+        title: "Flexplekken (Proeflokaal)",
+        description: "Licht en inspirerend proeflokaal waar ondernemers en studenten kosteloos kunnen werken en ideeën uitwisselen.",
+        specs: ["14 werkplekken", "Community netwerk", "High-speed WiFi", "Inspirerende omgeving"],
+        price: "Gratis"
+      }
+    ],
+    labels: {
+        features: "Specificaties",
+        book: "Direct Reserveren",
+        price: "Vanaf prijs"
+    }
+  },
+  en: {
+    hero: {
+      title: "Meeting & Gathering",
+      subtitle: "Professional spaces for every gathering, from intimate brainstorms to large-scale events."
+    },
+    facilities: [
+      {
+        title: "Vonk",
+        description: "An inspiring room for training sessions, presentations, or small conferences. Features a small tribune for extra audience or break-out sessions.",
+        specs: ["18 seats + tribune", "4K HD-TV", "Flip-over & Whiteboard", "AC & WiFi"],
+        price: "€ 43.50 per hour"
+      },
+      {
+        title: "Stroom",
+        description: "Located next to the pilot production space, ideal for productive sessions and break-out groups in an industrial atmosphere.",
+        specs: ["Max. 30 people", "4K HD-TV", "Flip-over & Whiteboard", "Bright & Spacious"],
+        price: "€ 35.50 per hour"
+      },
+      {
+        title: "Bron",
+        description: "A personal space for brainstorm sessions, workshops, or intimate presentations where focus is key.",
+        specs: ["Up to 8 people", "4K HD-TV", "Flip-over & Whiteboard", "Focus setting"],
+        price: "€ 36.00 per hour"
+      },
+      {
+        title: "Workshop Space",
+        description: "Large, flexible room directly connected to the test kitchen. Ideal for lectures, seminars, and larger gatherings.",
+        specs: ["48 seats", "Movable walls", "Flexible layout", "Next to test kitchen"],
+        price: "€ 275.00 per half-day"
+      },
+      {
+        title: "Event Hall",
+        description: "The raw, industrial location for large events. Completely customizable for trade fairs, conferences, or product launches.",
+        specs: ["100 to 1,000 guests", "Industrial character", "Fully flexible", "High ceilings"],
+        price: "€ 500.00 per half-day"
+      },
+      {
+        title: "Flex Spots (Tasting Room)",
+        description: "Bright and inspiring tasting room where entrepreneurs and students can work and exchange ideas free of charge.",
+        specs: ["14 workstations", "Community network", "High-speed WiFi", "Inspiring environment"],
+        price: "Free"
+      }
+    ],
+    labels: {
+        features: "Specifications",
+        book: "Book Directly",
+        price: "Starting price"
+    }
+  }
+};
+
+const c = content[lang] || content.nl;
+
+const facilityImages = [
+  "https://info.dockwize.nl/hubfs/Vonk.jpg",
+  "https://info.dockwize.nl/hubfs/Stroom.jpg",
+  "https://info.dockwize.nl/hubfs/KAAP/Bron%20(2).jpg",
+  "https://info.dockwize.nl/hubfs/KAAP/Workshopruimte.jpg",
+  "https://info.dockwize.nl/hubfs/KAAP/Eventhal.jpg",
+  "https://info.dockwize.nl/hubfs/Flexwerken.jpg"
+];
+---
+
+<Layout title={`${c.hero.title} | Innovatiepunt KAAP`} lang={lang}>
+  <section class="py-20 bg-gray-50 border-b border-gray-100">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+       <div class="reveal">
+         <span class="text-kaap-energy font-bold tracking-widest uppercase text-sm mb-4 block">{lang === 'nl' ? 'Faciliteiten' : 'Facilities'}</span>
+         <h1 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 mb-4">{c.hero.title}</h1>
+         <p class="text-xl text-gray-500 max-w-2xl leading-relaxed">{c.hero.subtitle}</p>
+       </div>
+     </div>
+  </section>
+
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="space-y-24">
+        {c.facilities.map((facility, index) => (
+          <div class={`flex flex-col md:flex-row gap-12 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} reveal`}>
+            <div class="w-full md:w-1/2">
+               <div class="relative rounded-3xl overflow-hidden shadow-2xl group border border-gray-100">
+                   <div class="absolute inset-0 bg-kaap-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-500 z-10"></div>
+                   <img src={facilityImages[index]} alt={facility.title} class="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-700" />
+               </div>
+            </div>
+            <div class="w-full md:w-1/2">
+                <h2 class="text-3xl font-bold font-heading text-gray-900 mb-2">{facility.title}</h2>
+                <div class="text-kaap-purple font-bold mb-4">{c.labels.price}: {facility.price}</div>
+                <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                    {facility.description}
+                </p>
+                <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-100">
+                    <h4 class="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">{c.labels.features}</h4>
+                    <ul class="space-y-2">
+                        {facility.specs.map(spec => (
+                            <li class="flex items-center text-gray-600">
+                                <svg class="w-5 h-5 text-kaap-energy mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                {spec}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <a href="https://kaap.bisner.com/book" target="_blank" class="inline-flex items-center px-8 py-4 bg-kaap-gray text-white font-bold rounded-tl-2xl rounded-br-2xl hover:bg-kaap-gradient transition-all shadow-lg hover:scale-105">
+                    {c.labels.book}
+                </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

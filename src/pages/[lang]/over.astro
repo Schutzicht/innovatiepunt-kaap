@@ -1,14 +1,113 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 // We'll use a placeholder for the "Robuuste ruimte" look
 const industrialBg = "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2600";
 const makerSpace = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200";
-import floorPlan from '../assets/images/kaap-plattegrond.png';
+import floorPlan from '../../assets/images/kaap-plattegrond.png';
+import { getStaticPathsHelper } from '../../i18n/utils';
 
+export function getStaticPaths() {
+  return getStaticPathsHelper();
+}
+
+const { lang } = Astro.params;
+
+const content = {
+  nl: {
+    hero: {
+      label: "Innovatiepunt KAAP",
+      title: "Bring your innovation to life.",
+      subtitle: "De fysieke ruimte die je nodig hebt om een innovatief idee werkelijkheid te laten worden.",
+      scroll: "Ontdek"
+    },
+    story: {
+      title: "Het punt waar innovaties",
+      title_suffix: "tot leven komen.",
+      quote: "\"Van de tekentafel naar het dagelijkse leven.\"",
+      p1: "Zeeland is pionier. Vernieuwend denken en ons creatief en technisch aanpassen aan elementen als water, energie en voedsel zit in ons DNA. Maar we denken niet alleen innovatief: we bieden de executiekracht om te maken, testen en ontwikkelen.",
+      p2: "Op het uiterste puntje van de Kenniswerf in Vlissingen fungeert KAAP als een baken voor de regio. Een centrale locatie voor het ontwikkelen, testen en demonstreren waar innovaties op 'real scale' samenkomen.",
+      p3: {
+        title: "4000m² Test- & Ontwikkelplek",
+        desc: "In de KAAP vind je unieke ruimtes waar overheid, bedrijfsleven en onderwijs samenwerken aan tastbare innovatie. Geen kantoorpand, maar een fysieke proeftuin voor opschaling:"
+      },
+      areas: ['Proefkeuken', 'Proefproductieruimte', 'Ontwikkel- & Demoruimte', 'Proeflokaal', 'Flexplekken & Kantoren'],
+      floorplan_label: "Plattegrond Begane Grond",
+      protein_transition: "Innovaties zijn de oplossingen die ons leven beter maken. En <strong>Food, Energy en Water</strong> zijn daarbij essentiële elementen en een spil in circulair denken."
+    },
+    values: {
+        background_text: "Gedurfd",
+        items: [
+            {
+                title: "Robuuste Ruimtes",
+                desc: "Geen gepolijste vergaderzalen, maar stoere plekken waar gewerkt mag worden. Een levendige locatie die uitnodigt tot actie."
+            },
+            {
+                title: "Afwijkende Aanpak",
+                desc: "We doen het anders. We stimuleren samenwerkingen die je niet verwacht. Eigenzinnig, gedurfd en altijd gericht op resultaat."
+            },
+            {
+                title: "Life Changing",
+                desc: "Of jouw idee nu life changing of life saving is: het verdient de denkkracht en commitment van de Delta van de toekomst."
+            }
+        ]
+    },
+    cta: {
+        title: "Delta van de",
+        title_suffix: "Toekomst",
+        btn: "Kom kijken"
+    }
+  },
+  en: {
+    hero: {
+      label: "Innovatiepunt KAAP",
+      title: "Bring your innovation to life.",
+      subtitle: "The physical space you need to turn an innovative idea into reality.",
+      scroll: "Discover"
+    },
+    story: {
+      title: "The point where innovations",
+      title_suffix: "come to life.",
+      quote: "\"From the drawing board to daily life.\"",
+      p1: "Zeeland is a pioneer. Innovative thinking and creatively and technically adapting to elements such as water, energy, and food is in our DNA. But we don't just think innovatively: we provide the execution power to make, test, and develop.",
+      p2: "At the very tip of the Kenniswerf in Vlissingen, KAAP acts as a beacon for the region. A central location for development, testing, and demonstration where innovations converge on a 'real scale'.",
+      p3: {
+        title: "4000m² Test & Development Space",
+        desc: "In KAAP, you will find unique spaces where government, business, and education collaborate on tangible innovation. Not an office building, but a physical playground for scaling:"
+      },
+      areas: ['Test Kitchen', 'Pilot Production Room', 'Development & Demo Space', 'Tasting Room', 'Flex Spots & Offices'],
+      floorplan_label: "Ground Floor Plan",
+      protein_transition: "Innovations are the solutions that make our lives better. And <strong>Food, Energy, and Water</strong> are essential elements and a pivot in circular thinking."
+    },
+    values: {
+        background_text: "Bold",
+        items: [
+            {
+                title: "Robust Spaces",
+                desc: "No polished meeting rooms, but tough places where work can be done. A lively location that invites action."
+            },
+            {
+                title: "Different Approach",
+                desc: "We do it differently. We stimulate collaborations you don't expect. Quirkly, bold, and always results-oriented."
+            },
+            {
+                title: "Life Changing",
+                desc: "Whether your idea is life-changing or life-saving: it deserves the mental power and commitment of the Delta of the future."
+            }
+        ]
+    },
+    cta: {
+        title: "Delta of the",
+        title_suffix: "Future",
+        btn: "Come and see"
+    }
+  }
+};
+
+const c = content[lang] || content.nl;
 ---
 
-<Layout title="Over KAAP | Bring your innovation to life">
+<Layout title={`${lang === 'nl' ? 'Over KAAP' : 'About KAAP'} | Bring your innovation to life`} lang={lang}>
   <!-- Hero: Pay-off -->
   <section class="relative min-h-[90vh] flex items-center bg-kaap-gray overflow-hidden">
     <div class="absolute inset-0 z-0">
@@ -20,21 +119,19 @@ import floorPlan from '../assets/images/kaap-plattegrond.png';
     
     <div class="relative z-10 max-w-7xl mx-auto px-4 w-full">
         <div class="max-w-4xl">
-            <span class="block text-kaap-pink font-bold tracking-[0.2em] uppercase mb-6 reveal">KAAP innovation point</span>
+            <span class="block text-kaap-pink font-bold tracking-[0.2em] uppercase mb-6 reveal">{c.hero.label}</span>
             <h1 class="text-6xl md:text-9xl font-bold font-heading text-white leading-none mb-8 reveal delay-100">
-                Bring your <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-kaap-pink to-kaap-purple">innovation</span><br/>
-                to life.
+                {c.hero.title}
             </h1>
             <p class="text-2xl md:text-3xl text-gray-300 max-w-2xl leading-relaxed reveal delay-200 font-light border-l-4 border-kaap-purple pl-6">
-                De <span class="text-white font-bold">fysieke ruimte</span> die je nodig hebt om een innovatief idee werkelijkheid te laten worden.
+                {c.hero.subtitle}
             </p>
         </div>
     </div>
 
     <!-- Scroll Indicator -->
     <div class="absolute bottom-10 right-10 text-white flex flex-col items-center gap-2 animate-bounce opacity-50">
-        <span class="text-xs uppercase tracking-widest writing-vertical-lr">Discover</span>
+        <span class="text-xs uppercase tracking-widest writing-vertical-lr">{c.hero.scroll}</span>
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
     </div>
   </section>
@@ -46,11 +143,11 @@ import floorPlan from '../assets/images/kaap-plattegrond.png';
             <!-- Left: The Bold Statement -->
             <div class="lg:col-span-5 sticky top-32 reveal">
                 <h2 class="text-4xl md:text-6xl font-bold font-heading text-gray-900 leading-tight mb-8 kastlijntje">
-                    Het punt waar innovaties <span class="text-kaap-purple">tot leven komen.</span>
+                    {c.story.title} <span class="text-kaap-purple">{c.story.title_suffix}</span>
                 </h2>
                 <div class="w-20 h-2 bg-kaap-gradient mb-8"></div>
                 <p class="text-gray-500 text-lg font-medium italic">
-                    "Van de tekentafel naar het dagelijkse leven."
+                    {c.story.quote}
                 </p>
             </div>
 
@@ -58,24 +155,23 @@ import floorPlan from '../assets/images/kaap-plattegrond.png';
             <div class="lg:col-span-7 space-y-16 text-lg md:text-xl text-gray-700 leading-relaxed font-light">
                 <div class="reveal delay-100">
                     <p class="mb-6">
-                        <strong class="text-gray-900 font-bold block text-2xl mb-2">Zeeland is pionier.</strong>
-                        Vernieuwend denken en ons creatief en technisch aanpassen aan elementen als <span class="font-bold text-kaap-water">water</span>, <span class="font-bold text-kaap-energy">energie</span> en <span class="font-bold text-kaap-food">voedsel</span> zit in ons DNA. Maar we denken niet alleen innovatief: we willen juist ook <strong>maken, testen en ontwikkelen</strong>.
+                        {c.story.p1}
                     </p>
                 </div>
 
                 <div class="reveal delay-200 p-8 bg-gray-50 border-l-4 border-kaap-food rounded-r-2xl">
                     <p>
-                        Op het uiterste puntje van de <strong>Kenniswerf in Vlissingen</strong> is ruimte gecreëerd. Dé locatie waar innovaties samenkomen. Letterlijk en figuurlijk de ruimte die jouw innovatie tot leven brengt.
+                        {c.story.p2}
                     </p>
                 </div>
 
                 <div class="reveal delay-300">
-                    <h3 class="text-3xl font-bold font-heading text-gray-900 mb-6 kastlijntje">4000m² Speelruimte</h3>
+                    <h3 class="text-3xl font-bold font-heading text-gray-900 mb-6 kastlijntje">{c.story.p3.title}</h3>
                     <p class="mb-6">
-                        In de KAAP vind je unieke ruimtes waar overheid, bedrijfsleven en onderwijs samenwerken. Geen kantoorpand, maar een <strong>broedplaats</strong>:
+                        {c.story.p3.desc}
                     </p>
                     <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 mb-12">
-                        {['Proefkeuken', 'Proefproductieruimte', 'Ontwikkel- & Demoruimte', 'Proeflokaal', 'Flexplekken & Kantoren'].map((item, index) => (
+                        {c.story.areas.map((item, index) => (
                              <li class="flex items-center space-x-3 text-gray-800 font-medium p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-100 hover:border-kaap-purple transition-all hover:scale-105 cursor-default group map-hover-trigger" data-hover-target={`area-${index + 1}`}>
                                 <span class="w-6 h-6 rounded-full bg-kaap-gray text-white flex items-center justify-center text-xs font-bold shadow-sm group-hover:bg-kaap-purple transition-colors">{index + 1}</span>
                                 <span>{item}</span>
@@ -106,7 +202,7 @@ import floorPlan from '../assets/images/kaap-plattegrond.png';
                         </svg>
 
                         <div class="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md px-4 py-2 rounded-lg border border-white/20 text-xs text-white">
-                            Plattegrond Begane Grond
+                            {c.story.floorplan_label}
                         </div>
                     </div>
 
@@ -138,9 +234,7 @@ import floorPlan from '../assets/images/kaap-plattegrond.png';
                 </div>
 
                 <div class="reveal delay-400">
-                     <p>
-                        Innovaties zijn de oplossingen die ons leven beter maken. En <strong>Food, Energy en Water</strong> zijn daarbij essentiële elementen en een spil in circulair denken.
-                    </p>
+                     <p set:html={c.story.protein_transition} />
                 </div>
             </div>
         </div>
@@ -151,49 +245,32 @@ import floorPlan from '../assets/images/kaap-plattegrond.png';
   <section class="py-24 bg-kaap-gray text-white relative overflow-hidden">
      <!-- Massive Background Text -->
      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-[0.03] overflow-hidden whitespace-nowrap">
-        <span class="text-[20rem] font-bold font-heading uppercase text-outline">Gedurfd</span>
+        <span class="text-[20rem] font-bold font-heading uppercase text-outline">{c.values.background_text}</span>
      </div>
 
      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- 1. Robuust & Levendig -->
-            <div class="bg-white/5 backdrop-blur-sm p-10 border border-white/10 hover:bg-white/10 transition-colors group reveal">
-                <h3 class="text-2xl font-bold font-heading mb-4 text-kaap-pink">Robuuste Ruimtes</h3>
-                <p class="text-gray-400 leading-relaxed">
-                    Geen gepolijste vergaderzalen, maar stoere plekken waar gewerkt mag worden. Een levendige locatie die uitnodigt tot actie.
-                </p>
-            </div>
-
-             <!-- 2. Afwijkend & Stimulerend -->
-            <div class="bg-white/5 backdrop-blur-sm p-10 border border-white/10 hover:bg-white/10 transition-colors group reveal delay-100">
-                <h3 class="text-2xl font-bold font-heading mb-4 text-kaap-purple">Afwijkende Aanpak</h3>
-                <p class="text-gray-400 leading-relaxed">
-                    We doen het anders. We stimuleren samenwerkingen die je niet verwacht. Eigenzinnig, gedurfd en altijd gericht op resultaat.
-                </p>
-            </div>
-
-             <!-- 3. Inspirerend & Opvallend -->
-            <div class="bg-white/5 backdrop-blur-sm p-10 border border-white/10 hover:bg-white/10 transition-colors group reveal delay-200">
-                <h3 class="text-2xl font-bold font-heading mb-4 text-kaap-energy">Life Changing</h3>
-                <p class="text-gray-400 leading-relaxed">
-                    Of jouw idee nu life changing of life saving is: het verdient de denkkracht en commitment van de Delta van de toekomst.
-                </p>
-            </div>
+            {c.values.items.map((item, index) => (
+                <div class={`bg-white/5 backdrop-blur-sm p-10 border border-white/10 hover:bg-white/10 transition-colors group reveal delay-${index * 100}`}>
+                    <h3 class={`text-2xl font-bold font-heading mb-4 ${index === 0 ? 'text-kaap-pink' : index === 1 ? 'text-kaap-purple' : 'text-kaap-energy'}`}>{item.title}</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        {item.desc}
+                    </p>
+                </div>
+            ))}
         </div>
      </div>
   </section>
-
-   </section>
 
   <!-- Photo Section / Impression -->
   <section class="relative h-[60vh] md:h-[80vh] bg-fixed bg-center bg-cover flex items-center justify-center group" style={`background-image: url('${makerSpace}');`}>
       <div class="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors duration-700"></div>
       <div class="relative z-10 text-center max-w-4xl px-4 reveal">
           <h2 class="text-5xl md:text-8xl font-bold font-heading text-white mb-6 tracking-tighter">
-            Delta van de <span class="text-kaap-water">Toekomst</span>
+            {c.cta.title} <span class="text-kaap-water">{c.cta.title_suffix}</span>
           </h2>
-          <a href="/contact" class="inline-block px-10 py-5 bg-white text-gray-900 font-bold text-xl rounded-full hover:scale-110 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-            Kom kijken
+          <a href={`/${lang}/contact`} class="inline-block px-10 py-5 bg-white text-gray-900 font-bold text-xl rounded-full hover:scale-110 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+            {c.cta.btn}
           </a>
       </div>
   </section>
