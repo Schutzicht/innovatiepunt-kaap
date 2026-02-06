@@ -1,0 +1,70 @@
+# Merkprofiel KAAP
+
+## Dockwize
+
+Datum:08-07-
+Door:RobLambert
+
+
+## Merkbelofte
+
+KAAPgeeftjede **(fysieke)ruimte** diejenodighebtomeen **innovatiefideeofproduct
+werkelijkheid** telatenworden.De **essentiëlestap** vantestenendoorontwikkelenvindthier
+plaats.
+
+## Merktekst(beknoptebrandstory)
+
+KAAPishetpuntwaarinnovatiestotlevenkomen.InZeelandzijnwehetgewend:
+vernieuwenddenkenenonscreatiefentechnischaanpassenaanelementenalswater,
+energieenfood.Hetzitinons!Wedenkennietalleeninnovatiefmaarwillenjuistook
+maken,testenenontwikkelen.DaaromiseropdeKenniswerfinVlissingenruimte
+gecreëerdwaarjeopgroteschaalkantesten,demonstrerenenontwikkelen.Ditpunt,deze
+Kaap,isdélocatieenhétherkenningspuntwaarinnovatiesinFood,EnergyenWater
+samenkomen.OphetuiterstepuntjevandeKenniswerfvindjeletterlijkenfiguurlijkde
+ruimtediejouwinnovatietotlevenbrengt.
+
+IndeKaapzijnuniekeruimteswaaroverheid,bedrijfslevenenonderwijssamenwerken,
+co-creatiesopzetten,elkaarontmoetenofeenbusinessnetwerkopbouwen.4000m2aan
+binnen-enbuitenruimtesvoorhetbouwenaannieuweconceptenofinnovaties:
+proefproductieruimtes,eenproefkeuken,inspirerende(flex)werkplekkeneneen
+sprekersarena.Zomaakjedestapvandetekentafelnaarhetdagelijkseleven.Want
+innovatieszijndeoplossingendieonslevenbetermaken.EnFood,EnergyenWaterzijn
+daarbijessentiëleelementeneneenspilincirculairdenken.
+
+KAAPheeftgrootsteplannenvoordetoekomst.Enofjouwideenoulifechangingoflife
+savingis,hetverdientderuimte,dekans,dedenkkrachtencommitmentombijtekunnen
+dragenaanhetlevenindeDeltavandetoekomst.WijzijndeKAAP,innovatiepuntin
+Zeeland.
+
+## Pay-off
+
+KAAPinnovationpoint
+**Bringyourinnovationtolife**
+
+2
+
+
+## Merkwaarden
+
+Robuusteruimtes(what)
+Levendigelocatie(what)
+
+Afwijkendeaanpak(how)
+Stimulerendesamenwerkingen(how)
+
+Inspirerendeinnovaties(why)
+Opvallendeoplossingen(why)
+
+## Kernboodschap
+
+KAAPinnovationpointbrengtinnovatiesinFood,EnergyofWatertotleven.
+
+## Gewensteassociaties
+
+_Uniek,gedurfd,eigenzinnig,stoer,krachtig,Zeeuws,dynamisch,innovatief,experimenteren,
+verbinden,co-creatie,inspirerend,onderzoeken,faciliteiten,verrassend,robuust,
+toekomstgericht,inontwikkeling,open,netwerk,ontmoeting,vindingrijk._
+
+3
+
+

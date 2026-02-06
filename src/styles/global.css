@@ -13,14 +13,20 @@
     --color-kaap-purple: #8d73da;
     --color-kaap-bg: #f8fafc;
 
-    /* Strict Brand Colors from PDF */
-    --color-kaap-gray: #222222;
-    /* C75 M64 Y59 K77 */
+    /* Strict Brand Colors */
+    --color-kaap-gray: #231f20; /* Dark Corporate Gray */
     --color-kaap-light-gray: #3d3d3d;
-    /* C67 M57 Y54 K59 */
     --color-kaap-text-gray: #8f8f8f;
-    /* C0 M0 Y0 K44 */
     --color-kaap-black: #000000;
+    
+    /* Brand Theme Colors */
+    --color-kaap-water: #00acc6;
+    --color-kaap-food: #97c165;
+    --color-kaap-energy: #f97d38;
+    
+    /* Gradient Colors */
+    --color-kaap-pink: #ea6398;
+    --color-kaap-purple: #8d73da;
 
     --animate-float: float 6s ease-in-out infinite;
 

@@ -1,53 +1,92 @@
 ---
-import { Image } from 'astro:assets';
-import iconWater from '../../assets/icons/Kaap_RGB_Water_Blok.svg';
-import iconFood from '../../assets/icons/Kaap_RGB_Food_Blok.svg';
-import iconEnergy from '../../assets/icons/Kaap_RGB_Energie_Blok.svg';
+import { Image } from "astro:assets";
+import iconWater from "../../assets/icons/Kaap_RGB_Water_Blok.svg";
+import iconFood from "../../assets/icons/Kaap_RGB_Food_Blok.svg";
+import iconEnergy from "../../assets/icons/Kaap_RGB_Energie_Blok.svg";
 
 interface Props {
-  project: {
-    title: string;
-    slug: string;
-    theme: string;
-    description: string;
-    image: ImageMetadata | string;
-  };
-  class?: string;
-  index?: number;
+    project: {
+        title: string;
+        slug: string;
+        theme: string;
+        description: string;
+        image: ImageMetadata | string;
+    };
+    class?: string;
+    index?: number;
 }
 
 const { project, class: className = "", index = 0 } = Astro.props;
 
-const icon = project.theme === 'water' ? iconWater : project.theme === 'voedsel' ? iconFood : iconEnergy;
-const imageSrc = typeof project.image === 'string' ? project.image : project.image.src;
+const icon =
+    project.theme === "water"
+        ? iconWater
+        : project.theme === "voedsel"
+          ? iconFood
+          : iconEnergy;
+const imageSrc =
+    typeof project.image === "string" ? project.image : project.image.src;
 ---
 
-<article class={`relative rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group/card reveal delay-${(index % 3) * 100} select-none h-[400px] md:h-[500px] w-full ${className}`}>
+<article
+    class={`relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group/card reveal delay-${(index % 3) * 100} select-none h-[400px] md:h-[500px] w-full ${className}`}
+>
     <!-- Full Background Image -->
     <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-kaap-gradient opacity-0 group-hover/card:opacity-20 transition-opacity duration-500 z-20 mix-blend-overlay"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-kaap-gray/40 to-transparent z-10"></div>
-        <div class="w-full h-full bg-cover bg-center transform group-hover/card:scale-110 transition-transform duration-700" style={`background-image: url('${imageSrc}');`}></div>
+        <div
+            class="absolute inset-0 bg-kaap-gradient opacity-0 group-hover/card:opacity-20 transition-opacity duration-500 z-20 mix-blend-overlay"
+        >
+        </div>
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-kaap-gray/40 to-transparent z-10"
+        >
+        </div>
+        <div
+            class="w-full h-full bg-cover bg-center transform group-hover/card:scale-110 transition-transform duration-700"
+            style={`background-image: url('${imageSrc}');`}
+        >
+        </div>
     </div>
 
     <!-- Top Left Theme Icon (Square) -->
-    <div class="absolute top-6 left-6 z-30 w-12 h-12 md:w-16 md:h-16 bg-white rounded-xl p-2 md:p-3 shadow-lg transform group-hover/card:rotate-6 transition-transform duration-300">
-        <Image src={icon} alt={project.theme} class="w-full h-full object-contain" />
+    <div
+        class="absolute top-6 left-6 z-30 w-12 h-12 md:w-16 md:h-16 bg-white rounded-tl-xl rounded-br-xl p-2 md:p-3 shadow-lg transform group-hover/card:rotate-6 transition-transform duration-300"
+    >
+        <Image
+            src={icon}
+            alt={project.theme}
+            class="w-full h-full object-contain"
+        />
     </div>
 
     <!-- Content Overlay -->
-    <div class="absolute bottom-0 left-0 w-full p-6 md:p-8 z-30 transform translate-y-4 group-hover/card:translate-y-0 transition-transform duration-500">
-        <span class={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 bg-white/10 backdrop-blur text-white border border-white/20 shadow-sm`}>
+    <div
+        class="absolute bottom-0 left-0 w-full p-6 md:p-8 z-30 transform translate-y-4 group-hover/card:translate-y-0 transition-transform duration-500"
+    >
+        <span
+            class={`inline-block px-3 py-1 rounded-tl-md rounded-br-md text-xs font-bold uppercase tracking-wider mb-4 bg-white/10 backdrop-blur text-white border border-white/20 shadow-sm`}
+        >
             {project.theme}
         </span>
-        
+
         <a href={`/projecten/${project.slug}`} class="block group/link">
-            <h3 class="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3 leading-tight drop-shadow-md group-hover/link:text-kaap-pink transition-colors">{project.title}</h3>
-            <p class="text-gray-300 text-sm line-clamp-2 mb-4 md:mb-6 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 delay-100">
+            <h3
+                class="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3 leading-tight drop-shadow-md group-hover/link:text-kaap-pink transition-colors"
+            >
+                {project.title}
+            </h3>
+            <p
+                class="text-gray-300 text-sm line-clamp-2 mb-4 md:mb-6 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 delay-100"
+            >
                 {project.description}
             </p>
-            <span class="text-white font-bold inline-flex items-center group-hover/link:text-kaap-pink transition-colors cursor-pointer text-sm md:text-base">
-                Bekijk project <span class="ml-2 transform group-hover/link:translate-x-2 transition-transform">→</span>
+            <span
+                class="text-white font-bold inline-flex items-center group-hover/link:text-kaap-pink transition-colors cursor-pointer text-sm md:text-base"
+            >
+                Bekijk project <span
+                    class="ml-2 transform group-hover/link:translate-x-2 transition-transform"
+                    >→</span
+                >
             </span>
         </a>
     </div>
