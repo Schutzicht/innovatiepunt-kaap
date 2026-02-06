@@ -5,9 +5,12 @@ import { Image } from 'astro:assets';
 import iconWater from '../assets/icons/Kaap_RGB_Water_Blok.svg';
 import iconFood from '../assets/icons/Kaap_RGB_Food_Blok.svg';
 import iconEnergy from '../assets/icons/Kaap_RGB_Energie_Blok.svg';
+
+
 import heroImage from '../assets/images/hero.jpg';
 import { projects } from '../data/projects';
 import ProjectCard from '../components/cards/ProjectCard.astro';
+import ThemesInteractive from '../components/home/ThemesInteractive.astro';
 
 // Brand Logos for Carousel
 import logoRondFC from '../assets/branding/Kaap_RGB_Logo_rond_fc.svg';
@@ -30,29 +33,7 @@ import facilityHousing from '../assets/photos/facility-housing.jpg';
 import facilityAssets from '../assets/photos/facility-assets.jpg';
 import facilityCommunity from '../assets/photos/facility-community.jpg';
 
-const themes = [
-  {
-    title: 'Water',
-    description: 'Innovaties in maritieme sector en watertechnologie.',
-    icon: iconWater,
-    color: 'text-kaap-water',
-    link: '/water'
-  },
-  {
-    title: 'Voedsel',
-    description: 'Toekomstbestendige voedselsystemen en eiwittransitie.',
-    icon: iconFood,
-    color: 'text-kaap-food',
-    link: '/voedsel'
-  },
-  {
-    title: 'Energie',
-    description: 'Duurzame energieoplossingen en de energietransitie.',
-    icon: iconEnergy,
-    color: 'text-kaap-energy',
-    link: '/energie'
-  }
-];
+
 ---
 
 <Layout title="Innovatiepunt KAAP | Water, Voedsel & Energie">
@@ -106,32 +87,7 @@ const themes = [
   </section>
 
   <!-- Themes Section -->
-  <section class="py-24 bg-white relative z-20 -mt-10 rounded-t-[3rem] shadow-[0_-20px_40px_rgba(0,0,0,0.05)]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="mb-16 reveal">
-        <h2 class="text-3xl md:text-5xl font-bold font-heading mb-4 text-gray-900 kastlijntje">Onze Transities</h2>
-        <p class="text-gray-600 max-w-2xl">
-          KAAP focust zich op drie kernthema's die essentieel zijn voor een duurzame toekomst.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        {themes.map((theme, index) => (
-          <a href={theme.link} class={`reveal group block p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:shadow-2xl hover:bg-white transition-all duration-300 transform hover:-translate-y-2 delay-${index * 100}`}>
-            <div class="flex flex-col items-center text-center">
-              <div class="w-24 h-24 mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                 <Image src={theme.icon} alt={theme.title} class="w-full h-full object-contain drop-shadow-md" />
-              </div>
-              <h3 class={`text-2xl font-bold ${theme.color} mb-3`}>{theme.title}</h3>
-              <p class="text-gray-500 leading-relaxed">
-                {theme.description}
-              </p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  <ThemesInteractive />
 
   <!-- Intro Section -->
   <section id="ontdek" class="py-24 bg-gray-50 relative z-20">

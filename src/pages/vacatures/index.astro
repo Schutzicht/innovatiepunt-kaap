@@ -1,0 +1,84 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { vacancies } from '../../data/vacancies';
+---
+
+<Layout title="Vacatures | Innovatiepunt KAAP">
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] flex items-center justify-center bg-kaap-gray overflow-hidden">
+     <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-kaap-gradient opacity-10 mix-blend-overlay"></div>
+        <div class="absolute inset-0" style="background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 30px 30px;"></div>
+    </div>
+
+    <div class="relative z-10 text-center max-w-5xl px-4 py-20 reveal">
+        <span class="text-kaap-pink font-bold tracking-[0.2em] uppercase mb-6 block animate-pulse">Join the team</span>
+        <h1 class="text-5xl md:text-8xl font-bold font-heading text-white leading-none mb-8">
+            Bouw mee aan <br/>
+            <span class="text-kaap-purple">de toekomst.</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
+            Werken bij KAAP betekent werken in het epicentrum van innovatie. Waar ideeën werkelijkheid worden en transities versnellen.
+        </p>
+    </div>
+  </section>
+
+  <!-- Vacancy List -->
+  <section class="py-24 bg-gray-50 min-h-screen relative">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 gap-8">
+            {vacancies.length > 0 ? vacancies.map((job, index) => (
+                <a href={`/vacatures/${job.slug}`} class="group block reveal delay-100">
+                    <article class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 hover:shadow-2xl transition-all duration-500 relative overflow-hidden transform hover:-translate-y-1">
+                        <!-- Hover Gradient Background -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-kaap-purple/5 to-kaap-pink/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <span class="px-4 py-1.5 rounded-full bg-kaap-gray text-white text-xs font-bold uppercase tracking-wider">{job.department}</span>
+                                    <span class="text-gray-400 font-medium text-sm flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        {job.fte}
+                                    </span>
+                                </div>
+                                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 group-hover:text-kaap-purple transition-colors">{job.title}</h2>
+                                <p class="text-xl text-gray-500 font-light mb-6 md:mb-0 max-w-2xl">{job.subtitle}</p>
+                            </div>
+                            
+                            <div class="flex items-center gap-4">
+                                <span class="hidden md:block text-gray-900 font-bold group-hover:mr-4 transition-all">Bekijk vacature</span>
+                                <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gray-100 group-hover:bg-kaap-gradient flex items-center justify-center transition-all duration-300 shadow-md group-hover:shadow-lg group-hover:scale-110">
+                                    <svg class="w-6 h-6 text-gray-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </a>
+            )) : (
+                <div class="text-center py-20 bg-white rounded-3xl border border-gray-100">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Geen openstaande vacatures</h3>
+                    <p class="text-gray-500">Maar we staan altijd open voor talent. Stuur een open sollicitatie!</p>
+                    <a href="/contact" class="inline-block mt-6 px-8 py-3 bg-kaap-gray text-white rounded-full font-bold hover:bg-kaap-purple transition-colors">
+                        Neem contact op
+                    </a>
+                </div>
+            )}
+        </div>
+     </div>
+  </section>
+
+  <!-- Open Application / CTA -->
+  <section class="py-24 bg-white">
+      <div class="max-w-4xl mx-auto px-4 text-center reveal">
+          <h2 class="text-3xl font-bold font-heading text-gray-900 mb-6">Niet gevonden wat je zocht?</h2>
+          <p class="text-lg text-gray-600 mb-10 leading-relaxed">
+              Denk jij dat je onmisbaar bent voor KAAP, maar staat jouw droombaan er niet tussen? 
+              Overtuig ons met je visie en energie.
+          </p>
+          <a href="/contact?subject=Open%20Sollicitatie" class="px-10 py-4 border-2 border-gray-900 text-gray-900 rounded-full font-bold hover:bg-gray-900 hover:text-white transition-all duration-300">
+              Stuur open sollicitatie
+          </a>
+      </div>
+  </section>
+</Layout>

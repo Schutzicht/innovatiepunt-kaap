@@ -5,9 +5,6 @@ import { Image } from 'astro:assets';
 const industrialBg = "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2600";
 const makerSpace = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200";
 import floorPlan from '../assets/images/kaap-plattegrond.png';
-import jorik from '../assets/team/Jorik.png';
-import marc from '../assets/team/Marc.png';
-import phaedra from '../assets/team/Phaedra.png';
 
 ---
 
@@ -186,48 +183,6 @@ import phaedra from '../assets/team/Phaedra.png';
      </div>
   </section>
 
-   <!-- Team Section -->
-   <section class="py-24 bg-white relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-4xl md:text-5xl font-bold font-heading text-gray-900 mb-6">De Gezichten van KAAP</h2>
-                <p class="text-xl text-gray-500 max-w-2xl mx-auto">
-                    Wij bouwen dagelijks aan de community en de faciliteiten. Heb je een vraag of een goed idee? Spreek ons aan!
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-                {/* Team Member: Phaedra */}
-                <div class="flex flex-col items-center group reveal">
-                    <div class="w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-gray-100 shadow-xl group-hover:border-kaap-pink transition-all duration-300 relative">
-                        <div class="absolute inset-0 bg-kaap-pink opacity-0 group-hover:opacity-20 transition-opacity z-10 mix-blend-multiply"></div>
-                        <Image src={phaedra} alt="Phaedra" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 font-heading">Phaedra</h3>
-                    <span class="text-kaap-pink font-medium uppercase tracking-wider text-sm mt-1">Community & Events</span>
-                </div>
-
-                {/* Team Member: Jorik */}
-                <div class="flex flex-col items-center group reveal delay-100">
-                     <div class="w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-gray-100 shadow-xl group-hover:border-kaap-purple transition-all duration-300 relative">
-                        <div class="absolute inset-0 bg-kaap-purple opacity-0 group-hover:opacity-20 transition-opacity z-10 mix-blend-multiply"></div>
-                        <Image src={jorik} alt="Jorik" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 font-heading">Jorik</h3>
-                     <span class="text-kaap-purple font-medium uppercase tracking-wider text-sm mt-1">Innovatie & Strategie</span>
-                </div>
-
-                {/* Team Member: Marc */}
-                <div class="flex flex-col items-center group reveal delay-200">
-                     <div class="w-64 h-64 rounded-full overflow-hidden mb-6 border-4 border-gray-100 shadow-xl group-hover:border-kaap-energy transition-all duration-300 relative">
-                        <div class="absolute inset-0 bg-kaap-energy opacity-0 group-hover:opacity-20 transition-opacity z-10 mix-blend-multiply"></div>
-                        <Image src={marc} alt="Marc" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 font-heading">Marc</h3>
-                     <span class="text-kaap-energy font-medium uppercase tracking-wider text-sm mt-1">Faciliteiten & Techniek</span>
-                </div>
-            </div>
-        </div>
    </section>
 
   <!-- Photo Section / Impression -->

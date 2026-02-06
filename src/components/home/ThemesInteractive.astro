@@ -1,0 +1,225 @@
+---
+import { Image } from 'astro:assets';
+import iconWater from '../../assets/icons/Kaap_RGB_Water_Blok.png';
+import iconFood from '../../assets/icons/Kaap_RGB_Food_Blok.png';
+import iconEnergy from '../../assets/icons/Kaap_RGB_Energie_Blok.png';
+
+// Import images for the circle
+import themeWater from '../../assets/photos/theme-water.jpg';
+import themeFood from '../../assets/photos/theme-food.jpg';
+import themeEnergy from '../../assets/photos/theme-energy.jpg';
+import beeldmerk from '../../assets/graphics/Beeldmerk_RGB_FC.png';
+
+const themes = [
+  {
+    id: 'food',
+    label: 'Food',
+    icon: iconFood,
+    color: 'text-kaap-food',
+    bg: 'bg-kaap-food',
+    image: themeFood,
+    borderColor: 'border-kaap-food'
+  },
+  {
+    id: 'water',
+    label: 'Water',
+    icon: iconWater,
+    color: 'text-kaap-water',
+    bg: 'bg-kaap-water',
+    image: themeWater,
+    borderColor: 'border-kaap-water'
+  },
+  {
+    id: 'energy',
+    label: 'Energy',
+    icon: iconEnergy,
+    color: 'text-kaap-energy',
+    bg: 'bg-kaap-energy',
+    image: themeEnergy,
+    borderColor: 'border-kaap-energy'
+  }
+];
+---
+
+<section id="sleek-themes" class="relative w-full h-auto min-h-[800px] bg-[#1a1a1a] overflow-hidden flex flex-col md:flex-row">
+  
+  <!-- Left Content Area (Main) -->
+  <div class="relative flex-1 flex items-center justify-center p-8 md:p-24 z-10 transition-colors duration-700" id="main-bg">
+    
+    <!-- Background Elements -->
+    <div class="absolute top-12 left-12">
+        <span class="text-white/60 uppercase tracking-widest text-xs font-bold font-heading">Innovatiepunt</span>
+        <div class="h-0.5 w-12 bg-white/60 mt-2"></div>
+    </div>
+
+    <div class="absolute bottom-12 left-12">
+        <div class="h-0.5 w-12 bg-white/60 mb-2"></div>
+    </div>
+
+    <!-- Centered Circle & Text -->
+    <div class="relative w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        
+        <!-- Circle Visual -->
+        <div class="relative order-2 md:order-1 flex justify-center">
+             <!-- Beeldmerk Graphic (Replaces CSS Ring) -->
+             <div class="absolute inset-0 m-auto w-[350px] h-[350px] md:w-[500px] md:h-[500px] animate-spin-slow opacity-80 select-none pointer-events-none">
+                 <Image src={beeldmerk} alt="KAAP Beeldmerk" class="w-full h-full object-contain" />
+             </div>
+             
+             <!-- Image Mask -->
+             <div class="w-[200px] h-[200px] md:w-[320px] md:h-[320px] rounded-full overflow-hidden border-8 border-[#1a1a1a] shadow-2xl relative z-10">
+                {themes.map((theme) => (
+                    <div 
+                        class={`absolute inset-0 w-full h-full transition-opacity duration-700 ${theme.id === 'food' ? '' : 'opacity-0'}`} 
+                        data-theme-img={theme.id}
+                    >
+                         <Image src={theme.image} alt={theme.label} class="w-full h-full object-cover" />
+                    </div>
+                ))}
+             </div>
+        </div>
+
+        <!-- Typography -->
+         <div class="order-1 md:order-2 text-left z-20">
+            <h2 class="text-5xl md:text-7xl font-bold font-heading text-white leading-[1.1]">
+                Bring <br/>
+                your <span id="dynamic-word" class="text-kaap-food transition-colors duration-500">food</span> <br/>
+                innovation <br/>
+                to life
+            </h2>
+            <div class="mt-8 flex items-center space-x-4">
+                <a href="/voedsel" id="dynamic-link" class="text-white border-b border-white pb-1 hover:text-gray-300 transition-colors">Ontdek de transitie</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- KAAP Logo Overlay (Bottom Right of Main Area) -->
+    <div class="absolute bottom-12 right-12 md:right-32 text-white font-bold text-2xl tracking-tighter">
+        KAAP
+    </div>
+  </div>
+
+  <!-- Right Navigation Sidebar -->
+  <div class="relative w-full md:w-32 bg-[#222] md:h-auto flex md:flex-col items-center justify-center md:justify-start md:pt-32 gap-0 border-l border-white/5 z-20">
+      
+      {themes.map((theme) => (
+          <button 
+            class={`theme-nav-btn group w-full md:w-full h-24 md:h-32 flex items-center justify-center relative focus:outline-none transition-all duration-300 hover:bg-white/5 ${theme.id === 'food' ? 'active' : ''}`}
+            data-target={theme.id}
+          >
+              <!-- Active Indicator Bar -->
+              <div class="absolute right-0 top-0 bottom-0 w-1 bg-transparent group-hover:bg-white/20 transition-colors indicator transform scale-y-0 group-[.active]:scale-y-100 group-[.active]:bg-white transition-transform duration-300 origin-center"></div>
+              
+              <div class="w-10 h-10 transition-transform duration-300 group-hover:scale-110 opacity-50 group-[.active]:opacity-100">
+                  <Image src={theme.icon} alt={theme.label} class="w-full h-full object-contain" />
+              </div>
+
+              <!-- Tooltip/Label -->
+              <span class="absolute left-4 opacity-0 group-hover:opacity-100 -translate-x-full md:translate-x-0 md:-left-4 md:group-hover:-translate-x-full transition-all duration-300 text-white text-sm font-bold bg-black/80 px-2 py-1 rounded pointer-events-none whitespace-nowrap">
+                  {theme.label}
+              </span>
+          </button>
+      ))}
+  </div>
+</section>
+
+<style>
+    .animate-spin-slow {
+        animation: spin 20s linear infinite;
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
+
+<script>
+    function initThemes() {
+        console.log('ThemesInteractive: Initializing...');
+        
+        // Theme Data
+        const themeData = {
+            'food': { color: 'text-kaap-food', border: 'border-kaap-food', word: 'food', url: '/voedsel' },
+            'water': { color: 'text-kaap-water', border: 'border-kaap-water', word: 'water', url: '/water' },
+            'energy': { color: 'text-kaap-energy', border: 'border-kaap-energy', word: 'energy', url: '/energie' }
+        };
+
+        const buttons = document.querySelectorAll('.theme-nav-btn');
+        const dynamicWord = document.getElementById('dynamic-word');
+        const dynamicLink = document.getElementById('dynamic-link');
+        const ringAccent = document.getElementById('ring-accent');
+        const imgs = document.querySelectorAll('[data-theme-img]');
+        
+        if (!buttons.length) {
+            console.error('ThemesInteractive: No buttons found');
+            return;
+        }
+
+        function setTheme(themeId) {
+            if (!themeData[themeId]) return;
+            console.log('ThemesInteractive: Setting theme to', themeId);
+            
+            // 1. Update Buttons
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-target') === themeId) {
+                    btn.classList.add('active');
+                    // Ensure the indicator is visible
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // 2. Update Text & Link
+            if (dynamicWord) {
+                const data = themeData[themeId];
+                
+                // Change classes and text immediately
+                dynamicWord.className = `${data.color} transition-colors duration-300`;
+                dynamicWord.innerText = data.word;
+                
+                // Update Link URL
+                if (dynamicLink) {
+                    dynamicLink.setAttribute('href', data.url);
+                }
+            }
+
+            // 3. Update Image
+            imgs.forEach(img => {
+                if (img.getAttribute('data-theme-img') === themeId) {
+                    img.classList.remove('opacity-0');
+                } else {
+                    img.classList.add('opacity-0');
+                }
+            });
+        }
+
+        // Init
+        // setTheme('food'); // Default is already set in HTML to some extent, but let's enforce it? 
+        // Actually, HTML static content is "food", so we don't need to force run it unless we want to reset.
+        // Let's just listen.
+
+        // Listeners
+        buttons.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                const target = btn.getAttribute('data-target');
+                if (target) setTheme(target);
+            });
+             btn.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent jump
+                const target = btn.getAttribute('data-target');
+                console.log('ThemesInteractive: Click', target);
+                if (target) setTheme(target);
+            });
+        });
+    }
+
+    // Run on load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initThemes);
+    } else {
+        initThemes();
+    }
+    
+    // Support View Transitions if added later
+    document.addEventListener('astro:page-load', initThemes);
+</script>
