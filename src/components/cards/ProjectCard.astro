@@ -41,11 +41,21 @@ const imageSrc =
             class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-kaap-gray/40 to-transparent z-10"
         >
         </div>
-        <div
-            class="w-full h-full bg-cover bg-center transform group-hover/card:scale-110 transition-transform duration-700"
-            style={`background-image: url('${imageSrc}');`}
-        >
-        </div>
+        {
+            typeof project.image === "string" ? (
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full h-full object-cover transform group-hover/card:scale-110 transition-transform duration-700"
+                />
+            ) : (
+                <Image
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full h-full object-cover transform group-hover/card:scale-110 transition-transform duration-700"
+                />
+            )
+        }
     </div>
 
     <!-- Top Left Theme Icon (Square) -->
