@@ -7,6 +7,9 @@ import iconWater from '../assets/icons/Kaap_RGB_Water_Blok.svg';
 import iconFood from '../assets/icons/Kaap_RGB_Food_Blok.svg';
 import iconEnergy from '../assets/icons/Kaap_RGB_Energie_Blok.svg';
 
+import { projects } from '../data/projects';
+import ProjectCard from '../components/cards/ProjectCard.astro';
+
 export async function getStaticPaths() {
   return [
     { 
@@ -44,6 +47,8 @@ const { name, description, color, icon } = Astro.props;
 
 const colorClass = `text-${color}`;
 const bgClass = `bg-${color}`;
+
+const themeProjects = projects.filter(p => p.theme === theme);
 ---
 
 <Layout title={`${name} | Innovatiepunt KAAP`}>
@@ -60,7 +65,7 @@ const bgClass = `bg-${color}`;
     
     <div class="relative z-10 text-center max-w-5xl px-4">
       <div class="w-32 h-32 mx-auto mb-8 animate-float">
-        <Image src={icon} alt={name} class="w-full h-full object-contain drop-shadow-2xl" />
+        <Image src={icon} alt={name} class="w-full h-full object-contain drop-shadow-2xl brightness-0 invert" />
       </div>
       
       <!-- Strict Pay-off: Bring your [theme] innovation to life -->
@@ -74,18 +79,25 @@ const bgClass = `bg-${color}`;
       </p>
     </div>
   </section>
-            </div>
-        </div>
+     </div>
   </div>
 
   <section class="py-24 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 class="text-3xl font-bold font-heading mb-12">Projecten binnen {name}</h2>
           
-          <div class="bg-gray-50 rounded-3xl p-12 text-center border border-dashed border-gray-300">
-              <p class="text-gray-500 text-lg">Projecten worden geladen... (Work in Progress)</p>
-              <a href="/projecten" class="inline-block mt-6 font-medium text-kaap-purple hover:text-kaap-pink">Bekijk alle projecten</a>
-          </div>
+          {themeProjects.length > 0 ? (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {themeProjects.map((project, index) => (
+                    <ProjectCard project={project} index={index} />
+                ))}
+            </div>
+          ) : (
+            <div class="bg-gray-50 rounded-3xl p-12 text-center border border-dashed border-gray-300">
+                <p class="text-gray-500 text-lg">Nog geen projecten zichtbaar voor dit thema.</p>
+                <a href="/projecten" class="inline-block mt-6 font-medium text-kaap-purple hover:text-kaap-pink">Bekijk alle projecten</a>
+            </div>
+          )}
       </div>
   </section>
 </Layout>
