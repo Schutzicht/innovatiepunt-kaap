@@ -384,11 +384,11 @@ import facilityCommunity from '../assets/photos/facility-community.jpg';
 
                                  <!-- 2. The Isolated "A" (Hidden by default, fades in) -->
                                  <!-- Uses a path derived from the logo A, styled to match -->
-                                 <div class="absolute inset-0 flex items-center justify-center opacity-0 transform scale-50 transition-all duration-300 group-hover/btn:opacity-100 group-hover/btn:scale-[2]">
-                                      <svg class="w-full h-full text-white" viewBox="0 0 245 245" xmlns="http://www.w3.org/2000/svg">
-                                        <!-- The Right 'A' shape isolated -->
-                                        <path fill="white" d="M150.73 135.7 L139.72 110.18 L134.27 110.18 L123.63 135.7 L129.03 135.7 L131.5 129 L143 129 L144.85 135.7 Z" />
-                                      </svg>
+                                 <!-- 2. The Isolated "A" (Hidden by default, fades in) -->
+                                 <!-- Uses a font-based Lambda to match Hero button exactly -->
+                                 <!-- Note: Parent rotates 90deg, turning Λ into > -->
+                                 <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100">
+                                      <span class="text-white font-bold text-6xl leading-none pb-2">Λ</span>
                                  </div>
                              </div>
                         </div>
