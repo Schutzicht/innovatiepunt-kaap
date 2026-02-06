@@ -14,9 +14,12 @@ import ThemesInteractive from '../components/home/ThemesInteractive.astro';
 
 // Brand Logos for Carousel
 import logoRondFC from '../assets/branding/Kaap_RGB_Logo_rond_fc.svg';
+import logoRondWit from '../assets/branding/Kaap_RGB_Logo_rond_wit.svg';
 import logoVertFC from '../assets/branding/Kaap_RGB_Logo_vert_fc.svg';
 import logoWoordmerkFC from '../assets/branding/Kaap_RGB_Woordmerk_fc.svg';
 import logoBeeldmerk from '../assets/branding/Kaap_RGB_Beeldmerk.svg';
+// Custom Play Button Asset
+
 
 // Authentic Photos
 import heroBg from '../assets/photos/hero-kaap.jpg';
@@ -205,28 +208,58 @@ import facilityCommunity from '../assets/photos/facility-community.jpg';
         
         <div id="video-container" class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(141,115,218,0.3)] border border-white/10 reveal delay-100 group cursor-pointer bg-black">
              <!-- Poster Image Overlay -->
-             <div id="video-poster" class="absolute inset-0 z-20 transition-all duration-700 group-hover:scale-105">
+             <div id="video-poster" class="absolute inset-0 z-20 transition-all duration-700">
                 <Image src={videoPoster} alt="KAAP Corporate Movie Thumbnail" class="w-full h-full object-cover opacity-60" />
                 <div class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-transparent to-transparent opacity-80"></div>
                 
-                <!-- Play Button -->
+             <!-- Poster Image Overlay -->
+             <div id="video-poster" class="absolute inset-0 z-20 transition-all duration-700">
+                <Image src={videoPoster} alt="KAAP Corporate Movie Thumbnail" class="w-full h-full object-cover opacity-60" />
+                <div class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-transparent to-transparent opacity-80"></div>
+                
+                <!-- Play Button Container - Only triggers on its own hover -->
                 <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="relative">
+                    <div class="relative group/btn cursor-pointer">
                         <!-- Pulsing Rings -->
-                        <div class="absolute inset-0 rounded-full bg-white/20 animate-ping -z-10 scale-150"></div>
-                        <div class="absolute inset-0 rounded-full bg-kaap-gradient animate-pulse -z-10 scale-125"></div>
+                        <div class="absolute inset-0 rounded-full bg-white/20 animate-ping -z-10 scale-150 group-hover/btn:animate-none transition-all"></div>
+                        <div class="absolute inset-0 rounded-full bg-kaap-gradient animate-pulse -z-10 scale-125 group-hover/btn:animate-none transition-all"></div>
                         
-                        <!-- Main Button -->
-                        <div class="w-20 h-20 md:w-28 md:h-28 bg-white rounded-full flex items-center justify-center shadow-2xl transform transition-all duration-500 group-hover:scale-110 group-active:scale-95">
-                            <svg class="w-8 h-8 md:w-12 md:h-12 text-kaap-gray ml-2" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z"></path>
-                            </svg>
+                        <!-- Main Button Circle -->
+                       <div class="w-32 h-32 bg-transparent rounded-full flex items-center justify-center relative perspective-1000">
+                             
+                             <!-- Rotating Container -->
+                             <div class="w-full h-full relative flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/btn:rotate-90">
+                                 
+                                 <!-- 1. The Full Logo (Visible by default, fades out on hover) -->
+                                 <div class="absolute inset-0 transition-opacity duration-300 group-hover/btn:opacity-0 flex items-center justify-center">
+                                     <svg class="w-[90%] h-[90%]" viewBox="0 0 245 245" xmlns="http://www.w3.org/2000/svg">
+                                        <g>
+                                            <polygon fill="white" points="150.73 135.7 144.85 135.7 136.94 117.01 129.03 135.7 118.22 135.7 110.31 117.01 102.4 135.7 90.83 135.7 83.56 124.92 78.92 124.92 78.92 135.7 73.87 135.7 73.87 110.18 78.92 110.18 78.92 120.1 83.54 120.1 90.55 110.18 96.7 110.18 87.8 122.46 96.72 135.23 107.64 110.18 113.09 110.18 123.63 134.6 134.27 110.18 139.72 110.18 150.73 135.7"/>
+                                            <path fill="white" d="M152.16,135.7v-25.52h13.91c4.86,0,8.26,3.86,8.26,8.65,0,4.77-3.48,8.75-8.26,8.75h-8.85s0,8.13,0,8.13h-5.05ZM165.83,122.82c2.52,0,3.95-2.85,3.15-5.47-.4-1.34-1.96-2.41-3.36-2.41h-8.42v7.88s8.62,0,8.62,0Z"/>
+                                        </g>
+                                        <g>
+                                            <path fill="white" d="M48.42,122.5c0-40.66,32.96-73.62,73.62-73.62,7.97,0,15.65,1.27,22.84,3.61l24.77-42.9C155,3.42,138.92,0,122.03,0,59.52,0,7.94,46.83.47,107.32l49.17,28.57c-.8-4.34-1.22-8.82-1.22-13.39Z"/>
+                                            <path fill="white" d="M195.96,24.81l-49.31,28.29c28.55,10.12,49,37.37,49,69.4,0,21.75-9.43,41.29-24.42,54.76l24.77,42.9c29.49-22.37,48.54-57.79,48.54-97.66s-19.06-75.32-48.58-97.69Z"/>
+                                            <path fill="white" d="M49.99,137.73H.47c7.5,60.47,59.07,107.27,121.56,107.27,16.9,0,32.99-3.42,47.64-9.61l.15-56.9c-12.86,10.99-29.55,17.62-47.79,17.62-35.44,0-65.03-25.04-72.04-58.39Z"/>
+                                        </g>
+                                     </svg>
+                                 </div>
+
+                                 <!-- 2. The Isolated "A" (Hidden by default, fades in) -->
+                                 <!-- Uses a path derived from the logo A, styled to match -->
+                                 <div class="absolute inset-0 flex items-center justify-center opacity-0 transform scale-50 transition-all duration-300 group-hover/btn:opacity-100 group-hover/btn:scale-[2]">
+                                      <svg class="w-full h-full text-white" viewBox="0 0 245 245" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- The Right 'A' shape isolated -->
+                                        <path fill="white" d="M150.73 135.7 L139.72 110.18 L134.27 110.18 L123.63 135.7 L129.03 135.7 L131.5 129 L143 129 L144.85 135.7 Z" />
+                                      </svg>
+                                 </div>
+                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Labels -->
-                <div class="absolute bottom-8 left-8 md:bottom-12 md:left-12">
+                <div class="absolute bottom-8 left-8 md:bottom-12 md:left-12 pointer-events-none">
                     <span class="text-kaap-pink font-bold uppercase tracking-widest text-sm mb-2 block">Premium Experience</span>
                     <h3 class="text-2xl md:text-4xl font-bold text-white uppercase italic tracking-tighter">Bring your innovation to life</h3>
                 </div>
