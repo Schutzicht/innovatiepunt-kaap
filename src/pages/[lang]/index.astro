@@ -275,9 +275,9 @@ const c = content[lang as keyof typeof content] || content.nl;
           {c.hero.desc}
         </p>
         
-        <div class="flex flex-col sm:flex-row gap-4 reveal delay-300 justify-center">
+        <div class="flex flex-wrap justify-center gap-4 reveal delay-300">
             <!-- Ontdek KΛAP: Premium Rotating Lambda Button -->
-            <a href="#ontdek" class="group relative px-8 py-4 bg-kaap-gradient text-white font-bold text-lg rounded-tl-2xl rounded-br-2xl hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden w-full md:w-auto flex justify-center">
+            <a href="#ontdek" class="group relative px-8 py-4 bg-kaap-gradient text-white font-bold text-lg rounded-tl-2xl rounded-br-2xl hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden w-auto min-w-[150px] flex justify-center">
                  <span class="relative z-10 flex items-center justify-center gap-[1px]">
                     <span class="transition-all duration-500 ease-in-out group-hover:-translate-x-2 group-hover:opacity-0 font-bold whitespace-pre">{lang === 'nl' ? 'Ontdek K' : 'Discover K'}</span>
                     <span class="transition-all duration-500 ease-in-out group-hover:-translate-x-1 group-hover:opacity-0 font-bold">Λ</span>
@@ -287,7 +287,7 @@ const c = content[lang as keyof typeof content] || content.nl;
             </a>
             
             <!-- Boek een ruimte: Secondary Glass Button -->
-            <a href={`/${lang}/faciliteiten`} class="group relative px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/20 text-white font-bold text-lg rounded-tl-2xl rounded-br-2xl hover:bg-white/10 hover:border-white/40 transition-all transform hover:scale-105 w-full md:w-auto flex justify-center">
+            <a href={`/${lang}/faciliteiten`} class="group relative px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/20 text-white font-bold text-lg rounded-tl-2xl rounded-br-2xl hover:bg-white/10 hover:border-white/40 transition-all transform hover:scale-105 w-auto min-w-[150px] flex justify-center">
                <span class="relative z-10">{c.hero.btn_book}</span>
             </a>
         </div>
