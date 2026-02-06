@@ -21,11 +21,11 @@ import beeldmerk from "../../assets/graphics/Beeldmerk_RGB_FC.png";
 
   <!-- Icon Container -->
   <div
-    class="relative z-10 w-8 h-8 flex items-center justify-center pointer-events-none rounded-full bg-white/90 shadow-md"
+    class="relative z-10 w-8 h-8 flex items-center justify-center pointer-events-none"
   >
     <!-- Icon (Message/Chat) -->
     <svg
-      class="absolute inset-0 w-full h-full drop-shadow-md transition-all duration-300 ease-in-out transform group-hover:opacity-0 group-hover:scale-50 text-kaap-gray"
+      class="sticky-icon absolute inset-0 w-full h-full drop-shadow-md transition-all duration-300 ease-in-out transform group-hover:opacity-0 group-hover:scale-50 text-white"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -41,7 +41,7 @@ import beeldmerk from "../../assets/graphics/Beeldmerk_RGB_FC.png";
 
     <!-- Icon (Arrow Right) -->
     <svg
-      class="absolute inset-0 w-full h-full drop-shadow-md opacity-0 scale-50 transition-all duration-300 ease-in-out transform group-hover:opacity-100 group-hover:scale-100 text-kaap-gray"
+      class="sticky-icon absolute inset-0 w-full h-full drop-shadow-md opacity-0 scale-50 transition-all duration-300 ease-in-out transform group-hover:opacity-100 group-hover:scale-100 text-white"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -62,3 +62,53 @@ import beeldmerk from "../../assets/graphics/Beeldmerk_RGB_FC.png";
     Neem contact op
   </span>
 </a>
+
+<script>
+  const stickyCTA = document.getElementById("sticky-cta");
+
+  function checkContrast() {
+    if (!stickyCTA) return;
+
+    // Get button center position
+    const rect = stickyCTA.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    // Find elements under the button
+    const elements = document.elementsFromPoint(x, y);
+
+    // Find the first section with a data-theme attribute
+    // We look for the closest section in the stack of elements under the point
+    const themeSection = elements
+      .find((el) => el.closest("section[data-theme]"))
+      ?.closest("section[data-theme]");
+
+    if (themeSection) {
+      const theme = themeSection.getAttribute("data-theme");
+      if (theme === "light") {
+        updateIcons("text-kaap-gray");
+      } else {
+        updateIcons("text-white");
+      }
+    }
+  }
+
+  function updateIcons(colorClass: string) {
+    if (!stickyCTA) return;
+    const icons = stickyCTA.querySelectorAll(".sticky-icon");
+    icons.forEach((icon) => {
+      // Check if already has class to avoid thrashing
+      if (!icon.classList.contains(colorClass)) {
+        icon.classList.remove("text-white", "text-kaap-gray");
+        icon.classList.add(colorClass);
+      }
+    });
+  }
+
+  // Check on scroll and resize
+  window.addEventListener("scroll", checkContrast, { passive: true });
+  window.addEventListener("resize", checkContrast, { passive: true });
+
+  // Initial check
+  checkContrast();
+</script>
