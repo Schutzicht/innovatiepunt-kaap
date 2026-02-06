@@ -160,32 +160,17 @@ import facilityCommunity from '../assets/photos/facility-community.jpg';
     </script>
 
     <!-- Active Elements -->
-    <div class="relative z-20 max-w-5xl mx-auto px-4 text-center">
-      
-      <!-- Brand Element: Innovatiepunt line -->
-      <div class="flex flex-col items-center mb-2 reveal">
-          <span class="text-white uppercase tracking-[0.2em] text-sm md:text-base font-bold mb-4 relative inline-block">
-            <span class="absolute top-1/2 -left-12 w-8 h-[2px] bg-auto bg-current opacity-60"></span>
-            Innovatiepunt
-            <span class="absolute top-1/2 -right-12 w-8 h-[2px] bg-auto bg-current opacity-60"></span>
-          </span>
-      </div>
-
-      <!-- Main Title -->
-      <h1 class="text-7xl md:text-9xl font-bold font-heading text-white mb-8 leading-none tracking-tight reveal delay-100">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-kaap-pink to-kaap-purple drop-shadow-2xl">
+    <div class="relative z-20 max-w-7xl mx-auto px-4 text-center">
+      <h1 class="text-6xl md:text-8xl font-bold font-heading text-white mb-6 leading-tight tracking-tight drop-shadow-2xl">
+        Innovatiepunt <span class="text-transparent bg-clip-text bg-gradient-to-r from-kaap-pink to-kaap-purple relative inline-block">
             KAAP
         </span>
       </h1>
-
-      <!-- Slogan -->
-      <h2 class="text-2xl md:text-4xl text-white font-medium mb-12 drop-shadow-lg opacity-90 reveal delay-200">
-        Bring your <span class="bg-gradient-to-r from-kaap-pink to-kaap-purple bg-clip-text text-transparent font-bold">innovation</span> to life
+      <h2 class="text-3xl md:text-5xl font-bold font-heading text-white mb-8 drop-shadow-lg opacity-90">
+        Bring your innovation to life
       </h2>
-
-      <!-- Description -->
-      <p class="text-lg text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-md reveal delay-300">
-        De fysieke haven in Zeeland waar jouw ideeën in Energy, Food en Water werkelijkheid worden.
+      <p class="text-lg md:text-xl text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
+        De fysieke haven in Zeeland om innovaties in Energy, Food en Water te testen, ontwikkelen en demonstreren.
       </p>
       
       <!-- Buttons -->
@@ -201,18 +186,15 @@ import facilityCommunity from '../assets/photos/facility-community.jpg';
                 
                 <!-- Part 2: First Lambda (Slides Left/Fade) -->
                 <span class="transition-all duration-500 ease-in-out group-hover:-translate-x-1 group-hover:opacity-0 font-bold">Λ</span>
-
                 <!-- Part 3: The Chosen Lambda (Becomes Arrow) -->
                 <span class="inline-block transition-all duration-500 ease-out font-bold group-hover:rotate-90 group-hover:scale-125 origin-center">Λ</span>
-
                 <!-- Part 4: P (Slides Right/Fade) -->
                 <span class="transition-all duration-500 ease-in-out group-hover:translate-x-2 group-hover:opacity-0 font-bold">P</span>
-             </span>
+              </span>
         </a>
-
         <!-- Kaap je M2: Secondary Glass/Border Button (Asymmetric) -->
         <a href="/faciliteiten" class="group relative px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/20 text-white font-bold text-lg rounded-tl-2xl rounded-br-2xl hover:bg-white/10 hover:border-white/40 transition-all transform hover:scale-105">
-             <span class="relative z-10">Kaap je M²</span>
+           <span class="relative z-10">Kaap je M²</span>
         </a>
       </div>
     </div>
@@ -345,15 +327,9 @@ import facilityCommunity from '../assets/photos/facility-community.jpg';
         
         <div id="video-container" class="relative w-full aspect-video rounded-lg overflow-hidden shadow-[0_0_50px_rgba(141,115,218,0.3)] border border-white/10 reveal delay-100 group cursor-pointer bg-black">
              <!-- Poster Image Overlay -->
-             <div id="video-poster" class="absolute inset-0 z-20 transition-all duration-700">
+             <div id="video-poster" class="absolute inset-0 z-20 transition-all duration-700 bg-black">
                 <Image src={videoPoster} alt="KAAP Corporate Movie Thumbnail" class="w-full h-full object-cover opacity-60" />
                 <div class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-transparent to-transparent opacity-80"></div>
-                
-             <!-- Poster Image Overlay -->
-             <div id="video-poster" class="absolute inset-0 z-20 transition-all duration-700">
-                <Image src={videoPoster} alt="KAAP Corporate Movie Thumbnail" class="w-full h-full object-cover opacity-60" />
-                <div class="absolute inset-0 bg-gradient-to-t from-kaap-gray via-transparent to-transparent opacity-80"></div>
-                
                 <!-- Play Button Container - Only triggers on its own hover -->
                 <div class="absolute inset-0 flex items-center justify-center">
                     <div class="relative group/btn cursor-pointer">
@@ -427,7 +403,7 @@ import facilityCommunity from '../assets/photos/facility-community.jpg';
       if (container && poster && wrapper && iframe) {
           container.addEventListener('click', () => {
               // Set the SRC and show the video
-              iframe.src = "https://www.youtube.com/embed/5t_JCDYSHHI?autoplay=1&rel=0&modestbranding=1";
+              iframe.src = "https://www.youtube.com/embed/5t_JCDYSHHI?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1";
               poster.classList.add('opacity-0', 'pointer-events-none');
               wrapper.classList.remove('hidden');
               setTimeout(() => {
