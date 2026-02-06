@@ -68,9 +68,9 @@ const content = {
       subtitle: "Van de eerste schets tot het demonstreren van een prototype: KAAP faciliteert elke stap in het innovatieproces.",
       items: [
         { nr: "01", title: "Testen & Ontwikkelen", desc: "Hoogwaardige faciliteiten voor real-scale validatie en opschaling van innovaties naar de markt.", tag: "Testveld" },
-        { nr: "02", title: "Huisvesting", desc: "Vaste kantoorruimte en werkplekken binnen hét innovatieve ecosysteem van de regio.", tag: "Werkplekken" },
-        { nr: "03", title: "Expertise & Faciliteiten", desc: "Directe toegang tot de proefkeuken, werkplaatsen en technische expertise voor doorontwikkeling.", tag: "R&D Support" },
-        { nr: "04", title: "Community", desc: "Vind de juiste partners, investeerders en talent via ons uitgebreide netwerk van partners.", tag: "Netwerk" }
+        { nr: "02", title: "Huren", desc: "Vaste kantoorruimte en werkplekken binnen hét innovatieve ecosysteem van de regio.", tag: "Werkplekken" },
+        { nr: "03", title: "Experimenteren", desc: "Directe toegang tot de proefkeuken, werkplaatsen en technische expertise voor doorontwikkeling.", tag: "R&D Support" },
+        { nr: "04", title: "Ontmoeten", desc: "Vind de juiste partners, investeerders en talent via ons uitgebreide netwerk van partners.", tag: "Netwerk" }
       ],
       btn_all: "Alle faciliteiten bekijken"
     },
@@ -514,8 +514,8 @@ const c = content[lang as keyof typeof content] || content.nl;
   <!-- Projects Carousel -->
   <section class="py-12 md:py-24 bg-gray-50 overflow-hidden" data-theme="light">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-8 md:mb-12 reveal">
-            <div>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 reveal">
+            <div class="text-left">
                  <h2 class="text-3xl md:text-5xl font-bold font-heading mb-4 text-gray-900 kastlijntje">{c.projects.title}</h2>
                 <p class="text-gray-600">{c.projects.subtitle}</p>
             </div>
